@@ -1,5 +1,5 @@
 {
-  "name": "final-project-template",
+  "name": "aaa-commerce",
   "scripts": {
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
