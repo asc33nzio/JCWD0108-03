@@ -1,4 +1,4 @@
-# Purwadhika Final Project Repository
+# Purwadhika Mini Project 3 Repository
 
 REPOSITORY OF TEAM 3:
 - Amadeo Filberto Marli
