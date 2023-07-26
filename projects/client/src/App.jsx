@@ -9,8 +9,12 @@ import { CashierList } from "./components/cashierList";
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
   { path: "/forgot", element: <Forgot />, },
+<<<<<<< HEAD
+  { path: "/cashier", element : <Cashier />}
+=======
   { path: "/cashier", element : <Cashier />},
   { path: "/cashierlist", element : <CashierList />}
+>>>>>>> c1b1038597e991bf40bcc7265e26d52be3b57d06
 
 ]);
 

@@ -1,15 +1,16 @@
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
 import { Navbar } from "../components/navbar"
+import { ProductCategory } from "../components/cashier/productsCategory"
 
 export const Cashier = () => {
     return(
-    <Flex>
+    <Box>
         <Navbar />
-        <Flex justifyContent={"center"} pt={"100px"}>
-            <Box> 
-                asd
-            </Box>
+        <Flex justifyContent={"center"}>
+            <Flex>
+                <ProductCategory/>
+            </Flex>
         </Flex>
-    </Flex>  
+    </Box>
     )
 }
