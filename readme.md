@@ -1,11 +1,12 @@
-# Purwadhika Final Project Repository
+# Purwadhika Mini Project 3 (Cashier App) Repository by AAA Studio
 
 REPOSITORY OF TEAM 3:
-- Amadeo Filberto Marli
-- Muhammad Akmal Hamidi
-- Alvian Aryo Bimo
+- AMADEO Filberto Marli
+- Muhammad AKMAL Hamidi
+- ALVIAN Aryo Bimo
 
-This is monorepo contain frontend project using ReactJS and backend project using ExpressJS.
+This lerna monorepo contains a frontend UI built using ReactJS and a backend server built using ExpressJS.
+DISCLAIMER: PROJECTS ARE DESIGNED WITHOUT TAKING DEPLOYMENT INTO CONSIDERATION.
 
 ## Available Scripts
 

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "main": "src/index.js",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "aaa-studio",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "start": "nodemon",
