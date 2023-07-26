@@ -4,19 +4,19 @@ import { Forgot } from "./pages/forgot";
 import { ErrorPage } from "./pages/error";
 import { Navbar } from "./components/navbar";
 import { Cashier } from "./pages/cashier";
+import { CashierList } from "./components/cashierList";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
   { path: "/forgot", element: <Forgot />, },
-  { path: "/cashier", element : <Cashier />}
+  { path: "/cashier", element : <Cashier />},
+  { path: "/cashierlist", element : <CashierList />}
 
 ]);
 
 function App() {
   return (
-  <ChakraProvider>
-    <Cashier />
-  </ChakraProvider>
+   <RouterProvider router={router} />
   )
 }
 
