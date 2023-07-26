@@ -1,5 +1,5 @@
 background-color = 	#FFFFFF
 font-color = #000000
-navbar-color = 	#ffc900
-button-color = 	#d5ad18
-box-shadow = #acacac
+navbar-color = 	#FFC900
+button-color = 	#D5AD18
+box-shadow = #ACACAC
