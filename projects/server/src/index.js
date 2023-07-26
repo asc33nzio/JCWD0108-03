@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
 const db = require('./models');
-const { productsRouter } = require("./routers");
+const { productRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
@@ -23,7 +23,7 @@ server.use(express.static('./public'));
 
 // ===========================
 // NOTE : Add your routes here
-server.use('/api', productsRouter)
+server.use('/api', productRouters);
 
 server.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
