@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
 const db = require('./models');
+const { productsRouter } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
@@ -22,6 +23,7 @@ server.use(express.static('./public'));
 
 // ===========================
 // NOTE : Add your routes here
+server.use('/api', productsRouter)
 
 server.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
@@ -71,7 +73,7 @@ server.listen(PORT, (err) => {
   if (err) {
     console.log(`ERROR: ${err}`);
   } else {
-    db.sequelize.sync({ alter: true });
+    // db.sequelize.sync({ alter: true });
     console.log(`SERVER IS RUNNING AT PORT:${PORT} ✅`);
   }
 });
