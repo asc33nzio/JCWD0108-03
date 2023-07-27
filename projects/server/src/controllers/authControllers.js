@@ -1,11 +1,7 @@
 const db = require('../models');
-const user = db.Users;
+const users = db.Users;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Op } = require("sequelize");
-const fs = require("fs")
-const handlebars = require("handlebars")
-const transporter = require("../middleware/transporter.js");
 
 module.exports = {
     login: async (req, res) => {
@@ -30,23 +26,9 @@ module.exports = {
         }
     },
     keepLogin: async (req, res) => {
-        try {
-            const token = req.headers.authorization.split(' ')[1];
-            const decodeUser = jwt.verify(token, process.env.KEY_JWT);
-            const userId = decodeUser.id;
-            const findUserInfo = await user.findByPk(userId);
-            if (!findUserInfo) throw { message: "Token expired. Please login again before making another request." }
-            res.status(200).send({
-                status: 200,
-                findUserInfo
-            });
-        } catch (error) {
-            res.status(400).send({
-                status: 400,
-                message: error
-            });
-        };
+
     },
+
     addCashier: async (req, res) => {
         try {
             const { username, email, password } = req.body;
@@ -55,11 +37,13 @@ module.exports = {
             const isEmailExist = await users.findOne({ where: { email } });
             if (isUserExist) throw { message: "Username has been used." };
             if (isEmailExist) throw { message: "E-mail has been used." };
+
             const salt = await bcrypt.genSalt(5);
             const hashPassword = await bcrypt.hash(password, salt);
             const result = await user.create({ username, email, password: hashPassword, avatar });
             const payload = { id: result.id };
             const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+
             res.status(200).send({
                 status: 200,
                 message: "Register success.",
@@ -67,7 +51,6 @@ module.exports = {
                 result
             });
         } catch (error) {
-            console.log(err);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."
@@ -98,5 +81,5 @@ module.exports = {
         } catch (error) {
             res.status(400).send(error);
         }
-    },
+    }
 }

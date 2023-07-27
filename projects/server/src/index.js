@@ -5,6 +5,7 @@ const { join } = require("path");
 const db = require('./models');
 const { productRouters } = require("./routers");
 const { authRouters } = require("./routers");
+const { txRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
@@ -27,6 +28,7 @@ server.use(express.static('./public'));
 // NOTE : Add your routes here
 server.use('/api/products', productRouters);
 server.use('/api/users', authRouters);
+// server.use('/api/transactions', txRouters);
 
 
 server.get("/api", (req, res) => {
