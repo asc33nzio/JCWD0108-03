@@ -11,7 +11,7 @@ export const AllProducts = () => {
 
     const allProducts = async (id) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/products/products/category/${params.categoryId}`)
+            const response = await Axios.get(`http://localhost:8000/api/products/category/${params.categoryId}`)
             setProducts(response.data)
         } catch (error) {
             console.log(error);
