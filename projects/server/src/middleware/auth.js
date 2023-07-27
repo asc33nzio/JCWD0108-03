@@ -7,8 +7,8 @@ module.exports = {
 
             if (!token) {
                 throw {
-                    status: 401,
-                    message: "Access denied--Unauthorized Request // Token missing."
+                    status: 400,
+                    message: "Token missing."
                 };
             };
             token = token.split(' ')[1];
@@ -39,7 +39,7 @@ module.exports = {
             return next();
         };
 
-        res.status(400).send({
+        res.status(403).send({
             status: 403,
             message: "Forbidden! You are not an administrator."
         });
