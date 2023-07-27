@@ -100,7 +100,7 @@ export default function InitialFocus() {
                                     </FormControl>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button type='submit' colorScheme='blue' mr={3}>  Add Cashier  </Button>
+                                    <Button type='submit' colorScheme='yellow' mr={3}>  Add Cashier  </Button>
                                     <Button onClick={onClose}>Cancel</Button>
                                 </ModalFooter>
                             </ModalContent>
