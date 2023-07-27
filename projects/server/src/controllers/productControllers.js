@@ -37,6 +37,21 @@ module.exports = {
             });
         }
     },
+    getAllProducts: async (req, res) => {
+        try {
+            const result = await products.findAll();
+
+            res.status(200).send({
+                status: 200,
+                result: result
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
     getCategories: async (req, res) => {
         try {
             const result = await categories.findAll();
