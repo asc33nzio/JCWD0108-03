@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, } from '@chakra-ui/react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRef, useState } from 'react'
 import * as Yup from "yup";
@@ -93,7 +93,7 @@ export default function InitialFocus() {
                                                     onChange={(e) => {
                                                         field.onChange(e);
                                                         setFile(e.target.files[0]);
-                                                    }}  placeholder='Photo' type='file' />
+                                                    }} placeholder='Photo' type='file' />
                                             )}
                                         </Field>
                                         <ErrorMessage component="Box" name="file" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
@@ -110,4 +110,4 @@ export default function InitialFocus() {
             }}
         </Formik>
     )
-}
+};

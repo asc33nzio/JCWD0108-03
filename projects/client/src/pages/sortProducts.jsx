@@ -1,8 +1,8 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
-import { Navbar } from "../components/navbar"
-import { ProductCategory } from "../components/cashier/productsCategory"
-import { Cart } from "../components/cart"
-import { AllProducts } from "../components/cashier/productsByCategory"
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Navbar } from "../components/navbar";
+import { ProductCategories } from "../components/cashier/productCategories";
+import { Cart } from "../components/cart";
+import { AllProducts } from "../components/cashier/productsByCategory";
 
 export const CashierProducts = () => {
     return(
