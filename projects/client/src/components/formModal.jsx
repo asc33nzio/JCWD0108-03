@@ -1,13 +1,18 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, } from '@chakra-ui/react';
+import Axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRef, useState } from 'react'
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+
 
 export default function InitialFocus() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
     const [file, setFile] = useState(null);
+    const toast = useToast();
+    const navigate = useNavigate();
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name"),
@@ -25,26 +30,26 @@ export default function InitialFocus() {
     }));
     const handleCreate = async (value) => {
         try {
-            // const data = new FormData();
-            // const { username, email, password } = value;
-            // data.append("data", JSON.stringify({ username, email, password, file }));
-            // data.append("file", file);
-            // const response = await Axios.post("https://minpro-blog.purwadhikabootcamp.com/api/blog", data, {
-            //     headers: {
-            //         Authorization: `Bearer ${token}`
-            //     },
-            //     "content-Type": "Multiple/form-data"
-            // });
-            // toast({
-            //     title: "New Article!",
-            //     description: "Your article uploaded!",
-            //     status: 'success',
-            //     duration: 1500,
-            //     isClosable: true,
-            //     position: "top"
-            //   });
-            // navigate("/myBlog");
-            // console.log(response);
+            const data = new FormData();
+            const { username, email, password } = value;
+            data.append("data", JSON.stringify({ username, email, password, file }));
+            data.append("file", file);
+            const response = await Axios.post("http://localhost:8000/api/users/register/", data, {
+                // headers: {
+                //     Authorization: `Bearer ${token}`
+                // },
+                // "content-Type": "Multiple/form-data"
+            });
+            toast({
+                title: "New Cashier!",
+                description: "Your Cashier Data uploaded!",
+                status: 'success',
+                duration: 1500,
+                isClosable: true,
+                position: "top"
+            });
+            navigate("/cashierlist");
+            console.log(response);
         } catch (err) {
             console.log(err);
         }
