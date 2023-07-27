@@ -37,7 +37,7 @@ module.exports = {
             });
         }
     },
-    getAllProduct: async (req, res) => {
+    getAllProducts: async (req, res) => {
         try {
             const result = await products.findAll();
 
