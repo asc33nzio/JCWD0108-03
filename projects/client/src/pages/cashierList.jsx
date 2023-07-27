@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react"
+import { Navbar } from "../components/navbar"
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react'
+import InitialFocus from "../components/formModal"
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
+=======
 import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from "@chakra-ui/react";
 import InitialFocus from "../components/formModal";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+>>>>>>> eb28ffc2948659fe53baa03b1bedd823db68efe6
 
 
 export const CashierList = () => {
@@ -29,7 +37,11 @@ export const CashierList = () => {
                             </Thead>
                             <Tbody >
                                 <Tr  >
+<<<<<<< HEAD
+                                    <Td textAlign={"center"}><Avatar/></Td>
+=======
                                     <Td textAlign={"center"}><Avatar /></Td>
+>>>>>>> eb28ffc2948659fe53baa03b1bedd823db68efe6
                                     <Td textAlign={"center"}>Alvian</Td>
                                     <Td textAlign={"center"}>alvian@gmail.com</Td>
                                     <Td textAlign={"center"} >Alvian1234</Td>
@@ -44,4 +56,8 @@ export const CashierList = () => {
             <Flex mt={"40px"} justifyContent={"center"}>   <InitialFocus />  </Flex>
         </>
     )
+<<<<<<< HEAD
+}
+=======
 };
+>>>>>>> eb28ffc2948659fe53baa03b1bedd823db68efe6

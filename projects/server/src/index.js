@@ -4,6 +4,7 @@ const cors = require("cors");
 const { join } = require("path");
 const db = require('./models');
 const { productRouters } = require("./routers");
+const { authRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
@@ -24,7 +25,8 @@ server.use(express.static('./public'));
 
 // ===========================
 // NOTE : Add your routes here
-server.use('/api', productRouters);
+server.use('/api/products', productRouters);
+server.use('/api/users', authRouters);
 
 
 server.get("/api", (req, res) => {
@@ -75,7 +77,7 @@ server.listen(PORT, (err) => {
   if (err) {
     console.log(`ERROR: ${err}`);
   } else {
-    db.sequelize.sync({ alter: true });
+    // db.sequelize.sync({ alter: true });
     console.log(`SERVER IS RUNNING AT PORT:${PORT} ✅`);
   }
 });
