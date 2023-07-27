@@ -20,6 +20,10 @@ export const ProductCategory = () => {
         category();
     }, [])
 
+    const handleClick = (id) => {
+        navigate(``)
+    }
+
     return (
         <Flex>
             <Flex justifyContent={"center"} w={"full"} h={"100%"}>
