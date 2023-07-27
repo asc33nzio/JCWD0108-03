@@ -79,6 +79,22 @@ module.exports = {
                 message: error
             });
         }
+    },
+    productByCategory : async (req,res) => {
+        try {
+            const  id  = req.params.id
+            console.log(id);
+            const result = await products.findAll(
+                {where : {CategoryId : id}}
+                ) 
+                res.status(200).send(result)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({
+                status: 500,
+                message: error
+            });
+        }
     }
 };
 
