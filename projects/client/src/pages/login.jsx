@@ -1,14 +1,14 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react';
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import { CashierLogin } from '../components/cashier/cashierLogin';
-import { AdminLogin } from '../components/admin/adminLogin';
-import { Link } from 'react-router-dom';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from "@chakra-ui/react"
+import { CashierLogin } from '../components/cashier/cashierLogin'
+import { AdminLogin } from '../components/admin/adminLogin'
+import { Link } from 'react-router-dom'
 
 export const Login = () => {
     return (
         <>
-            <Flex w={"full"} h={"100vh"} bgGradient="linear(#D5AD18, #FFEA61)" justifyContent={"center"}>
-                <Box margin={"auto"} bg={"white"} w={{ base: '250px', md: '500px', lg: '600px', xl: "600px" }} h={"500px"} borderRadius={"10px"} boxShadow={"0px 0px 10px grey"} justifyContent={"center"}>
+            <Flex w={"full"} h={"100vh"} bgGradient="linear(#FFC900, #FFEA61)" justifyContent={"center"}>
+                <Box margin={"auto"} bg={"white"} w={{ base: '250px', md: '500px', lg: '600px', xl: "600px" }} h={"500px"} border={"2px solid"} borderColor={"black"} borderRadius={"10px"} boxShadow={"0px 0px 10px black"} justifyContent={"center"}>
                     <Flex justifyContent={"center"}>
                         <Heading mt={{ base: '58px', md: '55px', lg: '45px' }} color={"#D5AD18"} fontSize={{ base: '30px', md: '40px', lg: '60px', xl: "60px" }} fontFamily={"Times New Roman"}>LOGIN</Heading>
                     </Flex>
@@ -42,4 +42,4 @@ export const Login = () => {
             </Flex>
         </>
     );
-};
+}

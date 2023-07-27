@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Axios from "axios";
 
-export const ProductCategory = () => {
+export const ProductCategories = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
 
