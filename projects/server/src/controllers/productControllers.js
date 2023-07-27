@@ -50,5 +50,34 @@ module.exports = {
                 message: "Internal server error."
             });
         }
+    },
+    getProductImage: async (req, res) => {
+        try {
+            const { filename } = req.params;
+            const dirname = process.env.PRODUCT_ASSETS_DIR;
+            const filePath = `${dirname}/public/products/${filename}`;
+
+            if (!filename || filename.trim() === "") {
+                return res.status(400).send({
+                    status: 400,
+                    message: "Add a valid product image name."
+                });
+            };
+
+            const productImage = await products.findOne({ where: { imgURL: filename } });
+            if (!productImage) {
+                return res.status(400).send({
+                    status: 404,
+                    message: "Product image not found in the database."
+                });
+            };
+
+            res.sendFile(filePath);
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: error
+            });
+        }
     }
 };
