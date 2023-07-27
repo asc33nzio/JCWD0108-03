@@ -15,7 +15,7 @@ module.exports = {
 
             const salt = await bcrypt.genSalt(5);
             const hashPassword = await bcrypt.hash(password, salt);
-            const result = await user.create({ username, email, password: hashPassword, avatar });
+            const result = await users.create({ username, email, password: hashPassword, avatar });
             const payload = { id: result.id };
             const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
 
