@@ -17,6 +17,11 @@ export const AllProducts = () => {
             console.log(error);
         }
     }
+
+    const handleClick1 = ((id) => {
+        navigate(`/product/${id}`)
+    })
+
     useEffect(() => {
         allProducts()
     }, [])
@@ -29,18 +34,22 @@ export const AllProducts = () => {
                 <Flex flexWrap={"wrap"} w={{ base: '200px', sm: '350px', md: '350px', lg: '600px' }} gap={"3"}>
                     {products.map(item => {
                         return (
-                            <Box >
-                                <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"} bgColor={"yellow.600"} cursor={"pointer"} _hover={{ transform: 'scale(1.02)', transition: "0.3s" }} >
-                                    <Box h={"135px"} borderTopRadius={"9px"}>
-                                        <Image src={item.imgURL} />
-                                        <Flex justifyContent={"center"} fontWeight={"thin"}>{item.productName}</Flex>
-                                        <Flex justifyContent={"center"}>{item.price}</Flex>
+                            <Box mb={{base:"30px"}}>
+                                <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"}>
+                                    <Box h={"100px"} borderTopRadius={"9px"}>
+                                        <Box position={"absolute"} w={{ base: '80px', sm: '120px', md: '160px' }} >
+                                            <Image borderRadius={"10px"} h={{ base: '130px', sm: '170px', md: '200px' }} filter={"auto"} brightness={"60%"} src={`http://localhost:8000/api/products/image/${item?.imgURL}`} />
+                                        </Box>
+                                        <Box position={"relative"}>
+                                            <Flex justifyContent={"center"} fontWeight={"thin"}>{item.productName}</Flex>
+                                            <Flex justifyContent={"center"}>Rp.{item.price}</Flex>
+                                        </Box>
                                     </Box>
+                                    <Flex mt={{base:'0px', sm:'35px'}} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
+                                        <Flex justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >Add</Flex>
+                                        <Flex justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} onClick={()=> handleClick1(item.id)}>detail</Flex>
+                                    </Flex>
                                 </Box>
-                                <Flex w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} bgColor={"#FFC900"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-around"}>
-                                    <Flex justifyContent={"center"} align={"center"} fontSize={{base:'7px', md:'15px'}} p={{base:'3px', sm:'5px', md:'7px'}} cursor={"pointer"} _active={{bgColor:'yellow.500'}} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"}>Add</Flex>
-                                    <Flex justifyContent={"center"} align={"center"} fontSize={{base:'7px', md:'15px'}} p={{base:'3px', sm:'5px', md:'7px'}} cursor={"pointer"} _active={{bgColor:'yellow.500'}} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"}>detail</Flex>
-                                </Flex>
                             </Box>
                         )
                     })}

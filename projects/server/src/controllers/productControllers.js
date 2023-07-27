@@ -5,14 +5,14 @@ const categories = db.Categories;
 module.exports = {
     getProduct: async (req, res) => {
         try {
-            const { product } = req.params;
+            const { id } = req.params;
             const result = await products.findAll({
                 where: {
-                    productName: product
+                    id : id
                 }
-            })
+            })  
 
-            if (!product) {
+            if (!products) {
                 return res.status(400).send({
                     status: 400,
                     message: "Product name cannot be empty."
