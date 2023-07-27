@@ -80,21 +80,36 @@ module.exports = {
             });
         }
     },
-    productByCategory : async (req,res) => {
+    addProduct: async (req, res) => {
         try {
-            const  id  = req.params.id
-            console.log(id);
-            const result = await products.findAll(
-                {where : {CategoryId : id}}
-                ) 
-                res.status(200).send(result)
+            const { productName, price, description, categoryId } = req.body;
+            const imgURL = req.file.filename;
+
+            if (!productName) throw { message: "Product name cannot be empty." };
+            if (!price) throw { message: "Price cannot be empty." };
+            if (!description) throw { message: "Descriptiion cannot be empty." };
+            if (!categoryId) throw { message: "Category ID cannot be empty." };
+
+            const newProduct = await products.create({
+                productName,
+                price,
+                imgURL,
+                description,
+                categoryId
+            });
+
+            return res.status(201).send({
+                status: 201,
+                message: 'Product created successfully.',
+                product: newProduct,
+            });
         } catch (error) {
-            console.log(error);
-            res.status(500).send({
+            console.error(error);
+            return res.status(500).send({
                 status: 500,
-                message: error
+                message: 'Internal server error.',
             });
         }
     }
-};
+}
 
