@@ -4,7 +4,7 @@ import { Forgot } from "./pages/forgot";
 import { ErrorPage } from "./pages/error";
 import { Navbar } from "./components/navbar";
 import { Cashier } from "./pages/cashier";
-import { CashierList } from "./components/cashierList";
+import { CashierList } from "./pages/cashierList";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },

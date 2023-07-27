@@ -22,7 +22,7 @@ export default function InitialFocus() {
 
     return (
         <>
-            <Button bg={"#FFC900"} w={"200px"} onClick={onOpen}>Add Cashier</Button>
+            <Button bg={"#D5AD18"} color={"white"} w={{ base: '200px', md: '300px', lg: '500px' }} onClick={onOpen}>Add Cashier</Button>
             <Modal
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
