@@ -1,7 +1,7 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
-import { Navbar } from "../components/navbar"
-import { ProductCategory } from "../components/cashier/productsCategory"
-import { Cart } from "../components/cart"
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Navbar } from "../components/navbar";
+import { ProductCategories } from "../components/cashier/productCategories";
+import { Cart } from "../components/cart";
 
 export const Cashier = () => {
     return(
@@ -9,7 +9,7 @@ export const Cashier = () => {
         <Navbar />
         <Flex justifyContent={"center"} pt={"100px"}>
             <Flex >
-                <ProductCategory/>
+                <ProductCategories/>
                 <Flex >
                     <Cart />
                 </Flex> 
