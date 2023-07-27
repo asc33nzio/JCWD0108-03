@@ -1,7 +1,7 @@
-import { Avatar, Box, Button, Flex } from "@chakra-ui/react"
-import { Navbar } from "./navbar"
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, } from '@chakra-ui/react'
-import InitialFocus from "./formModal"
+import { Avatar, Box, Button, Flex } from "@chakra-ui/react";
+import { Navbar } from "./navbar";
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, } from '@chakra-ui/react';
+import InitialFocus from "./formModal";
 
 
 export const CashierList = () => {
@@ -9,17 +9,17 @@ export const CashierList = () => {
         <>
             <Flex mt={"0px"}>
                 <Navbar />
-            </Flex> 
+            </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
                 {/* <Button bg={"#FFC900"} w={"200px"}>
                     Add Cashier
                 </Button> */}
-                <InitialFocus/>
+                <InitialFocus />
             </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
                     <TableContainer w={"1000px"}>
-                        <Table  variant='simple' >
+                        <Table variant='simple' >
                             <Thead >
                                 <Tr >
                                     <Th textAlign={"center"}>Photo</Th>
@@ -31,7 +31,7 @@ export const CashierList = () => {
                             </Thead>
                             <Tbody >
                                 <Tr  >
-                                    <Td textAlign={"center"}><Avatar/></Td>
+                                    <Td textAlign={"center"}><Avatar /></Td>
                                     <Td textAlign={"center"}>Alvian</Td>
                                     <Td textAlign={"center"}>alvian@gmail.com</Td>
                                     <Td textAlign={"center"} >Alvian1234</Td>
@@ -44,6 +44,5 @@ export const CashierList = () => {
                 </Box>
             </Flex>
         </>
-
     )
-}
+};

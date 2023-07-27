@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react"
-import { Link } from "react-router-dom"
+import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 
 export const Forgot = () => {
@@ -35,4 +35,4 @@ export const Forgot = () => {
             </Flex>
         </>
     );
-}
+};

@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, VStack } from "@chakra-ui/react"
+import { Box, Button, Flex, Input, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import * as Yup from "yup";
@@ -72,4 +72,4 @@ export const AdminLogin = () => {
             }}
         </Formik>
     );
-}
+};
