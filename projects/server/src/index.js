@@ -7,14 +7,15 @@ const { productRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
-server.use(
-  cors({
-    origin: [
-      process.env.WHITELISTED_DOMAIN &&
-        process.env.WHITELISTED_DOMAIN.split(","),
-    ],
-  })
-);
+// server.use(
+//   cors({
+//     origin: [
+//       process.env.WHITELISTED_DOMAIN &&
+//         process.env.WHITELISTED_DOMAIN.split(","),
+//     ],
+//   })
+// );
+server.use(cors())
 
 server.use(express.json());
 server.use(express.static('./public'));
@@ -24,6 +25,7 @@ server.use(express.static('./public'));
 // ===========================
 // NOTE : Add your routes here
 server.use('/api', productRouters);
+
 
 server.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
