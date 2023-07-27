@@ -5,17 +5,17 @@ const categories = db.Categories;
 module.exports = {
     getProduct: async (req, res) => {
         try {
-            const { product } = req.params;
-            const result = await products.findAll({
+            const { id } = req.params;
+            const result = await products.findOne({
                 where: {
-                    productName: product
+                    id: id
                 }
             })
 
-            if (!product) {
+            if (!id) {
                 return res.status(400).send({
                     status: 400,
-                    message: "Product name cannot be empty."
+                    message: "Product id cannot be empty."
                 });
             };
 
@@ -25,6 +25,21 @@ module.exports = {
                     message: "Product is not found."
                 });
             };
+
+            res.status(200).send({
+                status: 200,
+                result: result
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
+    getAllProduct: async (req, res) => {
+        try {
+            const result = await products.findAll();
 
             res.status(200).send({
                 status: 200,
