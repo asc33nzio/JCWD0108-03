@@ -13,7 +13,7 @@ module.exports = {
             res.status(400).send(error)
         }
     },
-    getCategory : async (req, res) => {
+    getCategories : async (req, res) => {
         try {
             const result = await categories.findAll()
             res.status(200).send(result)
