@@ -27,7 +27,6 @@ module.exports = {
             next();
 
         } catch (error) {
-            console.log(error);
             res.status(400).send({
                 status: 400,
                 message: error
