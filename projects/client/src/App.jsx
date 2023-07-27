@@ -13,6 +13,11 @@ const router = createBrowserRouter([
   { path: "/cashier", element : <Cashier />},
   { path: "/cashierlist", element : <CashierList />},
   { path: "/AllProducts", element : <AllProducts />}
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 880b7a1b42a4f61edd2b3d8c26a78a18f354bb7a
 ]);
 
 function App() {
