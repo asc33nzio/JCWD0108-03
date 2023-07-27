@@ -12,9 +12,7 @@ const router = createBrowserRouter([
   { path: "/forgot", element: <Forgot />, },
   { path: "/cashier", element : <Cashier />},
   { path: "/cashierlist", element : <CashierList />},
-  { path: "/category/:categoryId", element : <CashierProducts />}
-
-
+  { path: "/AllProducts", element : <AllProducts />}
 ]);
 
 function App() {

@@ -4,7 +4,6 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from "@chakra-ui/rea
 import InitialFocus from "../components/formModal";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
-
 export const CashierList = () => {
     return (
         <>
