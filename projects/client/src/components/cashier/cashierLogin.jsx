@@ -44,13 +44,15 @@ export const CashierLogin = () => {
             {(props) => {
                 return (
                     <Box as={Form}>
-                        <Box justifyContent={"center"} >
-                            <Field as={Input} name="username"  w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Username" size={"md"} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
-                            <ErrorMessage component="box" name="username" style={{ color: "red", marginTop: "-8px" }} />
-                        </Box>
+                        <Flex justifyContent={"center"}>
+                            <VStack>
+                                <Field as={Input} name="username" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Username" size={"md"} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                                <ErrorMessage component="box" name="username" style={{ color: "red", marginTop: "-8px" }} />
+                            </VStack>
+                        </Flex>
                         <Flex ml={{ base: '20px', md: '-2px', lg: '30px' }} mt={"10px"} justifyContent={"center"} w={{ base: '208px', md: '500px', lg: '500px' }}>
                             <VStack>
-                                <Field as={Input} name="password"  w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Password" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                                <Field as={Input} name="password" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Password" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
                                 <ErrorMessage
                                     component="box"
                                     name="password"

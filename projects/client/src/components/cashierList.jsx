@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@chakra-ui/react"
+import { Avatar, Box, Button, Flex } from "@chakra-ui/react"
 import { Navbar } from "./navbar"
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, } from '@chakra-ui/react'
 import InitialFocus from "./formModal"
@@ -22,6 +22,7 @@ export const CashierList = () => {
                         <Table  variant='simple' >
                             <Thead >
                                 <Tr >
+                                    <Th textAlign={"center"}>Photo</Th>
                                     <Th textAlign={"center"}>Username</Th>
                                     <Th textAlign={"center"}>Email</Th>
                                     <Th textAlign={"center"}>Password</Th>
@@ -30,6 +31,7 @@ export const CashierList = () => {
                             </Thead>
                             <Tbody >
                                 <Tr  >
+                                    <Td textAlign={"center"}><Avatar/></Td>
                                     <Td textAlign={"center"}>Alvian</Td>
                                     <Td textAlign={"center"}>alvian@gmail.com</Td>
                                     <Td textAlign={"center"} >Alvian1234</Td>
