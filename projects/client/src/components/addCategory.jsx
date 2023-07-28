@@ -8,15 +8,15 @@ import * as Yup from "yup";
 
 export const AddCategory = () => {
     const { onClose, onOpen, isOpen } = useDisclosure()
-
+    const [file, setFile] = useState(null)
     const handleSubmit = async (value) => {
         try {
             const formData = new FormData();
-            const { newCategory, imgURL } = value;
-            formData.append('data',
-                JSON.stringify({ newCategory, imgURL })
-            );
-            formData.append('imgURL', imgURL)
+            const input = {
+                newCategory: document.getElementById('newCategory')
+            }
+            formData.append('newCategory', input.newCategory);
+            formData.append('file', file)
             const response = await Axios.post(`http://localhost:8000/api/products/addCategory`, formData)
             console.log(response);
         } catch (error) {
@@ -30,25 +30,22 @@ export const AddCategory = () => {
             <Box >
                 <Button h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} onClick={onOpen} color={"white"} bgColor={"gray.300"} fontSize={"50px"}><AddIcon /></Button>
             </Box>
-            <Formik
-                initialValues={{
-                    newCategory: "",
-                    imgURL: ""
-                }}
-                onSubmit={(value, action) => {
-                    handleSubmit(value)
-                }}
+            <Modal
+                isOpen={isOpen}
+                onClose={onClose}
             >
-                {(props) => {
-                    return (
-
-
-                        <Modal
-                            isOpen={isOpen}
-                            onClose={onClose}
-                        >
+                <Formik
+                    initialValues={{
+                        newCategory: "",
+                        imgURL: ""
+                    }}
+                    onSubmit={(value, action) => {
+                        handleSubmit(value)
+                    }}
+                >
+                    {(props) => {
+                        return (
                             <Form>
-
                                 <ModalOverlay />
                                 <ModalContent>
                                     <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Category</ModalHeader>
@@ -56,12 +53,12 @@ export const AddCategory = () => {
                                     <ModalBody pb={6}>
                                         <FormControl>
                                             <FormLabel>New Category</FormLabel>
-                                            <Input name="newCategory" as={Field} placeholder='Enter New Category' />
+                                            <Input id="newCategory" as={Field} placeholder='Enter New Category' />
                                         </FormControl>
 
                                         <FormControl mt={4}>
                                             <FormLabel>Image Category</FormLabel>
-                                            <Input name="imgURL" as={Field} type="file" />
+                                            <Input id="categoryImage" as={Field} type="file" onChange={(e) => { setFile(e.target.files[0]) }} />
                                         </FormControl>
                                     </ModalBody>
 
@@ -73,10 +70,10 @@ export const AddCategory = () => {
                                     </ModalFooter>
                                 </ModalContent>
                             </Form>
-                        </Modal>
-                    )
-                }}
-            </Formik>
+                        )
+                    }}
+                </Formik>
+            </Modal>
         </Box>
     )
 }

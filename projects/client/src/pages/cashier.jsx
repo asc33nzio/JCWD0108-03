@@ -3,7 +3,7 @@ import { Navbar } from "../components/navbar"
 import { Cart } from "../components/cart"
 import { useEffect } from "react"
 import {useNavigate} from 'react-router-dom'
-import { ProductCategory } from "../components/admin/productsCategory"
+import { ProductCategory } from "../components/admin/productCategories"
 
 
 export const Cashier = () => {
