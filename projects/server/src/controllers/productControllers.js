@@ -97,20 +97,22 @@ module.exports = {
     },
     addProduct: async (req, res) => {
         try {
-            const { productName, price, description, CategoryId } = req.body;
+            const { productName, price, description, CategoryId, stock } = req.body;
             const imgURL = req.file.filename;
 
             if (!productName) throw { message: "Product name cannot be empty." };
             if (!price) throw { message: "Price cannot be empty." };
             if (!description) throw { message: "Descriptiion cannot be empty." };
             if (!CategoryId) throw { message: "Category ID cannot be empty." };
+            if (!stock) throw { message: "Stock cannot be empty. Please input a minimum of 1 unit." };
 
             const newProduct = await products.create({
                 productName,
                 price,
                 imgURL,
                 description,
-                CategoryId
+                CategoryId,
+                stock
             });
 
             return res.status(201).send({

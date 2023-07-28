@@ -26,6 +26,15 @@ module.exports = {
                 include: ['CartItems'],
             });
 
+            const salesRecords = cartItems.map((cartItem) => ({
+                productName: cartItem.product.name,
+                quantitySold: cartItem.quantity,
+                totalAmount: cartItem.quantity * cartItem.product.price,
+                transactionDate: new Date()
+            }));
+
+            await sales.bulkCreate(salesRecords);
+
             return res.status(201).send({
                 status: 201,
                 message: 'Transaction created successfully.',
