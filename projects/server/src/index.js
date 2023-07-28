@@ -27,7 +27,7 @@ server.use('/api/products', productRouters);
 server.use('/api/users', authRouters);
 server.use('/api/admin', adminRouters);
 server.use('/api/cart', cartRouters);
-// server.use('/api/transactions', txRouters);
+server.use('/api/transactions', txRouters);
 
 
 server.get("/api", (req, res) => {
