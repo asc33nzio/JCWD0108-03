@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     category: {
       type: DataTypes.STRING,
       unique: true
-    }
+    },
+    imgURL: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Categories',
