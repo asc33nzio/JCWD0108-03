@@ -22,10 +22,8 @@ export const CashierList = () => {
         getCashier();
         if (!token) {
             navigate("/")
-        }
-
+        }   
     }, []);
-    console.log(data);
 
     return (
         <>
@@ -44,6 +42,7 @@ export const CashierList = () => {
                         <Table  variant='simple' >
                             <Thead >
                                 <Tr >
+                                    <Th textAlign={"center"}>Avatar</Th>
                                     <Th textAlign={"center"}>Username</Th>
                                     <Th textAlign={"center"}>Email</Th>
                                     <Th textAlign={"center"}>Action</Th>
@@ -53,7 +52,7 @@ export const CashierList = () => {
                                 {data?.map((item) => {
                                     return (
                                         <Tr>
-                                            <Td textAlign={"center"}><Avatar src={`http://localhost:8000/api/${item.avatar}`} /></Td>
+                                            <Td textAlign={"center"}><Avatar src={`http://localhost:8000/Avatar/${item.avatar}`} /></Td>
                                             <Td textAlign={"center"}>{item.username}</Td>
                                             <Td textAlign={"center"}>{item.email}</Td>
                                             <Td textAlign={"center"} ><Button color={"white"} bg={"blue"}>Edit</Button>

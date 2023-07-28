@@ -10,13 +10,14 @@ import { useDispatch } from "react-redux";
 import { setValue } from './redux/userSlice';
 import { useEffect } from "react";
 import  Axios  from "axios";
+import { DetailProduct } from "./pages/detailProduct";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
   { path: "/forgot", element: <Forgot />, },
   { path: "/cashier", element: <Cashier /> },
   { path: "/cashierlist", element: <CashierList /> },
-  { path: "/category/:categoryId", element: <CashierProducts /> },
+  // { path: "/category/:categoryId", element: <CashierProduct /> },
   { path: "/product/:id", element: <DetailProduct />}
 ]);
 
@@ -42,6 +43,7 @@ function App() {
     keepLogin();
   }, []);
   return (
+
    <RouterProvider router={router} />
   )
 }
