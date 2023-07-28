@@ -1,13 +1,10 @@
-import { Box, Button, Flex, FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
-import { Navigate, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from "react"
+import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import Axios from "axios";
-import { AddIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { Formik, Form, ErrorMessage, Field } from "formik"
-import * as Yup from "yup";
+import { AddIcon } from "@chakra-ui/icons";
+import { Formik, Form, Field } from "formik";
 
 export const AddCategory = () => {
-    const { onClose, onOpen, isOpen } = useDisclosure()
+    const { onClose, onOpen, isOpen } = useDisclosure();
 
     const handleSubmit = async (value) => {
         try {
@@ -21,11 +18,10 @@ export const AddCategory = () => {
             console.log(response);
         } catch (error) {
             console.log(error);
-        }
-    }
+        };
+    };
 
     return (
-
         <Box>
             <Box >
                 <Button h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} onClick={onOpen} color={"white"} bgColor={"gray.300"} fontSize={"50px"}><AddIcon /></Button>
@@ -79,4 +75,4 @@ export const AddCategory = () => {
             </Formik>
         </Box>
     )
-}
+};

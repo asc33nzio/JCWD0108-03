@@ -25,7 +25,7 @@ module.exports = {
             res.status(200).send({
                 message: "Login success",
                 user: checkLogin,
-                JWT: token
+                token
             });
         } catch (error) {
             console.log(error);

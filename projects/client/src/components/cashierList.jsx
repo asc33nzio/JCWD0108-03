@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Flex } from "@chakra-ui/react";
-import { Navbar } from "./navbar";
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, } from '@chakra-ui/react';
-import InitialFocus from "./formModal";
+import { Navbar } from "./Navbar";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react';
+import InitialFocus from "./FormModal";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router";
@@ -16,8 +16,8 @@ export const CashierList = () => {
             setData(response.data);
         } catch (error) {
             console.log(error);
-        }
-    }
+        };
+    };
     useEffect(() => {
         getCashier();
         if (!token) {

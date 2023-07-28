@@ -1,15 +1,12 @@
-import { Box, Button, Flex, FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import Axios from "axios";
-import { AddIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { AddCategory } from "../addCategory";
+import { AddCategory } from "../AddCategory";
 
-export const ProductCategory = () => {
+export const ProductCategories = () => {
     const navigate = useNavigate()
     const [categories, setCategories] = useState([])
-    const { onClose, onOpen, isOpen } = useDisclosure()
-
 
     const category = async (data) => {
         try {
@@ -17,17 +14,16 @@ export const ProductCategory = () => {
             setCategories(response.data.result)
         } catch (error) {
             console.log(error);
-        }
-    }
+        };
+    };
 
     const handleClick = (id) => {
-        navigate(`/category/${id}`)
-    }
+        navigate(`/category/${id}`);
+    };
 
     useEffect(() => {
         category()
-    }, [])
-
+    }, []);
 
     return (
         <Flex>
@@ -45,4 +41,4 @@ export const ProductCategory = () => {
             </Flex>
         </Flex>
     )
-}
+};

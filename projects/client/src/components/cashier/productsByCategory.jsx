@@ -1,32 +1,30 @@
-import { Box, Button, Flex, Grid, GridItem, Image } from "@chakra-ui/react"
-import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from "react"
+import { Box, Button, Flex, Grid, GridItem, Image } from "@chakra-ui/react";
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import Axios from "axios";
 
 export const AllProducts = () => {
-    const params = useParams()
-    const navigate = useNavigate()
-    const [products, setProducts] = useState([])
+    const params = useParams();
+    const navigate = useNavigate();
+    const [products, setProducts] = useState([]);
 
 
     const allProducts = async (id) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/products/category/${params.categoryId}`)
-            setProducts(response.data)
+            const response = await Axios.get(`http://localhost:8000/api/products/category/${params.categoryId}`);
+            setProducts(response.data);
         } catch (error) {
             console.log(error);
-        }
-    }
+        };
+    };
 
     const handleClick1 = ((id) => {
-        navigate(`/product/${id}`)
-    })
+        navigate(`/product/${id}`);
+    });
 
     useEffect(() => {
-        allProducts()
-    }, [])
-
-    console.log(products);
+        allProducts();
+    }, []);
 
     return (
         <Flex>
@@ -57,4 +55,4 @@ export const AllProducts = () => {
             </Flex>
         </Flex>
     )
-}
+};
