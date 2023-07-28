@@ -35,12 +35,12 @@ module.exports = {
             return res.status(201).send({
                 status: 201,
                 message: 'Transaction created successfully.',
-                transaction: newTransaction,
+                transaction: newTransaction
             });
         } catch (error) {
             return res.status(500).send({
                 status: 500,
-                message: 'Internal server error.',
+                message: 'Internal server error.'
             });
         };
     }
