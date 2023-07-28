@@ -143,18 +143,18 @@ module.exports = {
         }
     },
     addCategory : async (req, res) => {
-        const {newCategory} = req.body
-
         try {
+            const {newCategory} = req.body
             const result = await categories.create(
                     { category : newCategory }
                 )
-                return res.status(201).send({
+                res.status(201).send({
                     status: 201,
                     message: 'Product created successfully.',
-                    category: newCategory,
+                    category: result,
                 });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."

@@ -21,6 +21,7 @@ module.exports = {
                 token
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."

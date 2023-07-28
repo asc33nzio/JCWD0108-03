@@ -10,11 +10,11 @@ export const Cashier = () => {
     const navigate = useNavigate()
     const token = localStorage.getItem("token")
     
-    // useEffect(() => {
-    //     if (!token) {
-    //         navigate('/')
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (!token) {
+            navigate('/')
+        }
+    }, []);
     return(
     <Box>
         <Navbar />

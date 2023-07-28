@@ -16,7 +16,9 @@ export const AddCategory = () => {
             formData.append('data',
                 JSON.stringify({ newCategory, imgURL })
             );
+            formData.append('imgURL', imgURL)
             const response = await Axios.post(`http://localhost:8000/api/products/addCategory`, formData)
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -28,44 +30,52 @@ export const AddCategory = () => {
             <Box >
                 <Button h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} onClick={onOpen} color={"white"} bgColor={"gray.300"} fontSize={"50px"}><AddIcon /></Button>
             </Box>
-
             <Formik
                 initialValues={{
                     newCategory: "",
-                    imgURL: null
+                    imgURL: ""
                 }}
                 onSubmit={(value, action) => {
                     handleSubmit(value)
                 }}
             >
-                <Modal
-                    isOpen={isOpen}
-                    onClose={onClose}
-                >
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Category</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody pb={6}>
-                            <FormControl>
-                                <FormLabel>New Category</FormLabel>
-                                <Input as={Field} placeholder='Enter New Category' />
-                            </FormControl>
+                {(props) => {
+                    return (
 
-                            <FormControl mt={4}>
-                                <FormLabel>Image Category</FormLabel>
-                                <Input as={Field} type="file" />
-                            </FormControl>
-                        </ModalBody>
+                        <Form>
 
-                        <ModalFooter>
-                            <Button colorScheme='yellow' color={"white"} mr={3}>
-                                Create
-                            </Button>
-                            <Button onClick={onClose}>Cancel</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
+                        <Modal
+                            isOpen={isOpen}
+                            onClose={onClose}
+                        >
+                        
+                            <ModalOverlay />
+                            <ModalContent>
+                                <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Category</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody pb={6}>
+                                    <FormControl>
+                                        <FormLabel>New Category</FormLabel>
+                                        <Input name="newCategory" as={Field} placeholder='Enter New Category' />
+                                    </FormControl>
+
+                                    <FormControl mt={4}>
+                                        <FormLabel>Image Category</FormLabel>
+                                        <Input name="imgURL" as={Field} type="file" />
+                                    </FormControl>
+                                </ModalBody>
+
+                                <ModalFooter>
+                                    <Button type="submit" colorScheme='yellow' color={"white"} mr={3}>
+                                        Create
+                                    </Button>
+                                    <Button onClick={onClose}>Cancel</Button>
+                                </ModalFooter>
+                            </ModalContent>
+                        </Modal>
+                    </Form>
+                    )
+                }}
             </Formik>
         </Box>
     )
