@@ -6,16 +6,16 @@ module.exports = {
     getProduct: async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await products.findOne({
+            const result = await products.findAll({
                 where: {
-                    id: id
+                    id : id
                 }
-            })
+            })  
 
-            if (!id) {
+            if (!products) {
                 return res.status(400).send({
                     status: 400,
-                    message: "Product id cannot be empty."
+                    message: "Product name cannot be empty."
                 });
             };
 
@@ -95,6 +95,22 @@ module.exports = {
             });
         }
     },
+    GetProductByCategory : async (req,res) => {
+        try {
+            const  id  = req.params.id
+            console.log(id);
+            const result = await products.findAll(
+                {where : {CategoryId : id}}
+                ) 
+                res.status(200).send(result)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({
+                status: 500,
+                message: error
+            });
+        }
+    },
     addProduct: async (req, res) => {
         try {
             const { productName, price, description, categoryId } = req.body;
@@ -125,6 +141,22 @@ module.exports = {
                 message: 'Internal server error.',
             });
         }
-    }
+    },
+    getAllProduct: async (req, res) => {
+        try {
+            const result = await products.findAll();
+
+            res.status(200).send({
+                status: 200,
+                result: result
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
 }
+
 

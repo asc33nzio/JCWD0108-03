@@ -5,19 +5,21 @@ import { ErrorPage } from "./pages/404";
 import { Navbar } from "./components/navbar";
 import { Cashier } from "./pages/cashier";
 import { CashierList } from "./components/cashierList";
-import { AllProducts } from "./pages/allProducts";
+import { CashierProducts } from "./pages/sortProducts";
+import { DetailProduct } from "./pages/detailProduct";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
   { path: "/forgot", element: <Forgot />, },
   { path: "/cashier", element : <Cashier />},
   { path: "/cashierlist", element : <CashierList />},
-  { path: "/AllProducts", element : <AllProducts />}
+  { path: "/category/:categoryId", element : <CashierProducts />},
+  { path: "/product/:id", element: <DetailProduct />}
 ]);
 
 function App() {
   return (
-    <RouterProvider router={router} />
+   <RouterProvider router={router} />
   )
 }
 
