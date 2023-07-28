@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
 const db = require('./models');
-const { productRouters } = require("./routers");
+const { productRouters, userRouters } = require("./routers");
 const { authRouters } = require("./routers");
 const { txRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
@@ -29,6 +29,7 @@ server.use(express.static('./public'));
 server.use('/api/products', productRouters);
 server.use('/api/users', authRouters);
 // server.use('/api/transactions', txRouters);
+server.use('/api/cashiers', userRouters);
 
 
 server.get("/api", (req, res) => {

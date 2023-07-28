@@ -7,7 +7,7 @@ module.exports = {
     login: async (req, res) => {
         try {
             const { username, password } = req.body;
-            const checkLogin = await user.findOne({
+            const checkLogin = await users.findOne({
                 where: { username: username }
             });
             if (!checkLogin) throw { message: "User not Found" }
@@ -15,7 +15,7 @@ module.exports = {
             const isValid = await bcrypt.compare(password, checkLogin.password);
             if (!isValid) throw { message: "wrong password" }
             const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin }
-            const token = jwt.sign(payload, "minproBimo", { expiresIn: "3d" });
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "3d" });
             res.status(200).send({
                 message: "Login success",
                 token
@@ -26,7 +26,16 @@ module.exports = {
         }
     },
     keepLogin: async (req, res) => {
-
+        try {
+            const result = await users.findOne({
+                where: {
+                    id: req.user.id
+                }
+            });
+            res.status(200).send(result);
+        } catch (error) {
+            res.status(400).send(error);
+        }
     },
 
     addCashier: async (req, res) => {
@@ -40,17 +49,17 @@ module.exports = {
 
             const salt = await bcrypt.genSalt(5);
             const hashPassword = await bcrypt.hash(password, salt);
-            const result = await user.create({ username, email, password: hashPassword, avatar });
-            const payload = { id: result.id };
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+            const result = await users.create({ username, email, password: hashPassword, avatar });
+            // const payload = { id: result.id };
+            // const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
 
             res.status(200).send({
                 status: 200,
                 message: "Register success.",
-                JWT: token,
                 result
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."

@@ -13,6 +13,7 @@ export default function InitialFocus() {
     const [file, setFile] = useState(null);
     const toast = useToast();
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name"),
@@ -34,11 +35,11 @@ export default function InitialFocus() {
             const { username, email, password } = value;
             data.append("data", JSON.stringify({ username, email, password, file }));
             data.append("file", file);
-            const response = await Axios.post("http://localhost:8000/api/users/register/", data, {
-                // headers: {
-                //     Authorization: `Bearer ${token}`
-                // },
-                // "content-Type": "Multiple/form-data"
+            const response = await Axios.post("http://localhost:8000/api/users/register", data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                "content-Type": "Multiple/form-data"
             });
             toast({
                 title: "New Cashier!",
