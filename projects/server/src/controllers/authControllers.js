@@ -45,10 +45,10 @@ module.exports = {
     forgetPassword: async (req, res) => {
         try {
             const isAccountExist = await user.findOne({ where: { email: req.body.email } });
-            if (!isAccountExist) throw { message: "Email not found" }
+            if (!isAccountExist) throw { message: "E-mail not found." }
             const { email } = req.body;
             const payload = { id: isAccountExist.id }
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "3d" });
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
             const data = await fs.readFileSync("./reset_password_template.html", "utf-8");
             const tempCompile = await handlebars.compile(data);
             const tempResult = tempCompile(data);
@@ -59,8 +59,8 @@ module.exports = {
             await transporter.sendMail({
                 from: "aryobimoalvian@gmail.com",
                 to: email,
-                subject: "New Phone",
-                html: tempResult,
+                subject: "Reset Your Cashierkeun Account Password.",
+                html: tempResult
             });
             res.status(200).send(token);
         } catch (error) {
@@ -68,6 +68,6 @@ module.exports = {
                 status: 500,
                 message: "Internal server error."
             });
-        }
+        };
     }
-}
+};
