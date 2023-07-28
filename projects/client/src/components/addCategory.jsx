@@ -42,38 +42,38 @@ export const AddCategory = () => {
                 {(props) => {
                     return (
 
-                        <Form>
-
                         <Modal
                             isOpen={isOpen}
                             onClose={onClose}
                         >
-                        
-                            <ModalOverlay />
-                            <ModalContent>
-                                <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Category</ModalHeader>
-                                <ModalCloseButton />
-                                <ModalBody pb={6}>
-                                    <FormControl>
-                                        <FormLabel>New Category</FormLabel>
-                                        <Input name="newCategory" as={Field} placeholder='Enter New Category' />
-                                    </FormControl>
+                            <Form>
 
-                                    <FormControl mt={4}>
-                                        <FormLabel>Image Category</FormLabel>
-                                        <Input name="imgURL" as={Field} type="file" />
-                                    </FormControl>
-                                </ModalBody>
 
-                                <ModalFooter>
-                                    <Button type="submit" colorScheme='yellow' color={"white"} mr={3}>
-                                        Create
-                                    </Button>
-                                    <Button onClick={onClose}>Cancel</Button>
-                                </ModalFooter>
-                            </ModalContent>
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Category</ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody pb={6}>
+                                        <FormControl>
+                                            <FormLabel>New Category</FormLabel>
+                                            <Input name="newCategory" as={Field} placeholder='Enter New Category' />
+                                        </FormControl>
+
+                                        <FormControl mt={4}>
+                                            <FormLabel>Image Category</FormLabel>
+                                            <Input name="imgURL" as={Field} type="file" />
+                                        </FormControl>
+                                    </ModalBody>
+
+                                    <ModalFooter>
+                                        <Button type="submit" colorScheme='yellow' color={"white"} mr={3}>
+                                            Create
+                                        </Button>
+                                        <Button onClick={onClose}>Cancel</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Form>
                         </Modal>
-                    </Form>
                     )
                 }}
             </Formik>

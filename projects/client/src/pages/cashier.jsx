@@ -1,10 +1,9 @@
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
 import { Navbar } from "../components/navbar"
-import { ProductCategory } from "../components/cashier/productsCategory"
 import { Cart } from "../components/cart"
 import { useEffect } from "react"
 import {useNavigate} from 'react-router-dom'
-import { ProductCategoryAdmin } from "../components/admin/productsCategoryAdmin"
+import { ProductCategory } from "../components/admin/productsCategory"
 
 export const Cashier = () => {
     const navigate = useNavigate()
@@ -20,7 +19,7 @@ export const Cashier = () => {
         <Navbar />
         <Flex justifyContent={"center"} pt={"100px"}>
             <Flex >
-                <ProductCategoryAdmin/>
+                <ProductCategory/>
                 <Flex >
                     <Cart />
                 </Flex> 

@@ -16,7 +16,7 @@ export const DetailProduct = () => {
     const dataProduct = async (id) => {
         try {
             const response = await Axios.get(`http://localhost:8000/api/products/${params.id}`)
-            setProduct(response.data.result[0])
+            setProduct(response.data.result)
         } catch (error) {
             console.log(error);
         }

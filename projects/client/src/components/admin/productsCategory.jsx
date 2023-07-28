@@ -5,7 +5,7 @@ import Axios from "axios";
 import { AddIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { AddCategory } from "../addCategory";
 
-export const ProductCategoryAdmin = () => {
+export const ProductCategory = () => {
     const navigate = useNavigate()
     const [categories, setCategories] = useState([])
     const { onClose, onOpen, isOpen } = useDisclosure()
