@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import {useNavigate} from 'react-router-dom'
 import { ProductCategory } from "../components/admin/productsCategory"
 
+
 export const Cashier = () => {
     const navigate = useNavigate()
     const token = localStorage.getItem("token")

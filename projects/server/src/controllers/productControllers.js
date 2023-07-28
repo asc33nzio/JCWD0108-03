@@ -97,20 +97,20 @@ module.exports = {
     },
     addProduct: async (req, res) => {
         try {
-            const { productName, price, description, categoryId } = req.body;
+            const { productName, price, description, CategoryId } = req.body;
             const imgURL = req.file.filename;
 
             if (!productName) throw { message: "Product name cannot be empty." };
             if (!price) throw { message: "Price cannot be empty." };
             if (!description) throw { message: "Descriptiion cannot be empty." };
-            if (!categoryId) throw { message: "Category ID cannot be empty." };
+            if (!CategoryId) throw { message: "Category ID cannot be empty." };
 
             const newProduct = await products.create({
                 productName,
                 price,
                 imgURL,
                 description,
-                categoryId
+                CategoryId
             });
 
             return res.status(201).send({
@@ -141,17 +141,21 @@ module.exports = {
             });
         }
     },
-    addCategory : async (req, res) => {
+    addCategory: async (req, res) => {
         try {
-            const {newCategory} = req.body
+            const { name } = req.body;
+            const imgURL = req.file.filename;
             const result = await categories.create(
-                    { category : newCategory }
-                )
-                res.status(201).send({
-                    status: 201,
-                    message: 'Product created successfully.',
-                    category: result,
-                });
+                {
+                    category: name,
+                    imgURL: imgURL
+                }
+            );
+            res.status(201).send({
+                status: 201,
+                message: 'Product created successfully.',
+                newCategory: result
+            });
         } catch (error) {
             res.status(500).send({
                 status: 500,

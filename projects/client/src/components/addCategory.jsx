@@ -42,12 +42,12 @@ export const AddCategory = () => {
                 {(props) => {
                     return (
 
+
                         <Modal
                             isOpen={isOpen}
                             onClose={onClose}
                         >
                             <Form>
-
 
                                 <ModalOverlay />
                                 <ModalContent>

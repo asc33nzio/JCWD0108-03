@@ -10,15 +10,22 @@ module.exports = {
             const checkLogin = await users.findOne({
                 where: { username: username }
             });
-            if (!checkLogin) throw { message: "User not Found" }
-            if (checkLogin.isVerified == false) throw ({ message: 'Account is not verified' });
+
+            if (!checkLogin) throw { message: "User not Found." }
+
+            if (checkLogin.isVerified == false) throw ({ message: 'Account is not verified.' });
+
             const isValid = await bcrypt.compare(password, checkLogin.password);
-            if (!isValid) throw { message: "wrong password" }
-            const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin }
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "3d" });
+
+            if (!isValid) throw { message: "Wrong password." };
+
+            const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin };
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+
             res.status(200).send({
                 message: "Login success",
-                token
+                user: checkLogin,
+                JWT: token
             });
         } catch (error) {
             console.log(error);

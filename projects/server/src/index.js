@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
 const db = require('./models');
-const { productRouters, adminRouters, authRouters, txRouters } = require("./routers");
+const { productRouters, adminRouters, authRouters, cartRouters, txRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
@@ -16,7 +16,6 @@ const server = express();
 //   })
 // );
 server.use(cors())
-
 server.use(express.json());
 server.use(express.static('./public'));
 
@@ -26,8 +25,9 @@ server.use(express.static('./public'));
 // NOTE : Add your routes here
 server.use('/api/products', productRouters);
 server.use('/api/users', authRouters);
-// server.use('/api/transactions', txRouters);
 server.use('/api/admin', adminRouters);
+server.use('/api/cart', cartRouters);
+server.use('/api/transactions', txRouters);
 
 
 server.get("/api", (req, res) => {
