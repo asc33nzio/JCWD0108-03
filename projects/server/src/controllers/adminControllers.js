@@ -1,11 +1,11 @@
 const db = require("../models");
-const user = db.Users;
+const users = db.Users;
 const bcrypt = require('bcrypt');
 
 module.exports = {
     getAllCashier: async (req, res) => {
         try {
-            const result = await user.findAll({ where: { isAdmin: false } });
+            const result = await users.findAll({ where: { isAdmin: false } });
             res.status(200).send(result);
         } catch (error) {
             res.status(500).send(error);

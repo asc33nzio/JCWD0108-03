@@ -48,11 +48,11 @@ module.exports = {
             if (!isAccountExist) throw { message: "Email not found" }
             const { email } = req.body;
             const payload = { id: isAccountExist.id }
-            const token = jwt.sign(payload, "minproBimo", { expiresIn: "3d" });
-            const data = await fs.readFileSync("./index.html", "utf-8");
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "3d" });
+            const data = await fs.readFileSync("./reset_password_template.html", "utf-8");
             const tempCompile = await handlebars.compile(data);
             const tempResult = tempCompile(data);
-            await user.update(
+            await users.update(
                 { isVerified: 1 },
                 { where: { email: req.body.email } }
             );

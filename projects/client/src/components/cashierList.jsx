@@ -12,7 +12,7 @@ export const CashierList = () => {
     const navigate = useNavigate();
     const getCashier = async (data) => {
         try {
-            const response = await Axios.get("http://localhost:8000/api/cashiers", data);
+            const response = await Axios.get("http://localhost:8000/api/admin/all", data);
             setData(response.data);
         } catch (error) {
             console.log(error);
@@ -22,27 +22,29 @@ export const CashierList = () => {
         getCashier();
         if (!token) {
             navigate("/")
-        }   
+        }
+
     }, []);
+    console.log(data);
 
     return (
         <>
             <Flex mt={"0px"}>
                 <Navbar />
-            </Flex> 
+            </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
                 {/* <Button bg={"#FFC900"} w={"200px"}>
                     Add Cashier
                 </Button> */}
-                <InitialFocus/>
+                <InitialFocus />
             </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
                     <TableContainer w={"1000px"}>
-                        <Table  variant='simple' >
+                        <Table variant='simple' >
                             <Thead >
                                 <Tr >
-                                    <Th textAlign={"center"}>Avatar</Th>
+                                    <Th textAlign={"center"}>Photo</Th>
                                     <Th textAlign={"center"}>Username</Th>
                                     <Th textAlign={"center"}>Email</Th>
                                     <Th textAlign={"center"}>Action</Th>
@@ -52,7 +54,7 @@ export const CashierList = () => {
                                 {data?.map((item) => {
                                     return (
                                         <Tr>
-                                            <Td textAlign={"center"}><Avatar src={`http://localhost:8000/Avatar/${item.avatar}`} /></Td>
+                                            <Td textAlign={"center"}><Avatar src={`http://localhost:8000/avatars/${item.avatar}`} /></Td>
                                             <Td textAlign={"center"}>{item.username}</Td>
                                             <Td textAlign={"center"}>{item.email}</Td>
                                             <Td textAlign={"center"} ><Button color={"white"} bg={"blue"}>Edit</Button>
@@ -66,6 +68,5 @@ export const CashierList = () => {
                 </Box>
             </Flex>
         </>
-
     )
-}
+};
