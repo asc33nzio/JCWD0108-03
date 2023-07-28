@@ -2,7 +2,6 @@ import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalClos
 import Axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import { Formik, Form, Field } from "formik";
-import { Formik, Form, Field } from "formik";
 
 export const AddCategory = () => {
     const { onClose, onOpen, isOpen } = useDisclosure();

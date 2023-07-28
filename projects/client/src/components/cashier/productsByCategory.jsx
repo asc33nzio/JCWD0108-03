@@ -2,7 +2,6 @@ import { Box, Button, Flex, Grid, GridItem, Image } from "@chakra-ui/react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import Axios from "axios";
 
 export const AllProducts = () => {
     const params = useParams();
