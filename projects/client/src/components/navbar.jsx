@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 
 export const Navbar = () => {
     return (
-        <Box position={"fixed"}>
+        <Box zIndex={"100"} position={"fixed"}>
             <Flex p={{base:'25px', sm:'40px'}} alignItems={"center"} w={{base:'100vw', md:'100vw', sm:'100vw', lg:'100vw'}} h={{base:"10px", sm:'30px'}} bgColor={"#FFC900"} >
                 <Box w={"20%"}>
                     <Box color={"white"} fontSize={"30px"} fontWeight={"thin"} textShadow={"0px 0px 5px white"}>Payment App</Box>

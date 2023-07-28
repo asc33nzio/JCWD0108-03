@@ -1,7 +1,9 @@
 const authControllers = require("../controllers/authControllers");
-const { multerUpload } = require("../middleware/multer");
+const { verifyToken } = require("../middleware/auth");
 const router = require('express').Router();
 
-router.post("/", multerUpload(`./public/avatars`, 'Avatar').single('avatar'), authControllers.addCashier);
+router.post("/login", authControllers.login);
+router.patch("/forget", authControllers.forgetPassword);
+router.get("/keeplogin", verifyToken, authControllers.keepLogin);
 
 module.exports = router;
