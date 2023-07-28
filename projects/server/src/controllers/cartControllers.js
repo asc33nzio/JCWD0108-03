@@ -29,17 +29,49 @@ module.exports = {
                 });
             };
 
-            const newCartItem = await cartItems.create({
-                ProductId,
-                quantity,
-                UserId
+            const existingCartItem = await cartItems.findOne({
+                where: {
+                    ProductId,
+                    UserId
+                }
             });
 
-            return res.status(201).send({
-                status: 201,
-                message: 'Item added to the cart successfully.',
-                cartItems: newCartItem
-            });
+            if (existingCartItem) {
+                existingCartItem.quantity += quantity;
+                await existingCartItem.save();
+
+                const allUserCartItems = await cartItems.findAll({
+                    where: {
+                        UserId
+                    }
+                });
+
+                return res.status(200).send({
+                    status: 200,
+                    message: 'Cart item quantity updated successfully.',
+                    cartItem: existingCartItem,
+                    allCartItems: allUserCartItems
+                });
+            } else {
+                const newCartItem = await cartItems.create({
+                    ProductId,
+                    quantity,
+                    UserId
+                });
+
+                const allUserCartItems = await cartItems.findAll({
+                    where: {
+                        UserId
+                    }
+                });
+
+                return res.status(201).send({
+                    status: 201,
+                    message: 'Item added to the cart successfully.',
+                    cartItem: newCartItem,
+                    allCartItems: allUserCartItems
+                });
+            }
         } catch (error) {
             return res.status(500).send({
                 status: 500,
