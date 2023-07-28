@@ -37,21 +37,6 @@ module.exports = {
             });
         }
     },
-    getAllProducts: async (req, res) => {
-        try {
-            const result = await products.findAll();
-
-            res.status(200).send({
-                status: 200,
-                result: result
-            });
-        } catch (error) {
-            res.status(500).send({
-                status: 500,
-                message: "Internal server error."
-            });
-        }
-    },
     getCategories: async (req, res) => {
         try {
             const result = await categories.findAll();
@@ -141,7 +126,8 @@ module.exports = {
             });
         }
     },
-    getAllProduct: async (req, res) => {
+    getAllProducts: async (req, res) => {
+        
         try {
             const result = await products.findAll();
 
@@ -156,6 +142,25 @@ module.exports = {
             });
         }
     },
+    addCategory : async (req, res) => {
+        const {newCategory} = req.body
+
+        try {
+            const result = await categories.create(
+                    { category : newCategory }
+                )
+                return res.status(201).send({
+                    status: 201,
+                    message: 'Product created successfully.',
+                    category: newCategory,
+                });
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    }
 }
 
 
