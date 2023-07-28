@@ -31,20 +31,19 @@ export const CashierList = () => {
         <>
             <Flex mt={"0px"}>
                 <Navbar />
-            </Flex>
+            </Flex> 
             <Flex mt={"110px"} justifyContent={"center"}>
                 {/* <Button bg={"#FFC900"} w={"200px"}>
                     Add Cashier
                 </Button> */}
-                <InitialFocus />
+                <InitialFocus/>
             </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
                     <TableContainer w={"1000px"}>
-                        <Table variant='simple' >
+                        <Table  variant='simple' >
                             <Thead >
                                 <Tr >
-                                    <Th textAlign={"center"}>Photo</Th>
                                     <Th textAlign={"center"}>Username</Th>
                                     <Th textAlign={"center"}>Email</Th>
                                     <Th textAlign={"center"}>Action</Th>
@@ -68,5 +67,6 @@ export const CashierList = () => {
                 </Box>
             </Flex>
         </>
+
     )
-};
+}

@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react"
 
 export const AllProducts = () => {
     return(
@@ -6,4 +6,4 @@ export const AllProducts = () => {
             asd
         </Box>
     )
-};
+}

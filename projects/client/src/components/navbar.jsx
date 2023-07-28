@@ -1,5 +1,7 @@
-import { Box, Button, Flex, Input } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Input } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
+import {useNavigate} from 'react-router-dom'
+
 
 export const Navbar = () => {
     return (
@@ -15,9 +17,9 @@ export const Navbar = () => {
                     </Flex>
                 </Flex>
                 <Flex justifyContent={"end"} w={"20%"}>
-                    <Button bgColor={"#D5AD18"} color={"white"} fontSize={{base:'15px'}} _hover={{bgColor:"#D5AD40"}} _active={{transition:"0.1s", transform:"scale(0.95)"}} cursor={"pointer"} h={{base:'30px',sm:'40px', md:'40px'}}>Login</Button>
+                    <Avatar bgColor={"gray.400"} colorScheme={"#FFC900"} />
                 </Flex>
             </Flex>
         </Box>
     )
-};
+}

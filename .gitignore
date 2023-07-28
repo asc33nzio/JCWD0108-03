@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+node_modules
 /projects/client/node_modules
 /projects/server/node_modules
 /.pnp

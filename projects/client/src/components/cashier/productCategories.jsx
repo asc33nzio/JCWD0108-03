@@ -10,7 +10,7 @@ export const ProductCategories = () => {
 
     const category = async (data) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/categories`, data);
+            const response = await Axios.get(`http://localhost:8000/api/products/categories`, data);
             setCategories(response.data.result);
         } catch (error) {
             console.log(error);
@@ -19,6 +19,10 @@ export const ProductCategories = () => {
     useEffect(() => {
         category();
     }, [])
+
+    const handleClick = (id) => {
+        navigate(``)
+    }
 
     return (
         <Flex>

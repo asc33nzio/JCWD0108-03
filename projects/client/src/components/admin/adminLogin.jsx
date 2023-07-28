@@ -87,4 +87,4 @@ export const AdminLogin = () => {
             }}
         </Formik>
     );
-};
+}

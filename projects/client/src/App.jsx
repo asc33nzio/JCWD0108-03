@@ -16,7 +16,8 @@ const router = createBrowserRouter([
   { path: "/forgot", element: <Forgot />, },
   { path: "/cashier", element: <Cashier /> },
   { path: "/cashierlist", element: <CashierList /> },
-  { path: "/AllProducts", element: <AllProducts /> }
+  { path: "/category/:categoryId", element: <CashierProducts /> },
+  { path: "/product/:id", element: <DetailProduct />}
 ]);
 
 
@@ -41,7 +42,7 @@ function App() {
     keepLogin();
   }, []);
   return (
-    <RouterProvider router={router} />
+   <RouterProvider router={router} />
   )
 }
 
