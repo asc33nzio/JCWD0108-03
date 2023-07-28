@@ -1,8 +1,8 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
-import { Navbar } from "../components/navbar"
-import { Cart } from "../components/cart"
-import { AllProducts } from "../components/cashier/productsByCategory"
-import { Back } from "../components/back"
+import { Box, Flex } from "@chakra-ui/react";
+import { Navbar } from "../components/Navbar";
+import { Cart } from "../components/Cart";
+import { AllProducts } from "../components/cashier/ProductsByCategory";
+import { Back } from "../components/Back";
 
 export const CashierProducts = () => {
     return (
@@ -21,4 +21,4 @@ export const CashierProducts = () => {
             </Flex>
         </Box>
     )
-}
+};

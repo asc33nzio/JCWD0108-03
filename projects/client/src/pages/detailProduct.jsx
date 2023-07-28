@@ -1,34 +1,30 @@
 import { Box, Button, Flex, Image } from "@chakra-ui/react";
-import { Navbar } from "../components/navbar";
+import { Navbar } from "../components/Navbar";
 import Axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Cart } from "../components/cart";
-import { Back } from "../components/back";
+import { Cart } from "../components/Cart";
+import { Back } from "../components/Back";
 
 
 export const DetailProduct = () => {
-    const params = useParams()
-    const navigate = useNavigate()
+    const params = useParams();
 
-    const [product, setProduct] = useState([])
+    const [product, setProduct] = useState([]);
 
     const dataProduct = async (id) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/products/${params.id}`)
-            setProduct(response.data.result)
+            const response = await Axios.get(`http://localhost:8000/api/products/${params.id}`);
+            setProduct(response.data.result);
         } catch (error) {
             console.log(error);
-        }
-    }
-
-
+        };
+    };
 
     useEffect(() => {
         dataProduct()
     }, [])
 
-    console.log(product);
     return (
         <Box>
             <Box><Navbar /></Box>
@@ -57,4 +53,4 @@ export const DetailProduct = () => {
 
         </Box>
     )
-}
+};
