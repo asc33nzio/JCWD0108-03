@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Flex } from "@chakra-ui/react";
-import { Navbar } from "./Navbar";
+import { Navbar } from "./navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react';
-import InitialFocus from "./FormModal";
+import InitialFocus from "./formModal";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router";

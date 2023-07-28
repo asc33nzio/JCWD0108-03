@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react";
-import { Navbar } from "../components/Navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from "@chakra-ui/react";
-import InitialFocus from "../components/FormModal";
+import { Navbar } from "../components/navbar";
+import InitialFocus from "../components/formModal";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 export const CashierList = () => {

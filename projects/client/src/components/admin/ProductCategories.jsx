@@ -2,7 +2,7 @@ import { Box, Flex, Grid, GridItem } from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import Axios from "axios";
-import { AddCategory } from "../AddCategory";
+import { AddCategory } from "../addCategory";
 
 export const ProductCategories = () => {
     const navigate = useNavigate()
