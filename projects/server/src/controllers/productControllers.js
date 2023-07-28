@@ -10,12 +10,12 @@ module.exports = {
                 where: {
                     id : id
                 }
-            })  
+            });
 
             if (!products) {
                 return res.status(400).send({
                     status: 400,
-                    message: "Product name cannot be empty."
+                    message: "Please input a valid product ID."
                 });
             };
 
@@ -95,14 +95,13 @@ module.exports = {
             });
         }
     },
-    GetProductByCategory : async (req,res) => {
+    GetProductByCategory: async (req, res) => {
         try {
-            const  id  = req.params.id
-            console.log(id);
+            const id = req.params.id;
             const result = await products.findAll(
-                {where : {CategoryId : id}}
-                ) 
-                res.status(200).send(result)
+                { where: { CategoryId: id } }
+            );
+            res.status(200).send(result);
         } catch (error) {
             console.log(error);
             res.status(500).send({
