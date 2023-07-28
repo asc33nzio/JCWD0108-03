@@ -6,13 +6,13 @@ module.exports = {
     getProduct: async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await products.findAll({
+            const result = await products.findOne({
                 where: {
-                    id : id
+                    id: id
                 }
             });
 
-            if (!products) {
+            if (!id) {
                 return res.status(400).send({
                     status: 400,
                     message: "Please input a valid product ID."
@@ -127,7 +127,6 @@ module.exports = {
         }
     },
     getAllProducts: async (req, res) => {
-        
         try {
             const result = await products.findAll();
 
