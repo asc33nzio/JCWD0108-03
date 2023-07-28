@@ -9,7 +9,7 @@ import { Cashier } from "./pages/cashier";
 import { DetailProduct } from "./pages/detailProduct";
 import { CashierProducts } from "./pages/sortProducts";
 import { setValue } from './redux/userSlice';
-import { CashierList } from "./components/CashierList";
+import { CashierList } from "./components/cashierList";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },

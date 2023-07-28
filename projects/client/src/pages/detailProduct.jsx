@@ -1,10 +1,10 @@
 import { Box, Button, Flex, Image } from "@chakra-ui/react";
-import { Navbar } from "../components/Navbar";
+import { Navbar } from "../components/navbar";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Cart } from "../components/Cart";
-import { Back } from "../components/Back";
+import { Cart } from "../components/cart";
+import { Back } from "../components/back";
 
 
 export const DetailProduct = () => {
