@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import Axios from "axios";
 import { setValue } from "../../redux/userSlice";
 import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export const AdminLogin = () => {
     const toast = useToast();

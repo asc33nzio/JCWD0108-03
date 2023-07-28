@@ -5,6 +5,7 @@ import InitialFocus from "./FormModal";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export const CashierList = () => {
     const [data, setData] = useState();

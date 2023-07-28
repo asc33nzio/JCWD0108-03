@@ -1,5 +1,5 @@
 const txControllers = require("../controllers/txControllers");
-const { verifyToken } = require("../middleware/auth");
+const { verifyToken, checkRole } = require("../middleware/auth");
 const router = require('express').Router();
 
 router.post('/', verifyToken, txControllers.createTransaction);

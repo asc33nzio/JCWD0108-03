@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import Axios from "axios";
 import { AddCategory } from "../AddCategory";
+import { AddCategory } from "../AddCategory";
 
 export const ProductCategories = () => {
     const navigate = useNavigate()
