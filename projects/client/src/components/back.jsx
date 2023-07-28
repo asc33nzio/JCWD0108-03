@@ -3,10 +3,10 @@ import { Box } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 
-export const Back = () => {
+export const Back = ({nav,id=""}) => {
     const navigate = useNavigate()
     const backPage = () => {
-        navigate('/cashier')
+        navigate(`${nav}${id}`)
     }
 
     return(

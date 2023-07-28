@@ -33,11 +33,11 @@ export const DetailProduct = () => {
         <Box>
             <Box><Navbar /></Box>
             <Flex>
-                <Back />
+                <Back nav={"/category"} id={`/${product.CategoryId}`}  />
                 <Flex justifyContent={"center"} pt={"100px"} px={"150px"}>
                     <Box>
                         <Box>
-                            <Image borderRadius={"5px"} boxShadow={"0px 0px 10px black"} w={"400px"} h={"350px"} src={`http://localhost:8000/api/products/image/${product?.imgURL}`} />
+                            <Image borderRadius={"5px"} boxShadow={"0px 0px 10px black"} w={"400px"} h={"350px"} src={`http://localhost:8000/products/${product?.imgURL}`} />
                         </Box>
                         <Flex w={"400px"} h={"90px"} justifyContent={"space-between"} mt={"5px"}>
                             <Box mb={"110px"} alignContent={"center"}>
