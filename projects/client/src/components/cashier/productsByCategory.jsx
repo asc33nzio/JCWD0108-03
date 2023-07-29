@@ -2,6 +2,9 @@ import { Box, Flex, Image } from "@chakra-ui/react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Axios from "axios";
+import { AiOutlineShoppingCart } from "react-icons/ai"
+import { SiQuicklook } from "react-icons/si"
+import { AddProduct } from "../admin/addProduct";
 
 export const ProductsByCategory = () => {
     const params = useParams();
@@ -84,13 +87,14 @@ export const ProductsByCategory = () => {
                                         <Flex onClick={() => handlePlusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >+</Flex>
                                     </Flex>
                                     <Flex mt={{ base: '5px', sm: '10px' }} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
-                                        <Flex onClick={() => handleAddToCart(item.id, item.quantity)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >Add</Flex>
-                                        <Flex onClick={() => handleClick(item.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >detail</Flex>
+                                        <Flex onClick={() => handleAddToCart(item.id, item.quantity)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} > <AiOutlineShoppingCart /> </Flex>
+                                        <Flex onClick={() => handleClick(item.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} ><SiQuicklook /> </Flex>
                                     </Flex>
                                 </Box>
                             </Box>
                         )
                     })}
+                    <AddProduct />
                 </Flex>
             </Flex>
         </Flex>

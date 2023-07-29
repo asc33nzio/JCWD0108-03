@@ -2,20 +2,25 @@ import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalClos
 import Axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import { Formik, Form, Field } from "formik";
+import { useState } from "react";
 
 export const AddCategory = () => {
     const { onClose, onOpen, isOpen } = useDisclosure();
+    const [file, setFile] = useState(null);
+    const token = localStorage.getItem('token')
 
     const handleSubmit = async (value) => {
         try {
             const formData = new FormData();
-            const { newCategory, imgURL } = value;
-            formData.append('data',
-                JSON.stringify({ newCategory, imgURL })
-            );
-            formData.append('imgURL', imgURL)
-            const response = await Axios.post(`http://localhost:8000/api/products/addCategory`, formData)
-            console.log(response);
+            const { name } = value;
+            formData.append('name', {name}.name);
+            formData.append('categoryImage', file)
+            console.log([...formData]);
+            const response = await Axios.post(`http://localhost:8000/api/products/addCategory`, formData,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    "Content-type": "multipart/form-data"
+                })
         } catch (error) {
             console.log(error);
         };
@@ -28,10 +33,10 @@ export const AddCategory = () => {
             </Box>
             <Formik
                 initialValues={{
-                    newCategory: "",
-                    imgURL: ""
+                    name: "",
+                    categoryImage: ""
                 }}
-                onSubmit={(value, action) => {
+                onSubmit={(value) => {
                     handleSubmit(value)
                 }}
             >
@@ -52,17 +57,25 @@ export const AddCategory = () => {
                                     <ModalBody pb={6}>
                                         <FormControl>
                                             <FormLabel>New Category</FormLabel>
-                                            <Input name="newCategory" as={Field} placeholder='Enter New Category' />
+                                            <Input name="name" as={Field} placeholder='Enter New Category' />
                                         </FormControl>
-
-                                        <FormControl mt={4}>
-                                            <FormLabel>Image Category</FormLabel>
-                                            <Input name="imgURL" as={Field} type="file" />
-                                        </FormControl>
+                                        <Field name="categoryImage">
+                                            {({ field }) => (
+                                                <FormControl mt={4}>
+                                                    <FormLabel>Image Category</FormLabel>
+                                                    <Input
+                                                        {...field}
+                                                        onChange={(e) => {
+                                                            field.onChange(e);
+                                                            setFile(e.target.files[0]);
+                                                        }} name="categoryImage" as={Field} type="file" />
+                                                </FormControl>
+                                            )}
+                                        </Field>
                                     </ModalBody>
 
                                     <ModalFooter>
-                                        <Button type="submit" colorScheme='yellow' color={"white"} mr={3}>
+                                        <Button type="submit" onClick={handleSubmit} colorScheme='yellow' color={"white"} mr={3}>
                                             Create
                                         </Button>
                                         <Button onClick={onClose}>Cancel</Button>

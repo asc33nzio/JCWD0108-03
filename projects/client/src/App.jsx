@@ -2,8 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Axios from "axios";
-// import { Navbar } from "./components/Navbar";
-// import { AllProducts } from "./pages/allProducts";
 import { CashierList } from "./components/cashierList";
 import { Login } from "./pages/login";
 import { Forgot } from "./pages/forgot";
