@@ -25,10 +25,9 @@ export const AdminLogin = () => {
             .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
             .matches(/.*[0-9].*/, "Password Must Contain 1 number")
     });
-    const handleSubmit = async (data1) => {
+    const handleSubmit = async (data) => {
         try {
-            const response = await Axios.post("http://localhost:8000/api/users/login", data1);
-            console.log(response.data);
+            const response = await Axios.post("http://localhost:8000/api/users/login", data);
             dispatch(setValue(response.data));
             localStorage.setItem("token", response.data.token);
             setSuccess(true);
@@ -43,11 +42,11 @@ export const AdminLogin = () => {
                 isClosable: true,
                 position: "top"
             });
-            console.log(data1);
         } catch (err) {
             console.log(err);
-        }
-    }
+        };
+    };
+
     return (
         <Formik
             initialValues={{ username: "", password: "" }}
@@ -87,4 +86,4 @@ export const AdminLogin = () => {
             }}
         </Formik>
     );
-}
+};

@@ -33,7 +33,7 @@ export const CashierLogin = () => {
             localStorage.setItem("token", response.data.token);
             setSuccess(true);
             setTimeout(() => {
-                navigate("/cashierlist");
+                navigate("/cashier");
             }, 1000)
             toast({
                 title: "Welcome!",

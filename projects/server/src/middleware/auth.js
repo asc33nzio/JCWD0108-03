@@ -7,7 +7,7 @@ module.exports = {
 
             if (!token) {
                 throw {
-                    status: 400,
+                    status: 401,
                     message: "Token missing."
                 };
             };
@@ -17,15 +17,18 @@ module.exports = {
             try {
                 verifiedUser = jwt.verify(token, process.env.KEY_JWT);
             } catch (error) {
-                throw {
-                    status: 401,
-                    message: "Access denied--Unauthorized Request // Invalid malformed token // Token expired."
-                };
+                error.statusCode = 401;
+                if (error.name === 'TokenExpiredError') {
+                    error.message = 'Token expired.';
+                } else if (error.name === 'JsonWebTokenError') {
+                    error.message = 'Malformed token.';
+                } else {
+                    error.message = 'Unauthorized request.';
+                }
+                throw error;
             };
-
             req.user = verifiedUser;
             next();
-
         } catch (error) {
             res.status(400).send({
                 status: 400,

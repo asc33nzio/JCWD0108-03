@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react";
-import { Navbar } from "../components/navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from "@chakra-ui/react";
+import { Navbar } from "../components/navbar";
 import InitialFocus from "../components/formModal";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 

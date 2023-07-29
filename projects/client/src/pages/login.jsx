@@ -1,8 +1,8 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react'
-import { Box, Flex, Heading, Text } from "@chakra-ui/react"
-import { CashierLogin } from '../components/cashier/cashierLogin'
-import { AdminLogin } from '../components/admin/adminLogin'
-import { Link } from 'react-router-dom'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { CashierLogin } from '../components/cashier/cashierLogin';
+import { AdminLogin } from '../components/admin/adminLogin';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
     return (
