@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
             Sales.belongsTo(models.Transactions, {
                 foreignKey: 'transactionId'
             });
+            Sales.belongsTo(models.Products, {
+                foreignKey: 'productId'
+            });
         }
     }
     Sales.init(
@@ -30,6 +33,9 @@ module.exports = (sequelize, DataTypes) => {
             transactionId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
+            },
+            productId: {
+                type: DataTypes.INTEGER
             }
         },
         {

@@ -129,6 +129,41 @@ module.exports = {
                     }
                 );
 
+                const salesRecords = await sales.findAll({
+                    where: {
+                        transactionId: transactionId
+                    }
+                });
+
+                let totalQuantitySold = 0;
+                for (const sale of salesRecords) {
+                    totalQuantitySold += sale.quantitySold;
+                };
+
+                for (const sale of salesRecords) {
+                    const product = await products.findByPk(sale.productId);
+
+                    if (!product) {
+                        return res.status(404).send({
+                            status: 404,
+                            message: 'Product not found.',
+                        });
+                    };
+
+                    const newStockQuantity = Math.max(product.stock - sale.quantitySold, 0);
+
+                    await products.update(
+                        {
+                            stock: newStockQuantity
+                        },
+                        {
+                            where: {
+                                id: sale.productId
+                            }
+                        }
+                    );
+                };
+
                 return res.status(200).send({
                     status: 200,
                     message: 'Checkout successful.',
