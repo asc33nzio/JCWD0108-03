@@ -3,9 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
 const db = require('./models');
-const { productRouters, adminRouters } = require("./routers");
-const { authRouters } = require("./routers");
-const { txRouters } = require("./routers");
+const { productRouters, adminRouters, authRouters, txRouters } = require("./routers");
 const PORT = process.env.PORT || 8000;
 const server = express();
 
