@@ -5,7 +5,6 @@ import { useRef, useState } from 'react'
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-
 export default function InitialFocus() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);

@@ -1,8 +1,8 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { Navbar } from "../components/navbar";
-import { Cart } from "../components/cart";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { Navbar } from "../components/navbar";
+import { Cart } from "../components/cart";
 import { ProductCategories } from "../components/admin/productCategories";
 
 export const Cashier = () => {
