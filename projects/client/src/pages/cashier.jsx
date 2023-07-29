@@ -15,9 +15,9 @@ export const Cashier = () => {
         }
     }, []);
     return (
-        <Box>
+        <Box bgColor={"gray.200"} w={"100%"} h={"720px"}>
             <Navbar />
-            <Flex justifyContent={"center"} pt={"100px"}>
+            <Flex justifyContent={"center"} pt={"100px"} bgColor={"gray.200"} w={"100%"} h={"100%"}>
                 <Flex >
                     <ProductCategories />
                     <Flex >

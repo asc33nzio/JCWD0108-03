@@ -51,7 +51,7 @@ export const DetailProduct = () => {
                     </Box>
                 </Flex>
             </Flex>
-
+            
         </Box>
     )
 };

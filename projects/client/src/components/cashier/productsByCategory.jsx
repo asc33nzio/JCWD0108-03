@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import { AiOutlineShoppingCart } from "react-icons/ai"
 import { SiQuicklook } from "react-icons/si"
+import { AddProduct } from "../admin/addProduct";
 
 export const ProductsByCategory = () => {
     const params = useParams();
@@ -93,6 +94,7 @@ export const ProductsByCategory = () => {
                             </Box>
                         )
                     })}
+                    <AddProduct />
                 </Flex>
             </Flex>
         </Flex>

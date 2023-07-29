@@ -61,7 +61,6 @@ export const AddCategory = () => {
                                         </FormControl>
                                         <Field name="categoryImage">
                                             {({ field }) => (
-
                                                 <FormControl mt={4}>
                                                     <FormLabel>Image Category</FormLabel>
                                                     <Input
