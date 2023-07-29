@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Cart } from "../components/cart";
 import { Back } from "../components/back";
+import { AiOutlineShoppingCart } from "react-icons/ai"
 
 
 export const DetailProduct = () => {
@@ -40,7 +41,7 @@ export const DetailProduct = () => {
                                 <Box textShadow={"2px 2px 3px gray"} fontSize={"50px"} fontWeight={"bold"} mb={"20px"}> {product.productName} </Box>
                             </Box>
                             <Flex alignItems={"center"}>
-                                <Button bgColor={"yellow.400"} color={"white"}>Add To Cart</Button>
+                                <Button bgColor={"yellow.400"} color={"white"}> <AiOutlineShoppingCart /> </Button>
                             </Flex>
                         </Flex>
                         <Box textAlign={"justify"} w={"400px"}> {product.description} </Box>
