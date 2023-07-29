@@ -29,7 +29,7 @@ export const DetailProduct = () => {
         <Box>
             <Box><Navbar /></Box>
             <Flex>
-                <Back nav={"/category"} id={`/${product.CategoryId}`}  />
+                <Back nav={"/category"} id={`/${product.CategoryId}`} />
                 <Flex justifyContent={"center"} pt={"100px"} px={"150px"}>
                     <Box>
                         <Box>
