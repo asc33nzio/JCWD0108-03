@@ -9,10 +9,11 @@ export default function InitialFocus() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
-    const [avatar, setFile] = useState(null);
+    const [file, setFile] = useState(null);
     const toast = useToast();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const [success, setSuccess] = useState();
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name"),
@@ -32,16 +33,15 @@ export default function InitialFocus() {
         try {
             const data = new FormData();
             const { username, email, password } = value;
-            data.append("username", JSON.stringify({ username }));
-            data.append("email", JSON.stringify({ email }));
-            data.append("password", JSON.stringify({ password }));
-            data.append("avatar", JSON.stringify({ avatar }));
+            data.append("username", { username }.username);
+            data.append("email", { email }.email);
+            data.append("password", { password }.password);
+            data.append("avatar", file);
             const response = await Axios.post("http://localhost:8000/api/admin", data, {
-                // headers: {
-                //     Authorization: `Bearer ${token}`
-                // },
+                headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
+            setSuccess(true);
             toast({
                 title: "New Cashier!",
                 description: "Your Cashier Data uploaded!",
@@ -51,7 +51,6 @@ export default function InitialFocus() {
                 position: "top"
             });
             navigate("/cashierlist");
-            console.log(response);
         } catch (err) {
             console.log(err);
         }
@@ -75,6 +74,7 @@ export default function InitialFocus() {
                             onSubmit={(value, action) => {
                                 console.log(value);
                                 handleCreate(value);
+                                if (success) action.resetForm();
                             }}>
                             {() => {
                                 return (
@@ -94,20 +94,20 @@ export default function InitialFocus() {
                                             <Field as={Input} placeholder='Password' name='password' />
                                             <ErrorMessage component="Box" name="password" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
-                                        <FormControl mt={4}>
-                                            <FormLabel>Photo</FormLabel>
-                                            <Field name="avatar">
-                                                {({ field }) => (
+                                        <Field name="avatar">
+                                            {({ field }) => (
+                                                <FormControl mt={4}>
+                                                    <FormLabel>Photo</FormLabel>
                                                     <Input   {...field}
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
-                                                        }} placeholder='Photo' type='file' />
-                                                )}
-                                            </Field>
-                                            <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
-                                        </FormControl>
-                                        <Button type='submit' colorScheme='yellow' mr={3}>  Add Cashier  </Button>
+                                                        }} placeholder='Photo' name='avatar' as={Field} type='file' />
+                                                    <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
+                                                </FormControl>
+                                            )}
+                                        </Field>
+                                        <Button onClick={handleCreate} type='submit' colorScheme='yellow' mr={3}>  Add Cashier  </Button>
                                         <Button onClick={onClose}>Cancel</Button>
                                     </Form>
                                 );
@@ -117,7 +117,7 @@ export default function InitialFocus() {
                     <ModalFooter>
                     </ModalFooter>
                 </ModalContent>
-            </Modal>
+            </Modal >
         </>
     )
 }
