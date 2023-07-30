@@ -1,14 +1,14 @@
+import Axios from "axios";
+import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import Axios from "axios";
 import { CashierList } from "./components/cashierList";
 import { Login } from "./pages/login";
 import { Forgot } from "./pages/forgot";
 import { ErrorPage } from "./pages/404";
 import { Cashier } from "./pages/cashier";
 import { DetailProduct } from "./pages/detailProduct";
-import { CashierProducts } from "./pages/sortProducts";
+import { CashierProducts } from "./pages/cashierProducts";
 import { setValue } from './redux/userSlice';
 
 const router = createBrowserRouter([
@@ -33,7 +33,6 @@ function App() {
           }
         });
         dispatch(setValue(response.data));
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }

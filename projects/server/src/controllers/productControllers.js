@@ -80,7 +80,7 @@ module.exports = {
             });
         }
     },
-    GetProductByCategory: async (req, res) => {
+    getProductByCategory: async (req, res) => {
         try {
             const id = req.params.id;
             const result = await products.findAll(
@@ -88,7 +88,6 @@ module.exports = {
             );
             res.status(200).send(result);
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: error
