@@ -33,14 +33,11 @@ export const CashierList = () => {
                 <Navbar />
             </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
-                {/* <Button bg={"#FFC900"} w={"200px"}>
-                    Add Cashier
-                </Button> */}
                 <InitialFocus />
             </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
-                    <TableContainer w={"1000px"}>
+                    <TableContainer w={{ base: '250px', md: '800px', lg: '700px', xl: "1000px" }}>
                         <Table variant='simple' >
                             <Thead >
                                 <Tr >
