@@ -44,7 +44,8 @@ module.exports = {
                 quantitySold: cartItem.quantity,
                 totalAmount: cartItem.quantity * cartItem.Product.price,
                 transactionDate: new Date(),
-                transactionId: newTransaction.id
+                transactionId: newTransaction.id,
+                productId: cartItem.ProductId
             }));
 
             await sales.bulkCreate(salesRecords);
@@ -56,7 +57,6 @@ module.exports = {
                 breakdown: salesRecords
             });
         } catch (error) {
-            console.error(error)
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.'
@@ -135,6 +135,8 @@ module.exports = {
                     }
                 });
 
+                console.log('Sales Records:', salesRecords);
+
                 let totalQuantitySold = 0;
                 for (const sale of salesRecords) {
                     totalQuantitySold += sale.quantitySold;
@@ -142,13 +144,6 @@ module.exports = {
 
                 for (const sale of salesRecords) {
                     const product = await products.findByPk(sale.productId);
-
-                    if (!product) {
-                        return res.status(404).send({
-                            status: 404,
-                            message: 'Product not found.',
-                        });
-                    };
 
                     const newStockQuantity = Math.max(product.stock - sale.quantitySold, 0);
 
@@ -172,7 +167,6 @@ module.exports = {
                 });
             }
         } catch (error) {
-            console.error(error);
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.',

@@ -61,7 +61,7 @@ module.exports = {
             const tempCompile = await handlebars.compile(data);
             const tempResult = tempCompile(data);
             await users.update(
-                { isVerified: 1 },
+                { isVerified: true },
                 { where: { email: req.body.email } }
             );
             await transporter.sendMail({
