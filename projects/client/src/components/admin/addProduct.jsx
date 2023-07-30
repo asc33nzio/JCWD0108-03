@@ -3,9 +3,11 @@ import Axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import { Formik, Form, Field } from "formik";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const AddProduct = () => {
     const { onClose, onOpen, isOpen } = useDisclosure();
+    const params = useParams()
 
     const [file, setFile] = useState(null);
     const token = localStorage.getItem('token')
@@ -13,13 +15,12 @@ export const AddProduct = () => {
     const handleSubmit = async (value) => {
         try {
             const formData = new FormData();
-            const { productName, price, category, description, CategoryId, stock } = value;
+            const { productName, price, description, stock } = value;
             formData.append('productName', {productName}.productName);
             formData.append('price', price)
-            formData.append('category', category)
             formData.append('productImage', file)
             formData.append('description', description)
-            formData.append('CategoryId', CategoryId)
+            formData.append('CategoryId', params.categoryId)
             formData.append('stock', stock)
             console.log([...formData]);
             const response = await Axios.post(`http://localhost:8000/api/products/addProduct`, formData,
@@ -80,10 +81,6 @@ export const AddProduct = () => {
                                         <FormControl>
                                             <FormLabel>Stock</FormLabel>
                                             <Input name="stock" as={Field} placeholder='Enter Stock Product' />
-                                        </FormControl>
-                                        <FormControl>
-                                            <FormLabel>Category</FormLabel>
-                                            <Input name="CategoryId" as={Field} placeholder='Enter Stock Product' />
                                         </FormControl>
                                         <Field name="categoryImage">
                                             {({ field }) => (
