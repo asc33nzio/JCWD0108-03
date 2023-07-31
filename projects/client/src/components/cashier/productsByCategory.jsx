@@ -88,17 +88,22 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
         const token = localStorage.getItem('token');
         const product = products.find((product) => product.id === productId);
 
+        
+
         try {
             if (product && inputQuantity >= 1) {
                 const payload = {
-                    productName: product.productName,
                     ProductId: productId,
                     quantity: inputQuantity,
+                    productName: product.productName,
                     price: product.price
                 };
 
                 const cartItem = cartItems.find((item) => item.ProductId === productId);
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
+
+                console.log(product.productName);
+                console.log(product.price);
 
                 if (totalQuantityInCart <= product.stock) {
                     await Axios.post('http://localhost:8000/api/cart', payload, {
@@ -139,8 +144,8 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     };
 
     useEffect(() => {
-        getCartByUser();
         setLoading(true);
+        getCartByUser();
         fetchProductsByCategory(page);
     }, [fetchProductsByCategory, page]);
 
@@ -157,9 +162,11 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                             {products.map((product) => {
                                 const productId = product.id;
                                 const inputQuantity = inputQuantities[productId] || 0;
-                                console.log(product);
-                                console.log(product.price);
-                                console.log(product.Product);
+
+                                if (!product || !product.productName || !product.price) {
+                                    return null;
+                                };
+
                                 return (
                                     <Box key={product.id} mb={{ base: "30px" }}>
                                         <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"}>

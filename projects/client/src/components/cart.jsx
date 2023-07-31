@@ -12,31 +12,13 @@ export const Cart = ({ cartItems, setCartItems }) => {
             const response = await Axios.get("http://localhost:8000/api/cart", {
                 headers: { Authorization: `Bearer ${token}` },
             });
-    
-            const productIds = [...new Set(response.data.result.map((cartItem) => cartItem.ProductId))];
-    
-            const productRequests = productIds.map((productId) =>
-                Axios.get(`http://localhost:8000/api/products/${productId}`)
-            );
-    
-            const productResponses = await Promise.all(productRequests);
-    
-            const updatedCartItems = response.data.result.map((cartItem) => {
-                const productResponse = productResponses.find(
-                    (response) => response.data.result.id === cartItem.ProductId
-                );
-                if (productResponse) {
-                    const productData = productResponse.data.result;
-                    return {
-                        ...cartItem,
-                        price: productData.price,
-                        productName: productData.productName
-                    };
-                } else {
-                    return cartItem;
-                }
-            });
-    
+
+            const updatedCartItems = response.data.result.map((cartItem) => ({
+                ...cartItem,
+                productName: cartItem.Product.productName,
+                price: cartItem.Product.price
+            }));
+
             setCartItems(updatedCartItems);
             setLoading(false);
         } catch (error) {
@@ -101,12 +83,12 @@ export const Cart = ({ cartItems, setCartItems }) => {
                                 fontWeight="hairline"
                                 color="white"
                             >
-                                <Box flex="2">{item.productName}</Box>
+                                <Box flex="2">{item.Product.productName}</Box>
                                 <Flex flex="1" justifyContent="space-between" alignItems="center" ml="20px">
                                     <Box mx={'5px'} color="black">QTY:</Box>
                                     <Box mr={'5px'} color={'black'} fontWeight={'semibold'}>{item.quantity}</Box>
                                 </Flex>
-                                <Box ml="40px">Rp. {formatPrice(item.price * item.quantity)}.00</Box>
+                                <Box ml="40px">Rp. {formatPrice(item.Product.price * item.quantity)},00</Box>
                             </Flex>
                         ))
                     ) : (
