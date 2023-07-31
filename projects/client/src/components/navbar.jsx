@@ -42,6 +42,7 @@ export const Navbar = () => {
                         </MenuButton>
                         <Portal>
                             <MenuList zIndex={100}>
+                                <MenuItem as={Link} to="/cashier">Home</MenuItem>
                                 <MenuItem as={Link} to="/cashierlist">Cashier List</MenuItem>
                                 <MenuItem>Sales Report</MenuItem>
                                 <MenuItem onClick={onLogout}>Log Out</MenuItem>

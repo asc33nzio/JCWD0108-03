@@ -100,7 +100,7 @@ export default function InitialFocus() {
                                             {({ field }) => (
                                                 <FormControl mt={4}>
                                                     <FormLabel>Photo</FormLabel>
-                                                    <Input   {...field}
+                                                    <Input mb={"10px"}  {...field}
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
