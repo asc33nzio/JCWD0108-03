@@ -26,9 +26,9 @@ export const Cashier = () => {
         }
     }, []);
     return (
-        <Box bgColor={"gray.200"} w={"100%"} h={"100vh"}>
+        <Box w={"100%"} h={"100vh"}>
             <Navbar />
-            <Flex justifyContent={"center"} pt={"100px"} bgColor={"gray.200"} w={"100%"} h={"100%"}>
+            <Flex justifyContent={"center"} pt={"100px"} w={"100%"} h={"100%"}>
                 <Flex >
                     <ProductCategories cartItems={cartItems} setCartItems={setCartItems} />
                     <Flex >
