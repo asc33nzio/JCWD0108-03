@@ -4,10 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from "../components/navbar";
 import { Cart } from "../components/cart";
 import { ProductCategories } from "../components/admin/productCategories";
+import  Axios  from "axios";
 
 export const Cashier = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+
+    const data = async () => {
+        try {
+            const response = await Axios.post(``)
+        } catch (error) {
+            
+        }
+    }
 
     useEffect(() => {
         if (!token) {
