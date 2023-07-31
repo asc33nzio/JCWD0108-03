@@ -10,17 +10,17 @@ export const Cart = ({ cartItems, setCartItems }) => {
         try {
             const token = localStorage.getItem("token");
             const response = await Axios.get("http://localhost:8000/api/cart", {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` },
             });
-
+    
             const productIds = [...new Set(response.data.result.map((cartItem) => cartItem.ProductId))];
-
+    
             const productRequests = productIds.map((productId) =>
                 Axios.get(`http://localhost:8000/api/products/${productId}`)
             );
-
+    
             const productResponses = await Promise.all(productRequests);
-
+    
             const updatedCartItems = response.data.result.map((cartItem) => {
                 const productResponse = productResponses.find(
                     (response) => response.data.result.id === cartItem.ProductId
@@ -30,16 +30,15 @@ export const Cart = ({ cartItems, setCartItems }) => {
                     return {
                         ...cartItem,
                         price: productData.price,
-                        productName: productData.productName,
+                        productName: productData.productName
                     };
                 } else {
                     return cartItem;
                 }
             });
-
+    
             setCartItems(updatedCartItems);
             setLoading(false);
-
         } catch (error) {
             console.error(error);
             setLoading(false);
@@ -104,8 +103,8 @@ export const Cart = ({ cartItems, setCartItems }) => {
                             >
                                 <Box flex="2">{item.productName}</Box>
                                 <Flex flex="1" justifyContent="space-between" alignItems="center" ml="20px">
-                                    <Box color="black">QTY:</Box>
-                                    <Box mr={'10px'} color={'black'} fontWeight={'semibold'}>{item.quantity}</Box>
+                                    <Box mx={'5px'} color="black">QTY:</Box>
+                                    <Box mr={'5px'} color={'black'} fontWeight={'semibold'}>{item.quantity}</Box>
                                 </Flex>
                                 <Box ml="40px">Rp. {formatPrice(item.price * item.quantity)}.00</Box>
                             </Flex>

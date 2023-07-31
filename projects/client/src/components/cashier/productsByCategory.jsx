@@ -29,6 +29,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
             });
             const cartItems = response.data.result;
             setCartItems(cartItems);
+            return Promise.resolve();
         } catch (error) {
             console.error(error);
         }
@@ -39,8 +40,8 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     };
 
     const handleMinusClick = (productId) => {
-        const currentQuantity = inputQuantities[productId] || 1;
-        const newQuantity = Math.max(currentQuantity - 1, 1);
+        const currentQuantity = inputQuantities[productId] || 0;
+        const newQuantity = Math.max(currentQuantity - 1, 0);
         setInputQuantities((prevQuantities) => ({
             ...prevQuantities,
             [productId]: newQuantity,
@@ -49,7 +50,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
 
     const handlePlusClick = (productId) => {
         const product = products.find((product) => product.id === productId);
-        const currentQuantity = inputQuantities[productId] || 1;
+        const currentQuantity = inputQuantities[productId] || 0;
         const newQuantity = currentQuantity + 1;
 
         if (product && newQuantity <= product.stock) {
@@ -75,15 +76,17 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     };
 
     const handleAddToCart = async (productId) => {
-        const inputQuantity = inputQuantities[productId] || 1;
+        const inputQuantity = inputQuantities[productId] || 0;
         const token = localStorage.getItem('token');
         const product = products.find((product) => product.id === productId);
 
         try {
             if (product && inputQuantity >= 1) {
                 const payload = {
+                    productName: product.productName,
                     ProductId: productId,
-                    quantity: inputQuantity
+                    quantity: inputQuantity,
+                    price: product.price,
                 };
 
                 const cartItem = cartItems.find((item) => item.ProductId === productId);
@@ -95,16 +98,14 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         "Content-type": "multipart/form-data"
                     });
 
-                    addToCart(payload);
+                    addToCart({ ...payload, id: cartItems.length + 1 });
 
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,
-                        [productId]: 0,
+                        [productId]: inputQuantity,
                     }));
 
                     await productsByCategory(params.categoryId);
-
-                    getCartByUser();
                 } else {
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,
@@ -119,11 +120,8 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
 
     useEffect(() => {
         productsByCategory(params.categoryId);
-    }, [params.categoryId]);
-
-    useEffect(() => {
         getCartByUser();
-    }, []);
+    }, [params.categoryId]);
 
     return (
         <Flex>
@@ -133,7 +131,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         const productId = item.id;
                         const inputQuantity = inputQuantities[productId] || 0;
                         return (
-                            <Box mb={{ base: "30px" }} key={item.id}>
+                            <Box key={item.id} mb={{ base: "30px" }}>
                                 <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"}>
                                     <Box h={"100px"} borderTopRadius={"9px"}>
                                         <Box position={"absolute"} w={{ base: '80px', sm: '120px', md: '160px' }} >
@@ -148,7 +146,9 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                                         {/* Minus button */}
                                         <Flex onClick={() => handleMinusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >-</Flex>
                                         {/* Quantity display */}
-                                        <Flex mx={4} fontSize="20px" fontWeight="bold">{inputQuantity}</Flex>
+                                        <Flex mx={4} fontSize="20px" fontWeight="bold">
+                                            {item.stock === 0 ? 0 : inputQuantity}
+                                        </Flex>
                                         {/* Plus button */}
                                         <Flex onClick={() => handlePlusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >+</Flex>
                                     </Flex>
