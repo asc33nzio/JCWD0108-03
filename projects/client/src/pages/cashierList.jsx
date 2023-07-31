@@ -56,18 +56,19 @@ export const CashierList = () => {
                 <Img w={"80px"} borderBottom={"2px solid"} src="c__1_-removebg-preview.png" />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
-                <Flex mt={"20px"} justifyContent={"center"}>
-                    <InitialFocus />
-                </Flex>
+            <Flex mt={"20px"} justifyContent={"center"}>
+                <InitialFocus />
+            </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
-                    <TableContainer w={{ base: '250px', md: '800px', lg: '700px', xl: "1000px" }}>
+                    <TableContainer w={{ base: '250px', md: '800px', lg: '900px', xl: "1200px" }}>
                         <Table variant='simple' >
                             <Thead >
                                 <Tr >
                                     <Th textAlign={"center"}>Photo</Th>
                                     <Th textAlign={"center"}>Username</Th>
                                     <Th textAlign={"center"}>Email</Th>
+                                    <Th textAlign={"center"}>Password</Th>
                                     <Th textAlign={"center"}>Status</Th>
                                     <Th textAlign={"center"}>Action</Th>
                                 </Tr>
@@ -79,10 +80,14 @@ export const CashierList = () => {
                                             <Td textAlign={"center"}><Avatar boxShadow={"0px 0px 10px grey"} src={`http://localhost:8000/avatars/${item.avatar}`} /></Td>
                                             <Td textAlign={"center"}>{item.username}</Td>
                                             <Td textAlign={"center"}>{item.email}</Td>
+                                            <Td overflow="hidden"
+                                                whiteSpace="nowrap"
+                                                textOverflow="ellipsis"
+                                                maxWidth="100px" textAlign={"center"}>{item.password}</Td>
                                             {item.isSuspended ? (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"15px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"20px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
                                             ) : (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"15px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"20px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
                                             )}
                                             <Td display={"flex"} justifyContent={"center"} >
                                                 <Button borderRadius={"70px"} color={"white"} bg={"blue.600"}><EditIcon /></Button>
