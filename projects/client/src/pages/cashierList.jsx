@@ -1,9 +1,9 @@
+import Axios from "axios";
+import InitialFocus from "../components/formModal";
 import { Avatar, Box, Button, Flex, Img, Text, useToast } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react';
-import InitialFocus from "../components/formModal";
 import { useEffect, useState } from "react";
-import Axios from "axios";
 import { useNavigate } from "react-router";
 import { DeleteButton } from "../components/admin/deleteButton";
 import { EditIcon } from "@chakra-ui/icons";
@@ -53,7 +53,7 @@ export const CashierList = () => {
                 <Navbar />
             </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
-                <Img w={"80px"} borderBottom={"2px solid"} src="c__1_-removebg-preview.png" />
+                <Img w={"80px"} borderBottom={"2px solid"} src="aaa_studio_transparent.png" />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
             <Flex mt={"20px"} justifyContent={"center"}>

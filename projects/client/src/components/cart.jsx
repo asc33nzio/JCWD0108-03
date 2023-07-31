@@ -85,8 +85,8 @@ export const Cart = ({ cartItems, setCartItems }) => {
                             >
                                 <Box flex="2">{item.Product?.productName || "Product Name Is Being Loaded"}</Box>
                                 <Flex flex="1" justifyContent="space-between" alignItems="center" ml="20px">
-                                    <Box mx={'5px'} color="black">QTY:</Box>
-                                    <Box mr={'5px'} color={'black'} fontWeight={'semibold'}>{item.quantity}</Box>
+                                    <Box mx={'5px'} color="black" textAlign={'center'}>QTY:</Box>
+                                    <Box mr={'5px'} color={'black'} fontWeight={'semibold'} textAlign={'center'}>{item.quantity}</Box>
                                 </Flex>
                                 <Box ml="40px">Rp. {formatPrice(item.Product?.price * item.quantity) || "Price Is Being Loaded"},00</Box>
                             </Flex>
