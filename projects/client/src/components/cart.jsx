@@ -13,13 +13,13 @@ export const Cart = ({ cartItems, setCartItems }) => {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            const updatedCartItems = response.data.result.map((cartItem) => ({
+            const newCartItems = response.data.result.map((cartItem) => ({
                 ...cartItem,
                 productName: cartItem.Product.productName,
                 price: cartItem.Product.price
             }));
 
-            setCartItems(updatedCartItems);
+            setCartItems((prevCartItems) => [...prevCartItems, ...newCartItems]);
             setLoading(false);
         } catch (error) {
             console.error(error);
@@ -36,11 +36,11 @@ export const Cart = ({ cartItems, setCartItems }) => {
     };
 
     const calculateTotalPrice = () => {
-        if (!cartItems) {
+        if (!cartItems || cartItems.length === 0) {
             return "0";
-        };
+        }
 
-        const totalPrice = cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+        const totalPrice = cartItems.reduce((total, item) => total + (item.Product?.price || 0) * item.quantity, 0);
         return formatPrice(totalPrice);
     };
 
@@ -75,7 +75,7 @@ export const Cart = ({ cartItems, setCartItems }) => {
                     ) : cartItems && cartItems.length > 0 ? (
                         cartItems.map((item) => (
                             <Flex
-                                key={item.ProductId}
+                                key={Math.random(item.ProductId + item.quantity)}
                                 justifyContent="space-between"
                                 fontSize={{ base: "10px", sm: "13px", md: "18px", lg: "25px" }}
                                 borderBottom="1px solid white"
@@ -83,12 +83,12 @@ export const Cart = ({ cartItems, setCartItems }) => {
                                 fontWeight="hairline"
                                 color="white"
                             >
-                                <Box flex="2">{item.Product.productName}</Box>
+                                <Box flex="2">{item.Product?.productName || "Product Name Is Being Loaded"}</Box>
                                 <Flex flex="1" justifyContent="space-between" alignItems="center" ml="20px">
-                                    <Box mx={'5px'} color="black">QTY:</Box>
-                                    <Box mr={'5px'} color={'black'} fontWeight={'semibold'}>{item.quantity}</Box>
+                                    <Box mx={'5px'} color="black" textAlign={'center'}>QTY:</Box>
+                                    <Box mr={'5px'} color={'black'} fontWeight={'semibold'} textAlign={'center'}>{item.quantity}</Box>
                                 </Flex>
-                                <Box ml="40px">Rp. {formatPrice(item.Product.price * item.quantity)},00</Box>
+                                <Box ml="40px">Rp. {formatPrice(item.Product?.price * item.quantity) || "Price Is Being Loaded"},00</Box>
                             </Flex>
                         ))
                     ) : (

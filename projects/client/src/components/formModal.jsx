@@ -59,7 +59,7 @@ export default function InitialFocus() {
     }
     return (
         <>
-            <Button bg={"#D5AD18"} color={"white"} w={{ base: '200px', md: '300px', lg: '500px' }} onClick={onOpen}>Add Cashier</Button>
+            <Button boxShadow={"0px 0px 5px grey"} bg={"#D5AD18"} color={"white"} w={{ base: '200px', md: '200px', lg: '200px' }} onClick={onOpen}>Add Cashier</Button>
             <Modal
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
@@ -100,7 +100,7 @@ export default function InitialFocus() {
                                             {({ field }) => (
                                                 <FormControl mt={4}>
                                                     <FormLabel>Photo</FormLabel>
-                                                    <Input   {...field}
+                                                    <Input mb={"10px"}  {...field}
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);

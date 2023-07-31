@@ -4,39 +4,39 @@ import { Navbar } from "../components/navbar";
 import { Cart } from "../components/cart";
 import { ProductsByCategoryAdmin } from "../components/cashier/productByCategoryCashier";
 import { Back } from "../components/back";
+import { ProductsByCategory } from "../components/cashier/productsByCategory";
 
 export const CashierProducts = () => {
-    const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
-    const addToCart = (newItem) => {
-        const existingItemIndex = cartItems.findIndex(
-          (item) => item.ProductId === newItem.ProductId
-        );
-      
-        if (existingItemIndex !== -1) {
-          const updatedCartItems = [...cartItems];
-          updatedCartItems[existingItemIndex].quantity += newItem.quantity;
-          setCartItems(updatedCartItems);
-        } else {
-          setCartItems((prevCartItems) => [...prevCartItems, newItem]);
-        }
-      };
-      
+  const addToCart = (newItem) => {
+    const existingItemIndex = cartItems.findIndex(
+      (item) => item.ProductId === newItem.ProductId
+    );
 
-    return (
-        <Box>
-            <Navbar />
+    if (existingItemIndex !== -1) {
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[existingItemIndex].quantity += newItem.quantity;
+      setCartItems(updatedCartItems);
+    } else {
+      setCartItems((prevCartItems) => [...prevCartItems, newItem]);
+    }
+  };
+
+  return (
+    <Box>
+      <Navbar />
+      <Flex>
+        <Back nav={'/cashier'} />
+        <Flex justifyContent={"center"} pt={"100px"}>
+          <Flex>
+            <ProductsByCategory addToCart={addToCart} cartItems={cartItems} setCartItems={setCartItems} />
             <Flex>
-                <Back nav={'/cashier'} />
-                <Flex justifyContent={"center"} pt={"100px"}>
-                    <Flex>
-                        <ProductsByCategoryAdmin addToCart={addToCart} cartItems={cartItems} setCartItems={setCartItems} />
-                        <Flex>
-                            <Cart cartItems={cartItems} setCartItems={setCartItems} />
-                        </Flex>
-                    </Flex>
-                </Flex>
+              <Cart cartItems={cartItems} setCartItems={setCartItems} />
             </Flex>
-        </Box>
-    )
+          </Flex>
+        </Flex>
+      </Flex>
+    </Box>
+  )
 };
