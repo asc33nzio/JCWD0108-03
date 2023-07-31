@@ -13,8 +13,6 @@ export const DeleteButton = ({ id }) => {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
-            console.log(id);
-            console.log(response);
             toast({
                 title: "Success!",
                 description: "Cashier Deleted!",
@@ -41,7 +39,6 @@ export const DeleteButton = ({ id }) => {
                     <ModalBody pb={6}>
                         Are you sure want to delete this cashier?
                     </ModalBody>
-
                     <ModalFooter>
                         <Button onClick={onDelete} mr={"5px"} color={"white"} bg={"red"}>Delete</Button>
                         <Button onClick={onClose}>Cancel</Button>

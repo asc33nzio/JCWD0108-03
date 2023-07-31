@@ -40,7 +40,6 @@ export const CashierLogin = () => {
                 isClosable: true,
                 position: "top"
             });
-            console.log(data1);
         } catch (err) {
             console.log(err);
             toast({

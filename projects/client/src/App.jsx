@@ -2,7 +2,7 @@ import Axios from "axios";
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { CashierList } from "./components/cashierList";
+import { CashierList } from "./pages/cashierList";
 import { Login } from "./pages/login";
 import { Forgot } from "./pages/forgot";
 import { ErrorPage } from "./pages/404";
