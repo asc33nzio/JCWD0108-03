@@ -1,6 +1,6 @@
+import Axios from "axios";
 import { Box, Button, Flex, Image } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
-import Axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Cart } from "../components/cart";
@@ -10,7 +10,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export const DetailProduct = () => {
     const params = useParams();
-
+    const [cartItems, setCartItems] = useState([]);
     const [product, setProduct] = useState([]);
 
     const dataProduct = async (id) => {
@@ -47,7 +47,7 @@ export const DetailProduct = () => {
                         <Box textAlign={"justify"} w={"400px"}> {product.description} </Box>
                     </Box>
                     <Box>
-                        <Cart />
+                        <Cart cartItems={cartItems} setCartItems={setCartItems} />
                     </Box>
                 </Flex>
             </Flex>

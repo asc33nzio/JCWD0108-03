@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const db = require('../models');
 const cartItems = db.CartItems;
 const products = db.Products;
@@ -78,5 +79,25 @@ module.exports = {
                 message: 'Internal server error.',
             });
         };
+    },
+    getCartByUser: async (req, res) => {
+        try {
+            const token = req.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, process.env.KEY_JWT);
+            const userId = decodedToken.id;
+
+            const result = await cartItems.findAll(
+                { where: { UserId: userId } }
+            );
+            res.status(200).send({
+                status: 200,
+                result
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: error
+            });
+        }
     }
 };
