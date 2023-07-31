@@ -31,14 +31,12 @@ module.exports = {
 
             res.status(200).send({
                 status: 200,
-                message: "Register success.",
-                result
+                message: "Register success."
             });
         } catch (error) {
             res.status(500).send({
                 status: 500,
-                message: "Internal server error.",
-                error
+                message: "Internal server error."
             });
         }
     },
@@ -71,7 +69,7 @@ module.exports = {
             console.log(error);
             return res.status(500).send({
                 status: 500,
-                error
+                message: 'Internal server error.',
             });
         }
     },
@@ -110,8 +108,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send({
                 status: 500,
-                message: "Internal server error.",
-                error
+                message: "Internal server error."
             });
         }
     },

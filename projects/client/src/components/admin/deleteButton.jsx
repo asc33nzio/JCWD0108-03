@@ -16,8 +16,8 @@ export const DeleteButton = ({ id }) => {
             console.log(id);
             console.log(response);
             toast({
-                title: "Success",
-                description: "Delete Cashier success!",
+                title: "Success!",
+                description: "Cashier Deleted!",
                 status: 'success',
                 duration: 1000,
                 isClosable: true,

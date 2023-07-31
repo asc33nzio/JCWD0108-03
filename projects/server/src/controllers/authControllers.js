@@ -30,7 +30,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send({
                 status: 500,
-                error
+                message: 'Internal server error.',
             });
         }
     },

@@ -32,8 +32,8 @@ export const CashierList = () => {
                 "content-Type": "Multiple/form-data"
             });
             toast({
-                title: "Cashier Status Already Change!",
-                description: "Check Your Cashier status Below!",
+                title: "Cashier Status Already Changed!",
+                description: "Check Your Cashier Status Below!",
                 status: "warning",
                 duration: 3500,
                 isClosable: true,
@@ -60,9 +60,9 @@ export const CashierList = () => {
                 <Img w={"80px"} borderBottom={"2px solid"} src="c__1_-removebg-preview.png" />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
-            <Flex mt={"20px"} justifyContent={"center"}>
-                <InitialFocus />
-            </Flex>
+                <Flex mt={"20px"} justifyContent={"center"}>
+                    <InitialFocus />
+                </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
                     <TableContainer w={{ base: '250px', md: '800px', lg: '700px', xl: "1000px" }}>
