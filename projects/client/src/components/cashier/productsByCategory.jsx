@@ -14,7 +14,8 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     const [inputQuantities, setInputQuantities] = useState({});
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
-    const [loading, setLoading] = useState(true);
+    const [loadingProducts, setLoadingProducts] = useState(true);
+    const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -22,25 +23,27 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
             setTotalPage(response.data.totalPage);
             setPage(response.data.page);
             setProducts(response.data.result);
-            setLoading(false);
+            setLoadingProducts(false);
         } catch (error) {
-            console.log(error);
-            setLoading(false);
+            console.error(error);
+            setLoadingProducts(false);
         }
     }, [categoryId]);
 
     const getCartByUser = async () => {
         try {
+            setLoadingCartUpdate(true);
             const token = localStorage.getItem('token');
             const response = await Axios.get('http://localhost:8000/api/cart', {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token}` }
             });
             const cartItems = response.data.result;
             setCartItems(cartItems);
-            return Promise.resolve();
+            setLoadingCartUpdate(false);
         } catch (error) {
+            setLoadingCartUpdate(false);
             console.error(error);
-        }
+        };
     };
 
     const handleClick = (id) => {
@@ -91,9 +94,9 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
         try {
             if (product && inputQuantity >= 1) {
                 const payload = {
-                    productName: product.productName,
                     ProductId: productId,
                     quantity: inputQuantity,
+                    productName: product.productName,
                     price: product.price
                 };
 
@@ -101,6 +104,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
                 if (totalQuantityInCart <= product.stock) {
+                    setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
                         "Content-type": "multipart/form-data"
@@ -112,18 +116,17 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         ...prevQuantities,
                         [productId]: inputQuantity,
                     }));
-
-                    await fetchProductsByCategory(page);
+                    setLoadingCartUpdate(false);
                 } else {
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,
                         [productId]: product.stock - (cartItem?.quantity || 0),
                     }));
                 }
-            };
+            }
         } catch (error) {
             console.error(error);
-        };
+        }
     };
 
     const nextPage = () => {
@@ -139,27 +142,36 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     };
 
     useEffect(() => {
-        getCartByUser();
-        setLoading(true);
-        fetchProductsByCategory(page);
+        setLoadingProducts(true);
+        Promise.all([getCartByUser(), fetchProductsByCategory(page)])
+            .then(() => setLoadingProducts(false))
+            .catch(() => setLoadingProducts(false));
     }, [fetchProductsByCategory, page]);
+
+    useEffect(() => {
+        if (!loadingCartUpdate) {
+            getCartByUser();
+        }
+    }, [loadingCartUpdate]);
 
     return (
         <Flex>
             <Flex justifyContent={"center"} w={"full"}>
                 <Box>
-                    {loading ? (
+                    {loadingProducts ? (
                         <Flex justifyContent="center" alignItems="center" height="200px">
-                            <CircleLoader size={200} color={"black"} loading={loading} />
+                            <CircleLoader size={200} color={"black"} loading={loadingProducts} />
                         </Flex>
                     ) : (
                         <Flex flexWrap={"wrap"} w={{ base: '200px', sm: '350px', md: '350px', lg: '600px' }} gap={"3"}>
                             {products.map((product) => {
                                 const productId = product.id;
                                 const inputQuantity = inputQuantities[productId] || 0;
-                                console.log(product);
-                                console.log(product.price);
-                                console.log(product.Product);
+
+                                if (!product || !product.productName || !product.price) {
+                                    return null;
+                                };
+
                                 return (
                                     <Box key={product.id} mb={{ base: "30px" }}>
                                         <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"}>

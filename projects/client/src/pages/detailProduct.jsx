@@ -7,7 +7,6 @@ import { Cart } from "../components/cart";
 import { Back } from "../components/back";
 import { AiOutlineShoppingCart } from "react-icons/ai"
 
-
 export const DetailProduct = () => {
     const params = useParams();
     const [cartItems, setCartItems] = useState([]);
