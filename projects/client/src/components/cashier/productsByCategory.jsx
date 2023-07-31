@@ -14,7 +14,8 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     const [inputQuantities, setInputQuantities] = useState({});
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
-    const [loading, setLoading] = useState(true);
+    const [loadingProducts, setLoadingProducts] = useState(true);
+    const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -22,25 +23,27 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
             setTotalPage(response.data.totalPage);
             setPage(response.data.page);
             setProducts(response.data.result);
-            setLoading(false);
+            setLoadingProducts(false);
         } catch (error) {
-            console.log(error);
-            setLoading(false);
+            console.error(error);
+            setLoadingProducts(false);
         }
     }, [categoryId]);
 
     const getCartByUser = async () => {
         try {
+            setLoadingCartUpdate(true);
             const token = localStorage.getItem('token');
             const response = await Axios.get('http://localhost:8000/api/cart', {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token}` }
             });
             const cartItems = response.data.result;
             setCartItems(cartItems);
-            return Promise.resolve();
+            setLoadingCartUpdate(false);
         } catch (error) {
+            setLoadingCartUpdate(false);
             console.error(error);
-        }
+        };
     };
 
     const handleClick = (id) => {
@@ -88,8 +91,6 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
         const token = localStorage.getItem('token');
         const product = products.find((product) => product.id === productId);
 
-        
-
         try {
             if (product && inputQuantity >= 1) {
                 const payload = {
@@ -102,10 +103,8 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                 const cartItem = cartItems.find((item) => item.ProductId === productId);
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
-                console.log(product.productName);
-                console.log(product.price);
-
                 if (totalQuantityInCart <= product.stock) {
+                    setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
                         "Content-type": "multipart/form-data"
@@ -117,18 +116,17 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         ...prevQuantities,
                         [productId]: inputQuantity,
                     }));
-
-                    await fetchProductsByCategory(page);
+                    setLoadingCartUpdate(false);
                 } else {
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,
                         [productId]: product.stock - (cartItem?.quantity || 0),
                     }));
                 }
-            };
+            }
         } catch (error) {
             console.error(error);
-        };
+        }
     };
 
     const nextPage = () => {
@@ -144,18 +142,25 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     };
 
     useEffect(() => {
-        setLoading(true);
-        getCartByUser();
-        fetchProductsByCategory(page);
+        setLoadingProducts(true);
+        Promise.all([getCartByUser(), fetchProductsByCategory(page)])
+            .then(() => setLoadingProducts(false))
+            .catch(() => setLoadingProducts(false));
     }, [fetchProductsByCategory, page]);
+
+    useEffect(() => {
+        if (!loadingCartUpdate) {
+            getCartByUser();
+        }
+    }, [loadingCartUpdate]);
 
     return (
         <Flex>
             <Flex justifyContent={"center"} w={"full"}>
                 <Box>
-                    {loading ? (
+                    {loadingProducts ? (
                         <Flex justifyContent="center" alignItems="center" height="200px">
-                            <CircleLoader size={200} color={"black"} loading={loading} />
+                            <CircleLoader size={200} color={"black"} loading={loadingProducts} />
                         </Flex>
                     ) : (
                         <Flex flexWrap={"wrap"} w={{ base: '200px', sm: '350px', md: '350px', lg: '600px' }} gap={"3"}>
