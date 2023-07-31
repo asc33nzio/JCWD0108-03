@@ -45,7 +45,7 @@ export const Navbar = () => {
                         <Portal>
                             <MenuList boxShadow={"0px 0px 5px grey"} zIndex={100}>
                                 <MenuItem as={Link} to="/cashier">Home</MenuItem>
-                                <MenuItem as={Link} to="/cashier">Profile</MenuItem>
+                                <MenuItem as={Link} to="/profile">Profile</MenuItem>
                                 {data.isAdmin ? (
                                     <Box>
                                         <MenuItem x as={Link} to="/cashierlist">Cashier List</MenuItem>
