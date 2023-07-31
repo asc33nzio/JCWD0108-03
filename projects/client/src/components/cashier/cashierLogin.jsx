@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Input, VStack, useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import * as Yup from "yup";
 import { Field, ErrorMessage, Formik, Form } from "formik";
@@ -15,6 +15,7 @@ export const CashierLogin = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [success, setSuccess] = useState();
+    const token = localStorage.getItem("token");
     const loginSchema = Yup.object().shape({
         username: Yup.string()
             .required("Username is required"),
@@ -46,8 +47,22 @@ export const CashierLogin = () => {
             console.log(data1);
         } catch (err) {
             console.log(err);
+            toast({
+                title: "Access Denied!",
+                description: "Username or Password Incorrect!",
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
+
         }
     }
+    useEffect(() => {
+        if (token) {
+            navigate("/cashierlist")
+        }
+    }, []);
     return (
         <Formik
             initialValues={{ username: "", password: "" }}

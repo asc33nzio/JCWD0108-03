@@ -1,7 +1,7 @@
 import { Box, Button, useToast } from "@chakra-ui/react"
 import Axios from "axios"
 
-export const DeleteButton = ({id}) => {
+export const DeleteButton = ({ id }) => {
     const toast = useToast();
     const token = localStorage.getItem("token");
     const onDelete = async () => {
@@ -14,13 +14,15 @@ export const DeleteButton = ({id}) => {
             console.log(response);
             toast({
                 title: "Success",
-                description: "Delete blog success!",
+                description: "Delete Cashier success!",
                 status: 'success',
-                duration: 2500,
+                duration: 1000,
                 isClosable: true,
                 position: "top"
             })
-            window.location.reload()
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000);
         } catch (err) {
             console.log(err);
         }
