@@ -5,6 +5,7 @@ import InitialFocus from "./formModal";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router";
+import { DeleteButton } from "./admin/deleteButton";
 
 export const CashierList = () => {
     const [data, setData] = useState();
@@ -23,9 +24,7 @@ export const CashierList = () => {
         if (!token) {
             navigate("/")
         }
-
     }, []);
-    console.log(data);
 
     return (
         <>
@@ -54,8 +53,8 @@ export const CashierList = () => {
                                             <Td textAlign={"center"}><Avatar src={`http://localhost:8000/avatars/${item.avatar}`} /></Td>
                                             <Td textAlign={"center"}>{item.username}</Td>
                                             <Td textAlign={"center"}>{item.email}</Td>
-                                            <Td textAlign={"center"} ><Button color={"white"} bg={"blue"}>Edit</Button>
-                                                <Button ml={"5px"} color={"white"} bg={"red"}>Delete</Button> <Button ml={"1px"} color={"white"} bg={"teal"}>Suspend</Button></Td>
+                                            <Td display={"flex"} textAlign={"center"} ><Button color={"white"} bg={"blue"}>Edit</Button>
+                                                <DeleteButton id={item.id} /><Button ml={"5px"} color={"white"} bg={"teal"}>Suspend</Button></Td>
                                         </Tr>
                                     );
                                 })}

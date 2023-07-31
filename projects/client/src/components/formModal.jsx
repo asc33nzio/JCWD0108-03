@@ -50,7 +50,9 @@ export default function InitialFocus() {
                 isClosable: true,
                 position: "top"
             });
+            window.location.reload();
             navigate("/cashierlist");
+            console.log(response);
         } catch (err) {
             console.log(err);
         }
