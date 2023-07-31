@@ -5,7 +5,7 @@ const { multerUpload } = require("../middleware/multer");
 
 router.post("/", verifyToken, checkRole, multerUpload(`./public/avatars`, 'Avatar').single('avatar'), adminControllers.addCashier);
 router.get("/all", adminControllers.getAllCashier);
-router.put('/banUser/:id', verifyToken, checkRole, adminControllers.suspendCashier);
+router.patch('/suspendCashier/:id', verifyToken, checkRole, adminControllers.suspendCashier);
 router.delete('/deletecashier/:id', verifyToken, checkRole, adminControllers.deleteCashier);
 
 module.exports = router;

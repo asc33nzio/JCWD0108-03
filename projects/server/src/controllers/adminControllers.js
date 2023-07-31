@@ -35,39 +35,43 @@ module.exports = {
                 result
             });
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
-                message: "Internal server error."
+                message: "Internal server error.",
+                error
             });
         }
     },
     suspendCashier: async (req, res) => {
         try {
-            const userId = req.params.id;
-            const findUser = await users.findOne({ where: { id: userId } });
+            const cashierId = req.params.id;
+            const findUser = await users.findOne({ where: { id: cashierId } });
             if (!findUser) {
                 return res.status(400).send({
                     status: 404,
-                    message: "User not found."
+                    message: "User not found.",
+                    Error
                 });
             };
-            if (findUser.isSuspended === true) {
-                return res.status(400).send({
-                    status: 400,
-                    message: "User already banned from SCP."
-                });
-            };
-            findUser.isSuspended = true;
-            await findUser.save();
-            return res.status(200).send({
-                status: 200,
-                message: "User has been banned successfully."
-            });
+            if (findUser.isSuspended) {
+                await findUser.update(
+                    { isSuspended: false },
+                    { where: { id: findUser.id } }
+                )
+                res.status(200).send({ message: "cashier already active" })
+            }
+            else {
+                await findUser.update(
+                    { isSuspended: true },
+                    { where: { id: findUser.id } }
+                )
+                res.status(200).send({ message: "Cashier Suspended" })
+            }
         } catch (error) {
+            console.log(error);
             return res.status(500).send({
                 status: 500,
-                message: "Internal server error.",
+                error
             });
         }
     },
@@ -104,10 +108,10 @@ module.exports = {
             };
             res.status(200).send({ message: "Deleted" })
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
-                message: "Internal server error."
+                message: "Internal server error.",
+                error
             });
         }
     },

@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Input, useToast } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Img, Input, useToast } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { Menu, MenuButton, MenuList, MenuItem, Portal } from '@chakra-ui/react'
 import { Link, useNavigate } from "react-router-dom";
@@ -25,9 +25,11 @@ export const Navbar = () => {
     }
     return (
         <Box zIndex={"100"} position={"fixed"}>
-            <Flex p={{ base: '25px', sm: '40px' }} alignItems={"center"} w={{ base: '100vw', md: '100vw', sm: '100vw', lg: '100vw' }} h={{ base: "10px", sm: '30px' }} bgColor={"#FFC900"} >
+            <Flex boxShadow={"0px 0px 10px grey"} p={{ base: '25px', sm: '40px' }} alignItems={"center"} w={{ base: '100vw', md: '100vw', sm: '100vw', lg: '100vw' }} h={{ base: "10px", sm: '30px' }} bgColor={"#FFC900"} >
                 <Box w={"20%"}>
-                    <Box color={"white"} fontSize={"30px"} fontWeight={"thin"} textShadow={"0px 0px 5px white"}>Payment App</Box>
+                    <Box as={Link}  to={"/cashier"} color={"white"} fontSize={"30px"} fontWeight={"thin"} textShadow={"0px 0px 5px white"}>
+                        <Img src="c__1_-removebg-preview.png" mt={"12px"} w={"90px"} />
+                    </Box>
                 </Box>
                 <Flex justifyContent={"center"} w={"60%"} mx={{ base: '10px', sm: '10px', }} _focus={{ borderColor: '#D5AD18', boxShadow: 'none', transform: 'scale(1.01)' }}>
                     <Input border={"3px solid #D5AD18"} _hover={{ borderColor: '#D5AD18' }} _focus={{ borderColor: '#D5AD18', boxShadow: 'none' }} bgColor={"white"} w={{ base: '200px', sm: '400px', md: '500px', lg: '600px' }} borderRightRadius={"0px"} h={{ sm: '40px', md: '40px', lg: '40px', base: '30px' }} />
@@ -38,14 +40,18 @@ export const Navbar = () => {
                 <Flex justifyContent={"end"} w={"20%"}>
                     <Menu>
                         <MenuButton>
-                            <Avatar src={`http://localhost:8000/avatars/${data.avatar}`} bgColor={"gray.400"} colorScheme={"#FFC900"} />
+                            <Avatar boxShadow={"0px 0px 10px grey"} src={`http://localhost:8000/avatars/${data.avatar}`} bgColor={"gray.400"} colorScheme={"#FFC900"} />
                         </MenuButton>
                         <Portal>
-                            <MenuList zIndex={100}>
+                            <MenuList boxShadow={"0px 0px 5px grey"} zIndex={100}>
                                 <MenuItem as={Link} to="/cashier">Home</MenuItem>
-                                <MenuItem as={Link} to="/cashierlist">Cashier List</MenuItem>
-                                <MenuItem>Sales Report</MenuItem>
-                                <MenuItem onClick={onLogout}>Log Out</MenuItem>
+                                {data.isAdmin ? (
+                                    <Box>
+                                        <MenuItem x as={Link} to="/cashierlist">Cashier List</MenuItem>
+                                        <MenuItem>Sales Report</MenuItem>
+                                    </Box>
+                                ) : (null)}
+                                <MenuItem color={"red"} onClick={onLogout}>Log Out</MenuItem>
                             </MenuList>
                         </Portal>
                     </Menu>

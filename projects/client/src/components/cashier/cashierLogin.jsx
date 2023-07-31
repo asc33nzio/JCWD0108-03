@@ -21,16 +21,12 @@ export const CashierLogin = () => {
             .required("Username is required"),
         password: Yup.string()
             .required("Password is required")
-            .min(6, "Paasowrd min 6 ")
-            .matches(/^(?=.*[A-Z])/, "Password Must Contain 1 Capital")
-            .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
-            .matches(/.*[0-9].*/, "Password Must Contain 1 number")
     });
     const handleSubmit = async (data1) => {
         try {
             const response = await Axios.post("http://localhost:8000/api/users/login", data1);
             console.log(response.data);
-            dispatch(setValue(response.data));
+            dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
             setSuccess(true);
             setTimeout(() => {
@@ -38,7 +34,7 @@ export const CashierLogin = () => {
             }, 1000)
             toast({
                 title: "Welcome!",
-                description: "Login Succses!",
+                description: "Login Success!",
                 status: 'success',
                 duration: 2500,
                 isClosable: true,
@@ -55,12 +51,11 @@ export const CashierLogin = () => {
                 isClosable: true,
                 position: "top"
             });
-
         }
     }
     useEffect(() => {
         if (token) {
-            navigate("/cashierlist")
+            navigate("/cashier")
         }
     }, []);
     return (

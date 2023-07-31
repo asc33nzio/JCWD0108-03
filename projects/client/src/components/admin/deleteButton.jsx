@@ -1,6 +1,7 @@
 import { Box, Button, useDisclosure, useToast } from "@chakra-ui/react"
 import Axios from "axios"
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export const DeleteButton = ({ id }) => {
     const toast = useToast();
@@ -31,7 +32,7 @@ export const DeleteButton = ({ id }) => {
     }
     return (
         <Box>
-            <Button onClick={onOpen} ml={"5px"} color={"white"} bg={"red"}>Delete</Button>
+            <Button borderRadius={"70px"} onClick={onOpen} ml={"5px"} color={"white"} bg={"red"}><DeleteIcon/></Button>
             <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
