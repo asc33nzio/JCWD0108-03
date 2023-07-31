@@ -83,10 +83,17 @@ module.exports = {
     getProductByCategory: async (req, res) => {
         try {
             const id = req.params.id;
+            const page = req.query.page || 1;
+            const limit = req.query.limit || 8;
+            const totalProduct = await products.count();
             const result = await products.findAll(
-                { where: { CategoryId: id } }
+                { where: { CategoryId: id }, limit, offset: limit * (page - 1) }
             );
-            res.status(200).send(result);
+            res.status(200).send({
+                page: page,
+                totalPage: Math.ceil(totalProduct / limit),
+                result
+            });
         } catch (error) {
             res.status(500).send({
                 status: 500,
