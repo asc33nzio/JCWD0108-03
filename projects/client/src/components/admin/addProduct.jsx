@@ -17,13 +17,13 @@ export const AddProduct = () => {
             const formData = new FormData();
             const { productName, price, description, stock } = value;
             formData.append('productName', {productName}.productName);
-            formData.append('price', price)
-            formData.append('productImage', file)
-            formData.append('description', description)
-            formData.append('CategoryId', params.categoryId)
-            formData.append('stock', stock)
-            console.log([...formData]);
-            const response = await Axios.post(`http://localhost:8000/api/products/addProduct`, formData,
+            formData.append('price', price);
+            formData.append('productImage', file);
+            formData.append('description', description);
+            formData.append('CategoryId', params.categoryId);
+            formData.append('stock', stock);
+
+            await Axios.post(`http://localhost:8000/api/products/addProduct`, formData,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                     "Content-type": "multipart/form-data"

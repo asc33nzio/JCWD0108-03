@@ -80,16 +80,14 @@ module.exports = {
             });
         }
     },
-    GetProductByCategory: async (req, res) => {
+    getProductByCategory: async (req, res) => {
         try {
             const id = req.params.id;
             const page = req.query.page || 1
             const limit = req.query.limit || 5
-            const sort = req.query.sort || "ASC"
-            const sortBy = req.query.sortBy || "productName"
             const totalProduct = await products.count()
             const result = await products.findAll(
-                {where: { CategoryId: id },order : [[sortBy, sort]], limit,offset : limit * (page - 1) }
+                {where: { CategoryId: id } && {isActive : 1}, limit,offset : limit * (page - 1) }
                 );
             res.status(200).send({
                 page : page,
@@ -97,7 +95,6 @@ module.exports = {
                  result
             });
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: error
@@ -196,6 +193,33 @@ module.exports = {
                 }
                 )
             res.status(200).send(result)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
+    activeProduct: async (req, res) => {
+        try {
+            const data = await products.findOne(
+                {where : {id : req.body.productId}}
+            )
+            if (data.isActive) {
+                await products.update(
+                    {isActive : 0},
+                    {where : {id : data.id}}
+                )
+                res.status(200).send({message : "deactive success"})
+            }
+            else {
+                await products.update(
+                    {isActive : 1},
+                    {where : {id : data.id}}
+                    )
+                    res.status(200).send({message : "actived success"})
+            }
         } catch (error) {
             console.log(error);
             res.status(500).send({

@@ -56,7 +56,7 @@ module.exports = {
             if (!isAccountExist) throw { message: "E-mail not found." }
             const { email } = req.body;
             const payload = { id: isAccountExist.id }
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "4h" });
             const data = await fs.readFileSync("./reset_password_template.html", "utf-8");
             const tempCompile = await handlebars.compile(data);
             const tempResult = tempCompile(data);
