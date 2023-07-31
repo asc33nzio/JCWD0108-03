@@ -28,16 +28,13 @@ function App() {
     const keepLogin = async () => {
       try {
         const response = await Axios.get(`http://localhost:8000/api/users/keeplogin`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
         dispatch(setValue(response.data));
       } catch (error) {
         console.log(error);
       }
     };
-
     keepLogin();
   }, [dispatch, token]);
 
