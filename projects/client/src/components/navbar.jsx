@@ -3,6 +3,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { Menu, MenuButton, MenuList, MenuItem, Portal } from '@chakra-ui/react'
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import AAA_Logo from '../public/aaa_studio_transparent.png';
 
 export const Navbar = () => {
     const navigate = useNavigate();
@@ -27,8 +28,8 @@ export const Navbar = () => {
         <Box zIndex={"100"} position={"fixed"}>
             <Flex boxShadow={"0px 0px 10px grey"} p={{ base: '25px', sm: '40px' }} alignItems={"center"} w={{ base: '100vw', md: '100vw', sm: '100vw', lg: '100vw' }} h={{ base: "10px", sm: '30px' }} bgColor={"#FFC900"} >
                 <Box w={"20%"}>
-                    <Box as={Link}  to={"/cashier"} color={"white"} fontSize={"30px"} fontWeight={"thin"} textShadow={"0px 0px 5px white"}>
-                        <Img src="c__1_-removebg-preview.png" mt={"12px"} w={"90px"} />
+                    <Box as={Link} to={"/"} color={"white"} fontSize={"30px"} fontWeight={"thin"} textShadow={"0px 0px 5px white"}>
+                        <Img src={AAA_Logo} mt={"12px"} w={"90px"} />
                     </Box>
                 </Box>
                 <Flex justifyContent={"center"} w={"60%"} mx={{ base: '10px', sm: '10px', }} _focus={{ borderColor: '#D5AD18', boxShadow: 'none', transform: 'scale(1.01)' }}>
