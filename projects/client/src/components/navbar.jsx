@@ -9,6 +9,7 @@ export const Navbar = () => {
     const navigate = useNavigate();
     const toast = useToast();
     const data = useSelector((state) => state.user.value);
+
     const onLogout = () => {
         localStorage.removeItem("token")
         toast({
@@ -33,8 +34,7 @@ export const Navbar = () => {
                     </Box>
                 </Box>
                 <Flex justifyContent={"center"} w={"60%"} mx={{ base: '10px', sm: '10px', }} _focus={{ borderColor: '#D5AD18', boxShadow: 'none', transform: 'scale(1.01)' }}>
-                    <Input border={"3px solid #D5AD18"} _hover={{ borderColor: '#D5AD18' }} _focus={{ borderColor: '#D5AD18', boxShadow: 'none' }} bgColor={"white"} w={{ base: '200px', sm: '400px', md: '500px', lg: '600px' }} borderRightRadius={"0px"} h={{ sm: '40px', md: '40px', lg: '40px', base: '30px' }} />
-                    <Flex _active={{ transition: "0.1s", transform: "scale(0.95)" }} cursor={"pointer"} bgColor={"#D5AD18"} alignItems={"center"} p={"10px"} borderRightRadius={"5px"} color={"white"} h={{ base: '30px', sm: '40px', md: '40px' }}>
+                    <Flex cursor={"pointer"} ml={"700px"} onClick={() => navigate("/search")} _active={{ transition: "0.1s", transform: "scale(0.95)" }} bgColor={"#D5AD18"} alignItems={"center"} p={"10px"} borderRadius={"5px"} color={"white"} h={{ base: '30px', sm: '40px', md: '40px' }}>
                         <SearchIcon />
                     </Flex>
                 </Flex>
