@@ -1,6 +1,7 @@
 import Axios from "axios";
 import AddCashier from "../components/admin/addCashier";
 import UpdateCashier from "../components/admin/updateCashier";
+import AAA_Logo from '../public/aaa_studio_transparent.png';
 import { Avatar, Box, Button, Flex, Img, Text, useToast } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react';
@@ -53,7 +54,7 @@ export const CashierList = () => {
                 <Navbar />
             </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
-                <Img w={"80px"} borderBottom={"2px solid"} src="aaa_studio_transparent.png" />
+                <Img w={"80px"} borderBottom={"2px solid"} src={AAA_Logo} />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
             <Flex mt={"20px"} justifyContent={"center"}>
