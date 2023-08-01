@@ -12,12 +12,11 @@ export const DetailProduct = () => {
     const params = useParams();
     const [cartItems, setCartItems] = useState([]);
     const [product, setProduct] = useState([]);
-    const [reload, setReload] = useState(true)
 
     const handleClick = async (id) => {
         try {
             const response = await Axios.patch(`http://localhost:8000/api/products/`, { productId: id })
-            setReload(!reload)
+            window.location.reload()
         } catch (error) {
             console.log(error);
         }
@@ -74,7 +73,8 @@ export const DetailProduct = () => {
                             <Flex>
                                 {data ? (<Flex alignItems={"center"} gap={{ base: "5px" }} mt={{base:"10px", sm:"25px"}}>
                                 <Flex boxShadow={"0px 0px 3px #FFC900"}  bgColor={"yellow.400"} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} color={"white"} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{base:"10px", sm:"20px"}} /> </Flex>
-                                    {product.isActive ? (<Box boxShadow={"0px 0px 3px green"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} fontSize={{ base: "10px", sm:"15px" }} transition={"0.3s"} bgColor={"green"} color={"white"} onClick={() => handleClick(product.id)}>Active</Box>) : (<Button boxShadow={"0px 0px 3px red"} w={{ base: "25px" }} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px" }} h={{ base: "15px" }} fontSize={{ base: "7px" }} transition={"0.3s"} color={"white"} bgColor={"red"} onClick={() => handleClick(product.id)}>Deactive</Button>)}
+                                    {product.isActive ? (<Box cursor={"pointer"} boxShadow={"0px 0px 3px green"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} fontSize={{ base: "10px", sm:"15px" }} transition={"0.3s"} bgColor={"green"} color={"white"} onClick={() => handleClick(product.id)}>Active</Box>) : (<Button boxShadow={"0px 0px 3px red"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} fontSize={{ base: "10px", sm:"15px" }} transition={"0.3s"} bgColor={"red"} color={"white"} onClick={() => handleClick(product.id)}>Deactive</Button>)}
+
                                 
                                 </Flex>) : (<Flex boxShadow={"0px 0px 3px #FFC900"} mt={{base:"0px", sm:"10px"}} bgColor={"yellow.400"} h={{ base: "20px", sm:"35px" }} color={"white"} w={{ base: "30px", sm:"50px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{base:"10px", sm:"20px"}} /> </Flex>)}
                             </Flex>
