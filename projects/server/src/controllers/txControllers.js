@@ -100,7 +100,7 @@ module.exports = {
 
             const changeAmount = amountPaid - transaction.totalAmount;
 
-            if (changeAmount <= 0) {
+            if (changeAmount < 0) {
                 return res.status(400).send({
                     status: 400,
                     message: 'Insufficient payment. Checkout failed.',
