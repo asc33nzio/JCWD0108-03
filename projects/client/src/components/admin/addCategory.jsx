@@ -13,14 +13,15 @@ export const AddCategory = () => {
         try {
             const formData = new FormData();
             const { name } = value;
-            formData.append('name', {name}.name);
+            formData.append('name', { name }.name);
             formData.append('categoryImage', file)
             console.log([...formData]);
-            const response = await Axios.post(`http://localhost:8000/api/products/addCategory`, formData,
+            await Axios.post(`http://localhost:8000/api/products/addCategory`, formData,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                     "Content-type": "multipart/form-data"
-                })
+                });
+            window.location.reload();
         } catch (error) {
             console.log(error);
         };

@@ -5,11 +5,20 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from "../components/navbar";
 import { Cart } from "../components/cart";
 import { ProductCategories } from "../components/admin/productCategories";
+import  Axios  from "axios";
 
 export const Cashier = () => {
     const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+
+    const data = async () => {
+        try {
+            const response = await Axios.post(``)
+        } catch (error) {
+            
+        }
+    }
 
     useEffect(() => {
         if (!token) {
@@ -17,9 +26,9 @@ export const Cashier = () => {
         }
     }, []);
     return (
-        <Box bgColor={"gray.200"} w={"100%"} h={"100vh"}>
+        <Box w={"100%"} h={"100vh"}>
             <Navbar />
-            <Flex justifyContent={"center"} pt={"100px"} bgColor={"gray.200"} w={"100%"} h={"100%"}>
+            <Flex justifyContent={"center"} pt={"100px"} w={"100%"} h={"100%"}>
                 <Flex >
                     <ProductCategories cartItems={cartItems} setCartItems={setCartItems} />
                     <Flex >

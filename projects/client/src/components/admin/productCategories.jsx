@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import { AddCategory } from "./addCategory";
 
-export const ProductCategories = () => {
-    const navigate = useNavigate()
-    const [categories, setCategories] = useState([])
+export const ProductCategories = ({ cartItems, setCartItems }) => {
+    const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
+    const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
 
     const category = async (data) => {
         try {
@@ -17,13 +18,30 @@ export const ProductCategories = () => {
         };
     };
 
+    const getCartByUser = async () => {
+        try {
+            setLoadingCartUpdate(true);
+            const token = localStorage.getItem('token');
+            const response = await Axios.get('http://localhost:8000/api/cart', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const cartItems = response.data.result;
+            setCartItems(cartItems);
+            setLoadingCartUpdate(false);
+        } catch (error) {
+            setLoadingCartUpdate(false);
+            console.error(error);
+        };
+    };
+
     const handleClick = (id) => {
         navigate(`/category/${id}`);
     };
 
     useEffect(() => {
-        category()
-    }, []);
+        category();
+        getCartByUser();
+    }, [loadingCartUpdate]);
 
     return (
         <Flex>
@@ -35,7 +53,7 @@ export const ProductCategories = () => {
                                 <Flex position={"absolute"} zIndex={"5"} color={"gray.200"} textShadow={"0px 0px 20px white"}>
                                     {item.category}
                                 </Flex>
-                                <Image position={"relative"}h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} borderRadius={"10px"} src={`http://localhost:8000/categories/${item.imgURL}`} />
+                                <Image position={"relative"} h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} borderRadius={"10px"} src={`http://localhost:8000/categories/${item.imgURL}`} />
                             </Flex>
                         )
                     })}

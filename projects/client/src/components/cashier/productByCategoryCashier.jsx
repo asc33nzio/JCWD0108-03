@@ -7,7 +7,7 @@ import { SiQuicklook } from "react-icons/si"
 import { AddProduct } from "../admin/addProduct";
 import { CircleLoader } from "react-spinners";
 
-export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
+export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }) => {
     const navigate = useNavigate();
     const { categoryId } = useParams();
     const [products, setProducts] = useState([]);
@@ -16,6 +16,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
+    const params = useParams();
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -117,6 +118,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         [productId]: inputQuantity,
                     }));
                     setLoadingCartUpdate(false);
+                    await ProductsByCategory(params.categoryId);
                 } else {
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,
@@ -206,15 +208,11 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         </Flex>
                     )}
                     <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
-                        {totalPage > 1 && (
-                            <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
-                                {page > 1 && (
-                                    <Button onClick={prevPage}>Previous Page</Button>
-                                )}
-                                {page < totalPage && (
-                                    <Button onClick={nextPage}>Next Page</Button>
-                                )}
-                            </Flex>
+                        {page > 1 && (
+                            <Button onClick={prevPage}>Previous Page</Button>
+                        )}
+                        {page < totalPage && (
+                            <Button onClick={nextPage}>Next Page</Button>
                         )}
                     </Flex>
                 </Box>
