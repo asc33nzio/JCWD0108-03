@@ -12,6 +12,7 @@ import { CashierProducts } from "./pages/cashierProducts";
 import { setValue } from './redux/userSlice';
 import { Search } from "./pages/search";
 import { Profile } from "./pages/profile";
+import { ResetPassword } from "./pages/resetPassword";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   { path: "/product/:id", element: <DetailProduct /> },
   { path: "/search", element: <Search /> },
   { path: "/profile", element: <Profile /> },
+  { path: "/resetpassword", element: <ResetPassword /> },
 ]);
 
 function App() {

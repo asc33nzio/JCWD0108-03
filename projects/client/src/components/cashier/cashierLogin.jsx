@@ -9,12 +9,12 @@ import { setValue } from "../../redux/userSlice";
 import { useNavigate } from "react-router";
 
 export const CashierLogin = () => {
-    const toast = useToast();
+    const [success, setSuccess] = useState();
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
+    const toast = useToast();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [success, setSuccess] = useState();
     const token = localStorage.getItem("token");
     const loginSchema = Yup.object().shape({
         username: Yup.string()

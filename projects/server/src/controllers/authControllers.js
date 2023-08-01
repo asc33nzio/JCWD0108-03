@@ -2,6 +2,9 @@ const db = require('../models');
 const users = db.Users;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require("fs")
+const handlebars = require("handlebars")
+const transporter = require("../middleware/transporter.js")
 
 module.exports = {
     login: async (req, res) => {
@@ -51,7 +54,7 @@ module.exports = {
     },
     forgetPassword: async (req, res) => {
         try {
-            const isAccountExist = await user.findOne({ where: { email: req.body.email } });
+            const isAccountExist = await users.findOne({ where: { email: req.body.email } });
             if (!isAccountExist) throw { message: "E-mail not found." }
             const { email } = req.body;
             const payload = { id: isAccountExist.id }
@@ -71,10 +74,27 @@ module.exports = {
             });
             res.status(200).send(token);
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."
             });
         };
-    }
+    },
+    resetPassword: async (req, res) => {
+        try {
+            const { newPassword, confirmPassword } = req.body;
+            if (newPassword !== confirmPassword) throw { message: "Password is not same" }
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(confirmPassword, salt);
+            const result = await users.update(
+                { password: hashPassword },
+                { where: { id: req.user.id } }
+            );
+            res.status(200).send({ message: "Password has been changed" });
+        } catch (error) {
+            console.log(error);
+            res.status(400).send(error);
+        }
+    },
 }
