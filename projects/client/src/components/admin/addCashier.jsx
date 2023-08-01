@@ -3,7 +3,8 @@ import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, Flex, Box, } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export default function AddCashier() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,6 +15,8 @@ export default function AddCashier() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [success, setSuccess] = useState();
+    const [show, setShow] = useState(false);
+    const handleClick = () => setShow(!show);
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name"),
@@ -67,7 +70,7 @@ export default function AddCashier() {
                 onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent borderRadius={"10px"}>
-                    <ModalHeader borderTopRadius={"10px"} bg={"#FFC900"}>Create your account</ModalHeader>
+                    <ModalHeader borderTopRadius={"10px"} bg={"#FFC900"}>Create a New Cashier Account</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Formik
@@ -83,18 +86,29 @@ export default function AddCashier() {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} placeholder='Username' name="username" />
+                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Abcde' name="username" borderBottom={"2px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
-                                            <Field as={Input} placeholder='Email' name='email' />
+                                            <Field as={Input} variant={"flushed"} placeholder='Abcde@gmail.com' name='email' borderBottom={"2px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Password</FormLabel>
-                                            <Field as={Input} placeholder='Password' name='password' />
-                                            <ErrorMessage component="Box" name="password" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
+                                            <Flex>
+                                                <Box>
+                                                    <Field as={Input} name="password" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Password" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                                                    <ErrorMessage
+                                                        component="box"
+                                                        name="password"
+                                                        style={{ color: "red", marginBottom: "-18px", marginTop: "-8px" }} />
+                                                </Box>
+
+                                                <Button right={"30px"} variant={"unstyled"} size='sm' onClick={handleClick}>
+                                                    {show ? <ViewIcon /> : <ViewOffIcon />}
+                                                </Button>
+                                            </Flex>
                                         </FormControl>
                                         <Field name="avatar">
                                             {({ field }) => (
@@ -104,7 +118,7 @@ export default function AddCashier() {
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
-                                                        }} placeholder='Photo' name='avatar' as={Field} type='file' />
+                                                        }} variant={"flushed"} borderBottom={"2px solid"} borderColor={"#D5AD18"} placeholder='Photo' name='avatar' as={Field} type='file' />
                                                     <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                                 </FormControl>
                                             )}

@@ -1,7 +1,34 @@
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import Axios from "axios";
+import { Box, Button, Flex, Heading, Input, Text, useToast } from "@chakra-ui/react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export const Forgot = () => {
+    const navigate = useNavigate();
+    const toast = useToast();
+    const { token } = useParams();
+    const header = {
+        Authorization: `Bearer ${token}`
+    }
+    const getResetPassword = async () => {
+        try {
+            const response = await Axios.put("http://localhost:8000/api/users/forget", {
+            }, { headers: header });
+
+            setTimeout(() => {
+                navigate("/");
+            }, 1000)
+            toast({
+                title: "Check your Email to Reset your Password!",
+                description: "Sent to your Email!",
+                status: 'success',
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
     return (
         <>
             <Flex w={"full"} h={"100vh"} bgGradient="linear(#FFC900, #FFEA61)" justifyContent={"center"}>
@@ -18,7 +45,7 @@ export const Forgot = () => {
                         <Input w={{ base: '200px', md: '400px', lg: '400px' }} placeholder="Email" size={"md"} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
                     </Flex>
                     <Flex mt={"30px"} justifyContent={"center"}>
-                        <Button fontFamily={"monospace"} boxShadow='0px 0px 6px black' color={"black"} bgGradient="linear(#FFEA61, #FFC900)" w={"200px"}>
+                        <Button onClick={getResetPassword} fontFamily={"monospace"} boxShadow='0px 0px 6px black' color={"black"} bgGradient="linear(#FFEA61, #FFC900)" w={"200px"}>
                             Submit
                         </Button>
                     </Flex>
