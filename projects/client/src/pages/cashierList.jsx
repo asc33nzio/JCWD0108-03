@@ -53,7 +53,7 @@ export const CashierList = () => {
                 <Navbar />
             </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
-                <Img w={"80px"} borderBottom={"2px solid"} src="c__1_-removebg-preview.png" />
+                <Img w={"80px"} borderBottom={"2px solid"} src="aaa_studo.png" />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
             <Flex mt={"20px"} justifyContent={"center"}>
