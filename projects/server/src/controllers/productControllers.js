@@ -144,11 +144,11 @@ module.exports = {
             const sortBy = req.query.sortBy
             const result = await products.findAll(
                 {
-                    order : [[sortBy, sort]],
+                    order: [[sortBy, sort]],
                     limit,
-                    offset : limit * (page - 1)
+                    offset: limit * (page - 1)
                 }
-                )
+            )
             res.status(200).send(result)
         } catch (error) {
             console.log(error);
@@ -184,21 +184,21 @@ module.exports = {
     activeDeactive: async (req, res) => {
         try {
             const data = await products.findOne(
-                {where : {id : req.body.productId}}
+                { where: { id: req.body.productId } }
             )
             if (data.isActive) {
                 await products.update(
-                    {isActive : 0},
-                    {where : {id : data.id}}
+                    { isActive: 0 },
+                    { where: { id: data.id } }
                 )
-                res.status(200).send({message : "deactive success"})
+                res.status(200).send({ message: "deactive success" })
             }
             else {
                 await products.update(
-                    {isActive : 1},
-                    {where : {id : data.id}}
-                    )
-                    res.status(200).send({message : "actived success"})
+                    { isActive: 1 },
+                    { where: { id: data.id } }
+                )
+                res.status(200).send({ message: "actived success" })
             }
         } catch (error) {
             console.log(error);

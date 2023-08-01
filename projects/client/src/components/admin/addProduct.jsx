@@ -16,7 +16,7 @@ export const AddProduct = () => {
         try {
             const formData = new FormData();
             const { productName, price, description, stock } = value;
-            formData.append('productName', {productName}.productName);
+            formData.append('productName', { productName }.productName);
             formData.append('price', price);
             formData.append('productImage', file);
             formData.append('description', description);
@@ -28,13 +28,13 @@ export const AddProduct = () => {
                     headers: { Authorization: `Bearer ${token}` },
                     "Content-type": "multipart/form-data"
                 })
-                window.location.reload()
+            window.location.reload();
         } catch (error) {
             console.log(error);
         };
     };
 
-    return(
+    return (
         <Box>
             <Box >
                 <Button h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} onClick={onOpen} color={"white"} bgColor={"gray.300"} fontSize={"50px"}><AddIcon /></Button>
@@ -43,9 +43,9 @@ export const AddProduct = () => {
                 initialValues={{
                     productName: "",
                     price: "",
-                    category : "",
-                    description:"",
-                    CategoryId :"",
+                    category: "",
+                    description: "",
+                    CategoryId: "",
                     productImage: null
                 }}
                 onSubmit={(value) => {
@@ -113,4 +113,4 @@ export const AddProduct = () => {
             </Formik>
         </Box>
     )
-} 
+};
