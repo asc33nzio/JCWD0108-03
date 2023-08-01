@@ -39,7 +39,7 @@ export const Navbar = () => {
                     </Flex>
                 </Flex>
                 <Flex justifyContent={"end"} w={"20%"}>
-                    <Avatar left={"20px"} boxShadow={"0px 0px 10px grey"} src={`http://localhost:8000/avatars/${data.avatar}`} bgColor={"gray.400"} colorScheme={"#FFC900"} />
+                    <Avatar as={Link} to={"/profile"} left={"20px"} boxShadow={"0px 0px 10px grey"} src={`http://localhost:8000/avatars/${data.avatar}`} bgColor={"gray.400"} colorScheme={"#FFC900"} />
                     <Menu>
                         <MenuButton as={IconButton} left={"28px"}
                             mt={"3px"}

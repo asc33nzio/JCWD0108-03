@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-export default function InitialFocus() {
+export default function AddCashier() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
