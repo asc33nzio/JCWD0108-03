@@ -11,6 +11,7 @@ import { DetailProduct } from "./pages/detailProduct";
 import { CashierProducts } from "./pages/cashierProducts";
 import { setValue } from './redux/userSlice';
 import { Profile } from "./pages/profile";
+import { ResetPassword } from "./pages/resetPassword";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
   { path: "/category/:categoryId", element: <CashierProducts /> },
   { path: "/product/:id", element: <DetailProduct /> },
   { path: "/profile", element: <Profile /> },
+  { path: "/resetpassword", element: <ResetPassword /> },
 ]);
 
 function App() {

@@ -61,7 +61,7 @@ export default function UpdateCashier({ id, username, email }) {
                 onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent borderRadius={"10px"}>
-                    <ModalHeader borderTopRadius={"10px"} bg={"#FFC900"}>Create your account</ModalHeader>
+                    <ModalHeader borderTopRadius={"10px"} bg={"#FFC900"}>Update Cashier Data</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Formik
@@ -77,12 +77,12 @@ export default function UpdateCashier({ id, username, email }) {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} placeholder='Username' name="username" />
+                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Username' name="username" />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
-                                            <Field as={Input} placeholder='Email' name='email' />
+                                            <Field as={Input} variant={"flushed"} placeholder='Email' name='email' />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <Field name="avatar">
@@ -93,7 +93,7 @@ export default function UpdateCashier({ id, username, email }) {
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
-                                                        }} placeholder='Photo' name='avatar' as={Field} type='file' />
+                                                        }} variant={"flushed"} placeholder='Photo' name='avatar' as={Field} type='file' />
                                                     <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                                 </FormControl>
                                             )}

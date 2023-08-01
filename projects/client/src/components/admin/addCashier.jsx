@@ -67,7 +67,7 @@ export default function AddCashier() {
                 onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent borderRadius={"10px"}>
-                    <ModalHeader borderTopRadius={"10px"} bg={"#FFC900"}>Create your account</ModalHeader>
+                    <ModalHeader borderTopRadius={"10px"} bg={"#FFC900"}>Create Cashier Data</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Formik
@@ -83,17 +83,17 @@ export default function AddCashier() {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} placeholder='Username' name="username" />
+                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Abcde' name="username" />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
-                                            <Field as={Input} placeholder='Email' name='email' />
+                                            <Field as={Input} variant={"flushed"} placeholder='Abcde@gmail.com' name='email' />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Password</FormLabel>
-                                            <Field as={Input} placeholder='Password' name='password' />
+                                            <Field as={Input} variant={"flushed"} placeholder='******' name='password' />
                                             <ErrorMessage component="Box" name="password" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <Field name="avatar">
@@ -104,7 +104,7 @@ export default function AddCashier() {
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
-                                                        }} placeholder='Photo' name='avatar' as={Field} type='file' />
+                                                        }} variant={"flushed"} placeholder='Photo' name='avatar' as={Field} type='file' />
                                                     <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                                 </FormControl>
                                             )}
