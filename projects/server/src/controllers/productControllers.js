@@ -89,7 +89,7 @@ module.exports = {
                 where: { CategoryId: id }
             });
             const result = await products.findAll(
-                {where: { CategoryId: id } && {isActive : 1}, limit,offset : limit * (page - 1) }
+                {where: { CategoryId: id }, limit,offset : limit * (page - 1) }
                 );
             res.status(200).send({
                 page : page,
@@ -181,7 +181,7 @@ module.exports = {
             });
         }
     },
-    activeProduct: async (req, res) => {
+    activeDeactive: async (req, res) => {
         try {
             const data = await products.findOne(
                 {where : {id : req.body.productId}}

@@ -10,6 +10,6 @@ router.get('/categories', productControllers.getCategories);
 router.get('/category/:id', productControllers.getProductByCategory);
 router.get('/:id', productControllers.getProduct);
 router.get('/image/:filename', productControllers.getProductImage);
-router.patch('/', productControllers.activeProduct);
+router.patch('/', productControllers.activeDeactive);
 
 module.exports = router;
