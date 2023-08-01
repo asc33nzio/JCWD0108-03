@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Cart } from "../components/cart";
-import { ProductsByCategory } from "../components/cashier/productByCategoryCashier";
+import { ProductsByCategoryCashier } from "../components/cashier/productByCategoryCashier";
 import { Back } from "../components/back";
 
 export const CashierProducts = () => {
@@ -29,7 +29,7 @@ export const CashierProducts = () => {
         <Back nav={'/cashier'} />
         <Flex justifyContent={"center"} pt={"100px"}>
           <Flex>
-            <ProductsByCategory addToCart={addToCart} cartItems={cartItems} setCartItems={setCartItems} />
+            <ProductsByCategoryCashier addToCart={addToCart} cartItems={cartItems} setCartItems={setCartItems} />
             <Flex>
               <Cart cartItems={cartItems} setCartItems={setCartItems} />
             </Flex>

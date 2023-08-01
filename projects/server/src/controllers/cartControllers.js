@@ -144,5 +144,57 @@ module.exports = {
                 message: error
             });
         }
+    },
+    updateCartItemQuantity: async (req, res) => {
+        try {
+            const { ProductId } = req.params;
+            const { quantity } = req.body;
+            const UserId = req.user.id;
+
+            if (!ProductId || !quantity) {
+                return res.status(400).send({
+                    status: 400,
+                    message: 'Both ProductId and quantity are required.'
+                });
+            };
+
+            const existingCartItem = await cartItems.findOne({
+                where: {
+                    ProductId: ProductId,
+                    UserId
+                }
+            });
+
+            if (!existingCartItem) {
+                return res.status(404).send({
+                    status: 404,
+                    message: 'Cart item not found.'
+                });
+            };
+
+            existingCartItem.quantity = quantity;
+            await existingCartItem.save();
+
+            const updatedCartItem = await cartItems.findOne({
+                where: {
+                    ProductId: ProductId,
+                    UserId
+                },
+                include: {
+                    model: products
+                }
+            });
+
+            return res.status(200).send({
+                status: 200,
+                message: 'Cart item quantity updated successfully.',
+                cartItem: updatedCartItem,
+            });
+        } catch (error) {
+            return res.status(500).send({
+                status: 500,
+                message: 'Internal server error.',
+            });
+        }
     }
 };
