@@ -26,8 +26,8 @@ const router = createBrowserRouter([
   { path: "/search", element: <Search /> },
   { path: "/profile", element: <Profile /> },
   { path: "/resetpassword", element: <ResetPassword /> },
-  { path: "/payment", element: <Payment /> },
-  { path: "/checkout", element: <Checkout /> },
+  { path: "/payment", element: <Payment />, errorElement: <Cashier /> },
+  { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
 ]);
 
 function App() {

@@ -2,7 +2,7 @@ import Axios from "axios";
 import { Navbar } from "../components/navbar";
 import { Back } from "../components/back";
 import { Box, Flex, Text, Input, Button, useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -59,19 +59,21 @@ export const Payment = () => {
                 <Flex
                     flexDirection="column"
                     alignItems="center"
-                    pt={"20px"}
+                    pt="20px"
                     pb="40px"
                     border="10px inset black"
                     borderRadius="20px"
-                    mt={'100px'}
+                    mt='50px'
                     mx="10px"
+                    w='475px'
                 >
                     <Text fontWeight="bold" fontSize="45px" mb="40px" ml='20px' mr='20px'>
                         Review Order
                     </Text>
                     {transactionData?.breakdown?.map((item, index) => (
-                        <Flex key={index} justifyContent="space-between" mb="10px" width="300px">
-                            <Text>{`${item.productName}`}</Text>
+                        <Flex key={index} justifyContent="space-between" mb="10px" width="400px">
+                            <Text paddingRight={'20px'}>{`${item.productName}`}</Text>
+                            <Text>{(Math.round(item.totalAmount / item.quantitySold / 1000)).toLocaleString("id-ID")}K</Text>
                             <Text fontStyle={'italic'}>x</Text>
                             <Text fontWeight={'bold'} marginRight={'40px'}>{`${item.quantitySold} pc(s)`}</Text>
                             <Text>{`Rp. ${item.totalAmount.toLocaleString("id-ID")},00`}</Text>
