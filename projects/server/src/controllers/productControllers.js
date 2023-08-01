@@ -90,12 +90,12 @@ module.exports = {
                 where: { CategoryId: id }
             });
             const result = await products.findAll(
-                {where: { CategoryId: id }, limit,offset : limit * (page - 1) }
-                );
+                { where: { CategoryId: id }, limit, offset: limit * (page - 1) }
+            );
             res.status(200).send({
-                page : page,
-                totalPage : Math.ceil(totalProduct / limit),  
-                 result
+                page: page,
+                totalPage: Math.ceil(totalProduct / limit),
+                result
             });
         } catch (error) {
             res.status(500).send({
@@ -147,41 +147,41 @@ module.exports = {
             const sortBy = req.query.sortBy || "productName"
             const totalProduct = await products.count()
             const user = await products.findOne(
-                {where : {id : id}}
+                { where: { id: id } }
             )
 
 
             if (user.isAdmin) {
                 const result = await products.findAll(
                     {
-                        where : { productName : {[Op.like] : `%${search}%`}},
+                        where: { productName: { [Op.like]: `%${search}%` } },
                         order: [[sortBy, sort]],
                         limit,
                         offset: limit * (page - 1)
                     }
                 )
-                return(
+                return (
                     res.status(200).send({
-                        totalPage : Math.ceil(totalProduct / limit),
-                        page : page,
+                        totalPage: Math.ceil(totalProduct / limit),
+                        page: page,
                         result
                     })
                 )
             }
-            
+
             else {
                 const result = await products.findAll(
                     {
-                        where:{ productName : {[Op.like] : `%${search}%`} , isActive : true},
+                        where: { productName: { [Op.like]: `%${search}%` }, isActive: true },
                         order: [[sortBy, sort]],
                         limit,
                         offset: limit * (page - 1)
                     }
                 )
-                return(
+                return (
                     res.status(200).send({
-                        totalPage : Math.ceil(totalProduct / limit),
-                        page : page,
+                        totalPage: Math.ceil(totalProduct / limit),
+                        page: page,
                         result
                     })
                 )
@@ -194,7 +194,7 @@ module.exports = {
             });
         }
     },
-    getAllProductCashier : async(req, res) => {
+    getAllProductCashier: async (req, res) => {
         try {
             const page = req.query.page || 1
             const limit = req.query.limit || 8
@@ -202,7 +202,7 @@ module.exports = {
             const sortBy = req.query.sortBy
             const result = await products.findAll(
                 {
-                    where: {isActive : 1},
+                    where: { isActive: 1 },
                     order: [[sortBy, sort]],
                     limit,
                     offset: limit * (page - 1)
