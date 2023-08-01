@@ -77,12 +77,12 @@ export default function UpdateCashier({ id, username, email }) {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Username' name="username" />
+                                            <Field as={Input} ref={initialRef} borderBottom={"2px solid"} borderColor={"#D5AD18"} variant={"flushed"} placeholder='Username' name="username" />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
-                                            <Field as={Input} variant={"flushed"} placeholder='Email' name='email' />
+                                            <Field as={Input} variant={"flushed"} borderBottom={"2px solid"} borderColor={"#D5AD18"} placeholder='Email' name='email' />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <Field name="avatar">
@@ -93,7 +93,7 @@ export default function UpdateCashier({ id, username, email }) {
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
-                                                        }} variant={"flushed"} placeholder='Photo' name='avatar' as={Field} type='file' />
+                                                        }} variant={"flushed"} borderBottom={"2px solid"} borderColor={"#D5AD18"} placeholder='Photo' name='avatar' as={Field} type='file' />
                                                     <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                                 </FormControl>
                                             )}
