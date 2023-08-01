@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Cart } from "../components/cart";
-import { ProductsByCategory } from "../components/cashier/productsByCategory";
+import { ProductsByCategory } from "../components/cashier/productByCategoryCashier";
 import { Back } from "../components/back";
 
 export const CashierProducts = () => {
