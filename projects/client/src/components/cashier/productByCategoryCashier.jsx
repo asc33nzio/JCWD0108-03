@@ -7,7 +7,7 @@ import { SiQuicklook } from "react-icons/si"
 import { AddProduct } from "../admin/addProduct";
 import { CircleLoader } from "react-spinners";
 
-export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }) => {
+export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, updatedQuantities, setUpdatedQuantities }) => {
     const navigate = useNavigate();
     const { categoryId } = useParams();
     const [products, setProducts] = useState([]);
@@ -16,7 +16,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
-    const params = useParams();
+    // const [shouldFetchCart, setShouldFetchCart] = useState(true);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -105,6 +105,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
                 if (totalQuantityInCart <= product.stock) {
+                    // setShouldFetchCart(true);
                     setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
@@ -117,6 +118,12 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }
                         ...prevQuantities,
                         [productId]: inputQuantity,
                     }));
+
+                    setUpdatedQuantities((prevQuantities) => ({
+                        ...prevQuantities,
+                        [productId]: (prevQuantities[productId] || 0) + inputQuantity,
+                    }));
+
                     setLoadingCartUpdate(false);
                 } else {
                     setInputQuantities((prevQuantities) => ({
@@ -127,19 +134,19 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }
             }
         } catch (error) {
             console.error(error);
-        }
+        };
     };
 
     const nextPage = () => {
         if (page < totalPage) {
             setPage((prevPage) => Math.max(+prevPage + 1, 1));
-        }
+        };
     };
 
     const prevPage = () => {
         if (page > 1) {
             setPage((prevPage) => Math.max(+prevPage - 1, 1));
-        }
+        };
     };
 
     useEffect(() => {
@@ -154,6 +161,23 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }
             getCartByUser();
         }
     }, [loadingCartUpdate]);
+
+    // useEffect(() => {
+    //     setLoadingProducts(true);
+    //     Promise.all([shouldFetchCart && getCartByUser(), fetchProductsByCategory(page)])
+    //         .then(() => setLoadingProducts(false))
+    //         .catch(() => setLoadingProducts(false));
+
+    //     if (shouldFetchCart) {
+    //         setShouldFetchCart(false);
+    //     };
+    // }, [fetchProductsByCategory, page, shouldFetchCart]);
+
+    // useEffect(() => {
+    //     if (!loadingCartUpdate && shouldFetchCart) {
+    //         setShouldFetchCart(true);
+    //     };
+    // }, [loadingCartUpdate, shouldFetchCart]);
 
     return (
         <Flex>
