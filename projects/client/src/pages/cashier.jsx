@@ -6,6 +6,7 @@ import { Navbar } from "../components/navbar";
 import { Cart } from "../components/cart";
 import { ProductCategories } from "../components/admin/productCategories";
 import  Axios  from "axios";
+import { useSelector } from "react-redux";
 
 export const Cashier = () => {
     const [cartItems, setCartItems] = useState([]);

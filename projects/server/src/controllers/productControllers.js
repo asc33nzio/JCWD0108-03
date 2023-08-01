@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const db = require('../models');
 const products = db.Products;
 const categories = db.Categories;
@@ -139,17 +140,21 @@ module.exports = {
     getAllProducts: async (req, res) => {
         try {
             const id = req.user.id
+            const search = req.query.search || ""
             const page = req.query.page || 1
-            const limit = req.query.limit || 8
+            const limit = req.query.limit || 10
             const sort = req.query.sort || "ASC"
             const sortBy = req.query.sortBy || "productName"
+            const totalProduct = await products.count()
             const user = await products.findOne(
                 {where : {id : id}}
             )
 
+
             if (user.isAdmin) {
                 const result = await products.findAll(
                     {
+                        where : { productName : {[Op.like] : `%${search}%`}},
                         order: [[sortBy, sort]],
                         limit,
                         offset: limit * (page - 1)
@@ -157,6 +162,7 @@ module.exports = {
                 )
                 return(
                     res.status(200).send({
+                        totalPage : Math.ceil(totalProduct / limit),
                         page : page,
                         result
                     })
@@ -166,7 +172,7 @@ module.exports = {
             else {
                 const result = await products.findAll(
                     {
-                        where: {isActive : 1},
+                        where:{ productName : {[Op.like] : `%${search}%`} , isActive : true},
                         order: [[sortBy, sort]],
                         limit,
                         offset: limit * (page - 1)
@@ -174,6 +180,7 @@ module.exports = {
                 )
                 return(
                     res.status(200).send({
+                        totalPage : Math.ceil(totalProduct / limit),
                         page : page,
                         result
                     })
