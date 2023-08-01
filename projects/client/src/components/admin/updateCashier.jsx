@@ -21,22 +21,15 @@ export default function UpdateCashier({ id, username, email }) {
         email: Yup.string()
             .email("Invalid email addres format")
             .required("Write your Email"),
-        // password: Yup.string()
-        //     .required("Password is required")
-        //     .min(6, "Paasowrd min 6 ")
-        //     .matches(/^(?=.*[A-Z])/, "Password Must Contain 1 Capital")
-        //     .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
-        //     .matches(/.*[0-9].*/, "Password Must Contain 1 number"),
         avatar: Yup.string()
             .required("Add image"),
     }));
     const handleCreate = async (value) => {
         try {
             const data = new FormData();
-            const { username, email, password } = value;
+            const { username, email } = value;
             data.append("username", { username }.username);
             data.append("email", { email }.email);
-            // data.append("password", { password }.password);
             data.append("avatar", file);
             const response = await Axios.patch(`http://localhost:8000/api/admin/updateCashier/${id}`, data, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -92,11 +85,6 @@ export default function UpdateCashier({ id, username, email }) {
                                             <Field as={Input} placeholder='Email' name='email' />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
-                                        {/* <FormControl mt={4}>
-                                            <FormLabel>Password</FormLabel>
-                                            <Field as={Input} placeholder='Password' name='password' />
-                                            <ErrorMessage component="Box" name="password" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
-                                        </FormControl> */}
                                         <Field name="avatar">
                                             {({ field }) => (
                                                 <FormControl mt={4}>

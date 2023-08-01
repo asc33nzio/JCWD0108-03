@@ -81,16 +81,12 @@ export const CashierList = () => {
                                             <Td textAlign={"center"}>{item.username}</Td>
                                             <Td textAlign={"center"}>{item.email}</Td>
                                             {item.isSuspended ? (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"45px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"55px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
                                             ) : (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"45px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"55px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
                                             )}
                                             <Td display={"flex"} justifyContent={"center"} >
-                                                <UpdateCashier
-                                                    id={item.id}
-                                                    username={item.username}
-                                                    email={item.email}
-                                                />
+                                                <UpdateCashier id={item.id} username={item.username} email={item.email} />
                                                 <DeleteButton id={item.id} />
                                                 {item.isSuspended ? (<Button w={"90px"} borderRadius={"70px"} onClick={() => handleSuspend(item.id)} color={"white"} bg={"Teal"} ml={"5px"}>Activate</Button>) : (<Button Button w={"90px"} borderRadius={"70px"} onClick={() => handleSuspend(item.id)} color={"white"} bg={"#D5AD18"} ml={"5px"}>Suspend</Button>)}
                                             </Td>
