@@ -25,7 +25,7 @@ export const CashierList = () => {
     };
     const handleSuspend = async (id) => {
         try {
-            const response = await Axios.patch(`http://localhost:8000/api/admin/suspendCashier/${id}`, {}, {
+            await Axios.patch(`http://localhost:8000/api/admin/suspendCashier/${id}`, {}, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });

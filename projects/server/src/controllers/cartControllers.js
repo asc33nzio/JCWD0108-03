@@ -151,10 +151,17 @@ module.exports = {
             const { quantity } = req.body;
             const UserId = req.user.id;
 
-            if (!ProductId || !quantity) {
+            if (!ProductId) {
                 return res.status(400).send({
                     status: 400,
-                    message: 'Both ProductId and quantity are required.'
+                    message: 'ProductId is required.'
+                });
+            };
+
+            if (!quantity) {
+                return res.status(400).send({
+                    status: 400,
+                    message: 'Quantity is required.'
                 });
             };
 

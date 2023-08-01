@@ -2,13 +2,12 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { CircleLoader } from "react-spinners";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { IconButton } from "@chakra-ui/react";
 
-export const Cart = ({ cartItems, setCartItems }) => {
+export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQuantities }) => {
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    const [updatedQuantities, setUpdatedQuantities] = useState({});
 
     const fetchCartItems = async () => {
         try {
@@ -18,14 +17,19 @@ export const Cart = ({ cartItems, setCartItems }) => {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            console.log(response.data.Product);
-
             const newCartItems = response.data.result.map((cartItem) => ({
                 ...cartItem,
                 productName: cartItem.Product.productName,
-                price: cartItem.Product.price
+                price: cartItem.Product.price,
+                stock: cartItem.Product.stock
             }));
 
+            const updatedQuantitiesObj = newCartItems.reduce((acc, item) => {
+                acc[item.ProductId] = item.quantity;
+                return acc;
+            }, {});
+
+            setUpdatedQuantities(updatedQuantitiesObj);
             setCartItems((prevCartItems) => [...prevCartItems, ...newCartItems]);
             setLoading(false);
         } catch (error) {
@@ -36,28 +40,61 @@ export const Cart = ({ cartItems, setCartItems }) => {
         }
     };
 
-    // const handleMinusClick = (productId) => {
-    //     const product = products.find((product) => product.id === productId);
-    //     const currentQuantity = updatedQuantities[productId] || 0;
-    //     const newQuantity = Math.max(currentQuantity - 1, 0);
-    //     setUpdatedQuantities((prevQuantities) => ({
-    //         ...prevQuantities,
-    //         [productId]: newQuantity,
-    //     }));
-    // };
+    const handleMinusClick = (productId) => {
+        const currentQuantity = updatedQuantities[productId];
+        const newQuantity = currentQuantity - 1;
 
-    // const handlePlusClick = (productId, productStock) => {
-    //     const product = products.find((product) => product.id === productId);
-    //     const currentQuantity = updatedQuantities[productId] || 0;
-    //     const newQuantity = currentQuantity + 1;
+        if (newQuantity >= 1) {
+            setUpdatedQuantities((prevQuantities) => ({
+                ...prevQuantities,
+                [productId]: newQuantity
+            }));
 
-    //     if (newQuantity <= productStock) {
-    //         setUpdatedQuantities((prevQuantities) => ({
-    //             ...prevQuantities,
-    //             [productId]: newQuantity,
-    //         }));
-    //     }
-    // };
+            if (currentQuantity !== newQuantity) {
+                updateQuantityOnServer(productId, newQuantity);
+            }
+        }
+    }
+
+    const handlePlusClick = (productId) => {
+        const currentQuantity = updatedQuantities[productId];
+        const product = cartItems.find((item) => item.ProductId === productId);
+        const productStock = product?.Product?.stock || 0;
+        const newQuantity = currentQuantity + 1;
+
+        if (newQuantity <= productStock) {
+            setUpdatedQuantities((prevQuantities) => ({
+                ...prevQuantities,
+                [productId]: newQuantity,
+            }));
+
+            if (currentQuantity !== newQuantity) {
+                updateQuantityOnServer(productId, newQuantity);
+            }
+        }
+    };
+
+    const updateQuantityOnServer = async (productId, quantity) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await Axios.patch(
+                `http://localhost:8000/api/cart/${productId}`,
+                { "quantity": quantity },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            const updatedCartItem = response.data.cartItem;
+            setCartItems((prevCartItems) =>
+                prevCartItems.map((item) =>
+                    item.ProductId === productId ? { ...item, quantity: updatedCartItem.quantity } : item
+                )
+            );
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleDelete = async (ProductId) => {
         try {
@@ -71,6 +108,12 @@ export const Cart = ({ cartItems, setCartItems }) => {
             });
 
             setCartItems((prevCartItems) => prevCartItems.filter((item) => item.ProductId !== ProductId));
+
+            setUpdatedQuantities((prevQuantities) => {
+                const newQuantities = { ...prevQuantities };
+                delete newQuantities[ProductId];
+                return newQuantities;
+            });
 
             setDeleteLoading(false);
         } catch (error) {
@@ -140,12 +183,28 @@ export const Cart = ({ cartItems, setCartItems }) => {
                                 color="white"
                                 alignItems={'center'}
                             >
-                                <Box flex="2">{item.Product?.productName || "Product Name Is Being Loaded"}</Box>
+                                <Box flex="2">{item.Product ? item.Product.productName : "Product Name Is Being Loaded"}</Box>
                                 <Flex flex="1" justifyContent="space-between" alignItems="center" ml="20px">
-                                    <Box mx={'5px'} color="black" textAlign={'center'}>QTY:</Box>
-                                    <Box mr={'5px'} color={'black'} fontWeight={'semibold'} textAlign={'center'}>{item.quantity}</Box>
+                                    <IconButton
+                                        icon={<AiOutlineMinus />}
+                                        colorScheme="yellow"
+                                        aria-label="Decrease Quantity"
+                                        onClick={() => handleMinusClick(item.ProductId)}
+                                    />
+                                    QTY:
+                                    <Box mx="5px" color="black" textAlign="center" fontWeight="semibold">
+                                        {updatedQuantities[item.ProductId] !== undefined
+                                            ? updatedQuantities[item.ProductId]
+                                            : item.quantity}
+                                    </Box>
+                                    <IconButton
+                                        icon={<AiOutlinePlus />}
+                                        colorScheme="yellow"
+                                        aria-label="Increase Quantity"
+                                        onClick={() => handlePlusClick(item.ProductId)}
+                                    />
                                 </Flex>
-                                <Box ml="40px">Rp. {formatPrice(item.Product?.price * item.quantity) || "Price Is Being Loaded"},00</Box>
+                                <Box ml="40px">Rp. {item.Product ? `Rp. ${formatPrice(item.Product.price * item.quantity)}` : "Price Is Being Loaded"},00</Box>
                                 <IconButton
                                     ml={'10px'}
                                     mt={'10px'}
