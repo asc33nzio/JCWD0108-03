@@ -87,12 +87,7 @@ module.exports = {
             const userId = decodedToken.id;
 
             const result = await cartItems.findAll(
-                {
-                    where: { UserId: userId },
-                    include: {
-                        model: products
-                    }
-                }
+                { where: { UserId: userId } }
             );
             res.status(200).send({
                 status: 200,

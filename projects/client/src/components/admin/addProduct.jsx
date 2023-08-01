@@ -28,6 +28,7 @@ export const AddProduct = () => {
                     headers: { Authorization: `Bearer ${token}` },
                     "Content-type": "multipart/form-data"
                 })
+                window.location.reload()
         } catch (error) {
             console.log(error);
         };

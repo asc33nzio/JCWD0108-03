@@ -13,6 +13,8 @@ export const Cart = ({ cartItems, setCartItems }) => {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
+            console.log(cartItems);
+
             const newCartItems = response.data.result.map((cartItem) => ({
                 ...cartItem,
                 productName: cartItem.Product.productName,
