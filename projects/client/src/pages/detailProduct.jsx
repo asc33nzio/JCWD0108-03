@@ -55,6 +55,8 @@ export const DetailProduct = () => {
         getCartByUser();
     }, [loadingCartUpdate]);
 
+    const data = useSelector((state) => state.user.value.isAdmin)
+
     return (
         <Box>
             <Box><Navbar /></Box>
@@ -70,11 +72,11 @@ export const DetailProduct = () => {
                                 <Box textShadow={"2px 2px 2px gray"} fontSize={{ base: "25px", sm: "35px", md:"45px" }} color={"gray.700"} fontFamily={"sans-serif"} fontWeight={"bold"} > {product.productName} </Box>
                             </Box>
                             <Flex>
-                                {product ? (<Flex alignItems={"center"} gap={{ base: "5px" }} mt={{base:"10px", sm:"25px"}}>
-                                <Flex cursor={"pointer"} boxShadow={"0px 0px 3px #FFC900"}  bgColor={"yellow.400"} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} color={"white"} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{base:"10px", sm:"20px"}} /> </Flex>
-                                    {product.isActive ? (<Button cursor={"pointer"} boxShadow={"0px 0px 3px green"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} fontSize={{ base: "10px", sm:"15px" }} transition={"0.3s"} bgColor={"green"} color={"white"} onClick={() => handleClick(product.id)}>Active</Button>) : (<Button cursor={"pointer"} boxShadow={"0px 0px 3px red"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} fontSize={{ base: "10px", sm:"15px" }} transition={"0.3s"} color={"white"} bgColor={"red"} onClick={() => handleClick(product.id)}>Deactive</Button>)}
+                                {data ? (<Flex alignItems={"center"} gap={{ base: "5px" }} mt={{base:"10px", sm:"25px"}}>
+                                <Flex boxShadow={"0px 0px 3px #FFC900"}  bgColor={"yellow.400"} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} color={"white"} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{base:"10px", sm:"20px"}} /> </Flex>
+                                    {product.isActive ? (<Box boxShadow={"0px 0px 3px green"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} fontSize={{ base: "10px", sm:"15px" }} transition={"0.3s"} bgColor={"green"} color={"white"} onClick={() => handleClick(product.id)}>Active</Box>) : (<Button boxShadow={"0px 0px 3px red"} w={{ base: "25px" }} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px" }} h={{ base: "15px" }} fontSize={{ base: "7px" }} transition={"0.3s"} color={"white"} bgColor={"red"} onClick={() => handleClick(product.id)}>Deactive</Button>)}
                                 
-                                </Flex>) : (<Flex cursor={"pointer"} boxShadow={"0px 0px 3px #FFC900"}  bgColor={"yellow.400"} mt={{base:"5px", sm:"10px"}} h={{ base: "15px", sm:"20px", md:"25px", lg:"30px" }} color={"white"} w={{ base: "40px", sm:"50px", md:"60px", lg:"70px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{base:"10px", sm:"20px"}}/> </Flex>)}
+                                </Flex>) : (<Flex boxShadow={"0px 0px 3px #FFC900"} mt={{base:"0px", sm:"10px"}} bgColor={"yellow.400"} h={{ base: "20px", sm:"35px" }} color={"white"} w={{ base: "30px", sm:"50px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{base:"10px", sm:"20px"}} /> </Flex>)}
                             </Flex>
                         </Flex>
                         <Box w={{ base: "250px", sm:"220px", md:"300px" }} fontSize={{ base: "15px", sm:"17px", md:"24px" }} fontFamily={"heading"} color={"gray.600"}> {product.description} </Box>
