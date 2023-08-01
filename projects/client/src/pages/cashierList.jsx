@@ -69,7 +69,6 @@ export const CashierList = () => {
                                     <Th textAlign={"center"}>Photo</Th>
                                     <Th textAlign={"center"}>Username</Th>
                                     <Th textAlign={"center"}>Email</Th>
-                                    <Th textAlign={"center"}>Password</Th>
                                     <Th textAlign={"center"}>Status</Th>
                                     <Th textAlign={"center"}>Action</Th>
                                 </Tr>
@@ -81,22 +80,16 @@ export const CashierList = () => {
                                             <Td textAlign={"center"}><Avatar boxShadow={"0px 0px 10px grey"} src={`http://localhost:8000/avatars/${item.avatar}`} /></Td>
                                             <Td textAlign={"center"}>{item.username}</Td>
                                             <Td textAlign={"center"}>{item.email}</Td>
-                                            <Td overflow="hidden"
-                                                whiteSpace="nowrap"
-                                                textOverflow="ellipsis"
-                                                maxWidth="100px" textAlign={"center"}>{item.password}</Td>
                                             {item.isSuspended ? (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"25px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"45px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
                                             ) : (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"25px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"45px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
                                             )}
                                             <Td display={"flex"} justifyContent={"center"} >
                                                 <UpdateCashier
                                                     id={item.id}
                                                     username={item.username}
                                                     email={item.email}
-                                                    password={item.password}
-                                                    avatar={item.avatar}
                                                 />
                                                 <DeleteButton id={item.id} />
                                                 {item.isSuspended ? (<Button w={"90px"} borderRadius={"70px"} onClick={() => handleSuspend(item.id)} color={"white"} bg={"Teal"} ml={"5px"}>Activate</Button>) : (<Button Button w={"90px"} borderRadius={"70px"} onClick={() => handleSuspend(item.id)} color={"white"} bg={"#D5AD18"} ml={"5px"}>Suspend</Button>)}
