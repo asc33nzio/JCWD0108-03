@@ -11,6 +11,7 @@ export const DetailProduct = () => {
     const params = useParams();
     const [cartItems, setCartItems] = useState([]);
     const [product, setProduct] = useState([]);
+    const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
 
     const dataProduct = async (id) => {
         try {
@@ -21,9 +22,26 @@ export const DetailProduct = () => {
         };
     };
 
+    const getCartByUser = async () => {
+        try {
+            setLoadingCartUpdate(true);
+            const token = localStorage.getItem('token');
+            const response = await Axios.get('http://localhost:8000/api/cart', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const cartItems = response.data.result;
+            setCartItems(cartItems);
+            setLoadingCartUpdate(false);
+        } catch (error) {
+            setLoadingCartUpdate(false);
+            console.error(error);
+        };
+    };
+
     useEffect(() => {
-        dataProduct()
-    }, [])
+        dataProduct();
+        getCartByUser();
+    }, [loadingCartUpdate]);
 
     return (
         <Box>

@@ -80,6 +80,46 @@ module.exports = {
             });
         };
     },
+    deleteCartItem: async (req, res) => {
+        try {
+            const { ProductId } = req.body;
+            const UserId = req.user.id;
+
+            if (!ProductId) {
+                return res.status(400).send({
+                    status: 400,
+                    message: 'Both productId and quantity are required.',
+                });
+            };
+
+            const existingCartItem = await cartItems.findOne({
+                where: {
+                    ProductId,
+                    UserId
+                }
+            });
+
+            await existingCartItem.destroy();
+
+            const updatedCartItems = await cartItems.findAll({
+                where: {
+                    UserId
+                }
+            });
+
+            return res.status(200).send({
+                status: 200,
+                message: 'Cart item deleted successfully.',
+                deleted: existingCartItem,
+                updatedCartItems: updatedCartItems
+            });
+        } catch (error) {
+            return res.status(500).send({
+                status: 500,
+                message: 'Internal server error.',
+            });
+        };
+    },
     getCartByUser: async (req, res) => {
         try {
             const token = req.headers.authorization.split(' ')[1];

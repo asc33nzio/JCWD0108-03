@@ -83,9 +83,11 @@ module.exports = {
     getProductByCategory: async (req, res) => {
         try {
             const id = req.params.id;
-            const page = req.query.page || 1;
-            const limit = req.query.limit || 8;
-            const totalProduct = await products.count();
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 8;
+            const totalProduct = await products.count({
+                where: { CategoryId: id }
+            });
             const result = await products.findAll(
                 { where: { CategoryId: id }, limit, offset: limit * (page - 1) }
             );
