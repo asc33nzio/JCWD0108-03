@@ -1,20 +1,20 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, } from '@chakra-ui/react';
 import Axios from 'axios';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useEffect, useRef, useState } from 'react'
 import * as Yup from "yup";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRef, useState } from 'react'
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useNavigate } from "react-router-dom";
 import { EditIcon } from '@chakra-ui/icons';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, } from '@chakra-ui/react';
 
-export default function UpdateCashier({ id, username, email, password, avatar }) {
+export default function UpdateCashier({ id, username, email }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [file, setFile] = useState(null);
+    const [success, setSuccess] = useState();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
-    const [file, setFile] = useState(null);
     const toast = useToast();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const [success, setSuccess] = useState();
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name"),
@@ -58,23 +58,6 @@ export default function UpdateCashier({ id, username, email, password, avatar })
             console.log(err);
         }
     }
-    // const getUserbyId = async (req, res) => {
-    //     try {
-    //         // const response = await Axios.get(`http://localhost:8000/api/admin/detailCashier/${id}`);
-    //         // const data = new FormData();
-    //         // const { username, email, password } = value;
-    //         // data.append("username", { username }.username);
-    //         // data.append("email", { email }.email);
-    //         // data.append("password", { password }.password);
-    //         // data.append("avatar", file);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getUserbyId
-    // })
     return (
         <>
             <Button borderRadius={"70px"} color={"white"} bg={"blue.600"} onClick={onOpen}><EditIcon /> </Button>

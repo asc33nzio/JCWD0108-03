@@ -118,7 +118,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems }
                         [productId]: inputQuantity,
                     }));
                     setLoadingCartUpdate(false);
-                    await ProductsByCategory(params.categoryId);
+                    await ProductsByCategoryCashier(params.categoryId);
                 } else {
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,

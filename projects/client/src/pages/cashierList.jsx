@@ -1,14 +1,12 @@
+import Axios from "axios";
+import AddCashier from "../components/admin/addCashier";
+import UpdateCashier from "../components/admin/updateCashier";
 import { Avatar, Box, Button, Flex, Img, Text, useToast } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react';
-import InitialFocus from "../components/admin/updateCashier";
 import { useEffect, useState } from "react";
-import Axios from "axios";
 import { useNavigate } from "react-router";
 import { DeleteButton } from "../components/admin/deleteButton";
-import { EditIcon } from "@chakra-ui/icons";
-import AddCashier from "../components/admin/addCashier";
-import UpdateCashier from "../components/admin/updateCashier";
 
 export const CashierList = () => {
     const [data, setData] = useState();
