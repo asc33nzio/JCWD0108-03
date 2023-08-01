@@ -158,6 +158,29 @@ module.exports = {
             });
         }
     },
+    getAllProductCashier : async(req, res) => {
+        try {
+            const page = req.query.page || 1
+            const limit = req.query.limit || 8
+            const sort = req.query.sort || "ASC"
+            const sortBy = req.query.sortBy
+            const result = await products.findAll(
+                {
+                    where: {isActive : 1},
+                    order: [[sortBy, sort]],
+                    limit,
+                    offset: limit * (page - 1)
+                }
+            )
+            res.status(200).send(result)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
     addCategory: async (req, res) => {
         try {
             const { name } = req.body;
