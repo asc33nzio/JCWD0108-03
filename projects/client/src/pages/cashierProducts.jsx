@@ -7,6 +7,7 @@ import { Back } from "../components/back";
 
 export const CashierProducts = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [updatedQuantities, setUpdatedQuantities] = useState({});
 
   const addToCart = (newItem) => {
     const existingItemIndex = cartItems.findIndex(
@@ -29,9 +30,9 @@ export const CashierProducts = () => {
         <Back nav={'/cashier'} />
         <Flex justifyContent={"center"} pt={"100px"}>
           <Flex>
-            <ProductsByCategoryCashier addToCart={addToCart} cartItems={cartItems} setCartItems={setCartItems} />
+            <ProductsByCategoryCashier addToCart={addToCart} cartItems={cartItems} setCartItems={setCartItems} updatedQuantities={updatedQuantities} setUpdatedQuantities={setUpdatedQuantities} />
             <Flex>
-              <Cart cartItems={cartItems} setCartItems={setCartItems} />
+              <Cart cartItems={cartItems} setCartItems={setCartItems} updatedQuantities={updatedQuantities} setUpdatedQuantities={setUpdatedQuantities} />
             </Flex>
           </Flex>
         </Flex>

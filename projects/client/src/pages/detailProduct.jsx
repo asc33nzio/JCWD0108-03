@@ -12,13 +12,13 @@ export const DetailProduct = () => {
     const params = useParams();
     const [cartItems, setCartItems] = useState([]);
     const [product, setProduct] = useState([]);
-    const [reload, setReload] = useState(true)
+    const [updatedQuantities, setUpdatedQuantities] = useState({});
 
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
 
     const handleClick = async (id) => {
         try {
-            const response = await Axios.patch(`http://localhost:8000/api/products/`, { productId: id })
+            await Axios.patch(`http://localhost:8000/api/products/`, { productId: id })
             window.location.reload()
         } catch (error) {
             console.log(error);
@@ -83,7 +83,7 @@ export const DetailProduct = () => {
                         <Box w={{ base: "250px", sm: "220px", md: "300px" }} fontSize={{ base: "15px", sm: "17px", md: "24px" }} fontFamily={"heading"} color={"gray.600"}> {product.description} </Box>
                     </Box>
                     <Box>
-                        <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                        <Cart cartItems={cartItems} setCartItems={setCartItems} updatedQuantities={updatedQuantities} setUpdatedQuantities={setUpdatedQuantities} />
                     </Box>
                 </Flex>
             </Flex>

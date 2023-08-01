@@ -7,6 +7,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/rea
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { DeleteButton } from "../components/admin/deleteButton";
+import AAA_Logo from '../public/aaa_studio_transparent.png';
 
 export const CashierList = () => {
     const [data, setData] = useState();
@@ -24,7 +25,7 @@ export const CashierList = () => {
     };
     const handleSuspend = async (id) => {
         try {
-            const response = await Axios.patch(`http://localhost:8000/api/admin/suspendCashier/${id}`, {}, {
+            await Axios.patch(`http://localhost:8000/api/admin/suspendCashier/${id}`, {}, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
@@ -53,7 +54,7 @@ export const CashierList = () => {
                 <Navbar />
             </Flex>
             <Flex mt={"110px"} justifyContent={"center"}>
-                <Img w={"80px"} borderBottom={"2px solid"} src="aaa_studio_transparent.png" />
+                <Img w={"80px"} borderBottom={"2px solid"} src={AAA_Logo} />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
             <Flex mt={"20px"} justifyContent={"center"}>

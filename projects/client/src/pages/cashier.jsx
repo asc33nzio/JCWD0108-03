@@ -11,6 +11,7 @@ export const Cashier = () => {
     const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const [updatedQuantities, setUpdatedQuantities] = useState({});
 
     const data = async () => {
         try {
@@ -18,7 +19,7 @@ export const Cashier = () => {
         } catch (error) {
             
         }
-    }
+    };
 
     useEffect(() => {
         if (!token) {
@@ -32,7 +33,7 @@ export const Cashier = () => {
                 <Flex >
                     <ProductCategories cartItems={cartItems} setCartItems={setCartItems} />
                     <Flex >
-                        <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                        <Cart cartItems={cartItems} setCartItems={setCartItems} updatedQuantities={updatedQuantities} setUpdatedQuantities={setUpdatedQuantities} />
                     </Flex>
                 </Flex>
             </Flex>
