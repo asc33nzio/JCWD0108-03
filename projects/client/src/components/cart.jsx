@@ -8,6 +8,7 @@ import { IconButton } from "@chakra-ui/react";
 export const Cart = ({ cartItems, setCartItems }) => {
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [updatedQuantities, setUpdatedQuantities] = useState({});
 
     const fetchCartItems = async () => {
         try {
@@ -16,6 +17,8 @@ export const Cart = ({ cartItems, setCartItems }) => {
             const response = await Axios.get("http://localhost:8000/api/cart", {
                 headers: { Authorization: `Bearer ${token}` },
             });
+
+            console.log(response.data.Product);
 
             const newCartItems = response.data.result.map((cartItem) => ({
                 ...cartItem,
@@ -32,6 +35,29 @@ export const Cart = ({ cartItems, setCartItems }) => {
             setDeleteLoading(false);
         }
     };
+
+    // const handleMinusClick = (productId) => {
+    //     const product = products.find((product) => product.id === productId);
+    //     const currentQuantity = updatedQuantities[productId] || 0;
+    //     const newQuantity = Math.max(currentQuantity - 1, 0);
+    //     setUpdatedQuantities((prevQuantities) => ({
+    //         ...prevQuantities,
+    //         [productId]: newQuantity,
+    //     }));
+    // };
+
+    // const handlePlusClick = (productId, productStock) => {
+    //     const product = products.find((product) => product.id === productId);
+    //     const currentQuantity = updatedQuantities[productId] || 0;
+    //     const newQuantity = currentQuantity + 1;
+
+    //     if (newQuantity <= productStock) {
+    //         setUpdatedQuantities((prevQuantities) => ({
+    //             ...prevQuantities,
+    //             [productId]: newQuantity,
+    //         }));
+    //     }
+    // };
 
     const handleDelete = async (ProductId) => {
         try {

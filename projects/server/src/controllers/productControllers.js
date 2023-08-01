@@ -138,18 +138,47 @@ module.exports = {
     },
     getAllProducts: async (req, res) => {
         try {
+            const id = req.user.id
             const page = req.query.page || 1
             const limit = req.query.limit || 8
             const sort = req.query.sort || "ASC"
-            const sortBy = req.query.sortBy
-            const result = await products.findAll(
-                {
-                    order: [[sortBy, sort]],
-                    limit,
-                    offset: limit * (page - 1)
-                }
+            const sortBy = req.query.sortBy || "productName"
+            const user = await products.findOne(
+                {where : {id : id}}
             )
-            res.status(200).send(result)
+
+            if (user.isAdmin) {
+                const result = await products.findAll(
+                    {
+                        order: [[sortBy, sort]],
+                        limit,
+                        offset: limit * (page - 1)
+                    }
+                )
+                return(
+                    res.status(200).send({
+                        page : page,
+                        result
+                    })
+                )
+            }
+            
+            else {
+                const result = await products.findAll(
+                    {
+                        where: {isActive : 1},
+                        order: [[sortBy, sort]],
+                        limit,
+                        offset: limit * (page - 1)
+                    }
+                )
+                return(
+                    res.status(200).send({
+                        page : page,
+                        result
+                    })
+                )
+            }
         } catch (error) {
             console.log(error);
             res.status(500).send({

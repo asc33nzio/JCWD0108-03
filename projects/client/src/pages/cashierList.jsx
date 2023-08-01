@@ -1,12 +1,12 @@
 import Axios from "axios";
-import InitialFocus from "../components/formModal";
+import AddCashier from "../components/admin/addCashier";
+import UpdateCashier from "../components/admin/updateCashier";
 import { Avatar, Box, Button, Flex, Img, Text, useToast } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, } from '@chakra-ui/react';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { DeleteButton } from "../components/admin/deleteButton";
-import { EditIcon } from "@chakra-ui/icons";
 
 export const CashierList = () => {
     const [data, setData] = useState();
@@ -57,7 +57,7 @@ export const CashierList = () => {
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
             <Flex mt={"20px"} justifyContent={"center"}>
-                <InitialFocus />
+                <AddCashier />
             </Flex>
             <Flex mt={"40px"} justifyContent={"center"}>
                 <Box>
@@ -85,12 +85,18 @@ export const CashierList = () => {
                                                 textOverflow="ellipsis"
                                                 maxWidth="100px" textAlign={"center"}>{item.password}</Td>
                                             {item.isSuspended ? (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"20px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"25px"} justifyContent={"center"} bgColor={"red.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Supended</Flex></Td>
                                             ) : (
-                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"20px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
+                                                <Td><Flex boxShadow={"0px 0px 10px grey"} ml={"25px"} justifyContent={"center"} bgColor={"green.400"} h={"30px"} w={"100px"} lineHeight={"30px"} color={"white"} borderRadius={"5px"}>Active</Flex></Td>
                                             )}
                                             <Td display={"flex"} justifyContent={"center"} >
-                                                <Button borderRadius={"70px"} color={"white"} bg={"blue.600"}><EditIcon /></Button>
+                                                <UpdateCashier
+                                                    id={item.id}
+                                                    username={item.username}
+                                                    email={item.email}
+                                                    password={item.password}
+                                                    avatar={item.avatar}
+                                                />
                                                 <DeleteButton id={item.id} />
                                                 {item.isSuspended ? (<Button w={"90px"} borderRadius={"70px"} onClick={() => handleSuspend(item.id)} color={"white"} bg={"Teal"} ml={"5px"}>Activate</Button>) : (<Button Button w={"90px"} borderRadius={"70px"} onClick={() => handleSuspend(item.id)} color={"white"} bg={"#D5AD18"} ml={"5px"}>Suspend</Button>)}
                                             </Td>

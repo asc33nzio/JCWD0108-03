@@ -1,11 +1,11 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, } from '@chakra-ui/react';
 import Axios from 'axios';
+import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRef, useState } from 'react'
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, } from '@chakra-ui/react';
 
-export default function InitialFocus() {
+export default function AddCashier() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
