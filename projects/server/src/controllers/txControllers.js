@@ -135,8 +135,6 @@ module.exports = {
                     }
                 });
 
-                console.log('Sales Records:', salesRecords);
-
                 let totalQuantitySold = 0;
                 for (const sale of salesRecords) {
                     totalQuantitySold += sale.quantitySold;
@@ -166,6 +164,28 @@ module.exports = {
                     payment: newPayment
                 });
             }
+        } catch (error) {
+            return res.status(500).send({
+                status: 500,
+                message: 'Internal server error.',
+            });
+        };
+    },
+    getPayment: async (req, res) => {
+        try {
+            const { txId } = req.params;
+
+            const result = await payments.findOne({
+                where: {
+                    TransactionId: txId
+                }
+            });
+
+            return res.status(200).send({
+                status: 200,
+                message: 'Payment Record Succesfully Fetched.',
+                paymentRecord: result
+            });
         } catch (error) {
             return res.status(500).send({
                 status: 500,
