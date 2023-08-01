@@ -45,7 +45,7 @@ export const Navbar = () => {
                         mt={"3px"}
                             aria-label='Options'
                             icon={<HamburgerIcon />}
-                            variant="ghost">
+                            variant="unstyled">
                         </MenuButton>
                         <Portal>
                             <MenuList boxShadow={"0px 0px 5px grey"} zIndex={100}>
