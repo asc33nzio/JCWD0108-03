@@ -16,6 +16,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
+    const params = useParams()
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -117,7 +118,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         [productId]: inputQuantity,
                     }));
                     setLoadingCartUpdate(false);
-                    await productsByCategory(params.categoryId);
+                    await ProductsByCategory(params.categoryId);
                 } else {
                     setInputQuantities((prevQuantities) => ({
                         ...prevQuantities,
