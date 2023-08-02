@@ -90,7 +90,7 @@ module.exports = {
             );
             res.status(200).send({ message: "Password has been changed" });
         } catch (error) {
-            console.log(error); 
+            console.log(error);
             res.status(400).send(error);
         }
     },

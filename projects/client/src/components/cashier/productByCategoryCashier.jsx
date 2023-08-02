@@ -47,7 +47,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
         };
     };
 
-    const handleClick = (id) => {
+    const handleProductDetail = (id) => {
         navigate(`/product/${id}`);
     };
 
@@ -221,7 +221,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                                             </Flex>
                                             <Flex mt={{ base: '5px', sm: '10px' }} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
                                                 <Flex onClick={() => handleAddToCart(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} > <AiOutlineShoppingCart /> </Flex>
-                                                <Flex onClick={() => handleClick(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} ><SiQuicklook /> </Flex>
+                                                <Flex onClick={() => handleProductDetail(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} ><SiQuicklook /> </Flex>
                                             </Flex>
                                         </Box>
                                     </Box>

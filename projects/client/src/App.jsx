@@ -10,8 +10,11 @@ import { Cashier } from "./pages/cashier";
 import { DetailProduct } from "./pages/detailProduct";
 import { CashierProducts } from "./pages/cashierProducts";
 import { setValue } from './redux/userSlice';
+import { Search } from "./pages/search";
 import { Profile } from "./pages/profile";
 import { ResetPassword } from "./pages/resetPassword";
+import { Payment } from "./pages/payment";
+import { Checkout } from "./pages/checkout";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -20,8 +23,11 @@ const router = createBrowserRouter([
   { path: "/cashierlist", element: <CashierList /> },
   { path: "/category/:categoryId", element: <CashierProducts /> },
   { path: "/product/:id", element: <DetailProduct /> },
+  { path: "/search", element: <Search /> },
   { path: "/profile", element: <Profile /> },
   { path: "/resetpassword", element: <ResetPassword /> },
+  { path: "/payment", element: <Payment />, errorElement: <Cashier /> },
+  { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
 ]);
 
 function App() {

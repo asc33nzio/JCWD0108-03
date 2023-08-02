@@ -3,11 +3,13 @@ import { Flex, Image } from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import { AddCategory } from "./addCategory";
+import { useSelector } from "react-redux";
 
 export const ProductCategories = ({ cartItems, setCartItems }) => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
+    const user = useSelector((state) => state.user.value.isAdmin)
 
     const category = async (data) => {
         try {
@@ -57,7 +59,7 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
                             </Flex>
                         )
                     })}
-                    <AddCategory />
+                    {user? (<AddCategory />) : (null)}
                 </Flex>
             </Flex>
         </Flex>
