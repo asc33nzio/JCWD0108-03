@@ -37,12 +37,7 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
     };
 
     const handleClick = (id) => {
-        if (user) {
-            navigate(`/categoryAdmin/${id}`)
-        }
-        else{
-            navigate(`/categoryCashier/${id}`)
-        }
+        navigate(`/categoryAdmin/${id}`);
     };
 
     useEffect(() => {
