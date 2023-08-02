@@ -7,7 +7,7 @@ import { SiQuicklook } from "react-icons/si"
 import { AddProduct } from "../admin/addProduct";
 import { CircleLoader } from "react-spinners";
 
-export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
+export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updatedQuantities, setUpdatedQuantities }) => {
     const navigate = useNavigate();
     const { categoryId } = useParams();
     const [products, setProducts] = useState([]);
@@ -16,6 +16,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
+    // const [shouldFetchCart, setShouldFetchCart] = useState(true);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -46,7 +47,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
         };
     };
 
-    const handleClick = (id) => {
+    const handleProductDetail = (id) => {
         navigate(`/product/${id}`);
     };
 
@@ -83,7 +84,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                     }));
                 }
             }
-        }
+        };
     };
 
     const handleAddToCart = async (productId) => {
@@ -104,6 +105,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
                 if (totalQuantityInCart <= product.stock) {
+                    // setShouldFetchCart(true);
                     setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
@@ -116,6 +118,12 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         ...prevQuantities,
                         [productId]: inputQuantity,
                     }));
+
+                    setUpdatedQuantities((prevQuantities) => ({
+                        ...prevQuantities,
+                        [productId]: (prevQuantities[productId] || 0) + inputQuantity,
+                    }));
+
                     setLoadingCartUpdate(false);
                 } else {
                     setInputQuantities((prevQuantities) => ({
@@ -126,19 +134,19 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
             }
         } catch (error) {
             console.error(error);
-        }
+        };
     };
 
     const nextPage = () => {
         if (page < totalPage) {
             setPage((prevPage) => Math.max(+prevPage + 1, 1));
-        }
+        };
     };
 
     const prevPage = () => {
         if (page > 1) {
             setPage((prevPage) => Math.max(+prevPage - 1, 1));
-        }
+        };
     };
 
     useEffect(() => {
@@ -153,6 +161,23 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
             getCartByUser();
         }
     }, [loadingCartUpdate]);
+
+    // useEffect(() => {
+    //     setLoadingProducts(true);
+    //     Promise.all([shouldFetchCart && getCartByUser(), fetchProductsByCategory(page)])
+    //         .then(() => setLoadingProducts(false))
+    //         .catch(() => setLoadingProducts(false));
+
+    //     if (shouldFetchCart) {
+    //         setShouldFetchCart(false);
+    //     };
+    // }, [fetchProductsByCategory, page, shouldFetchCart]);
+
+    // useEffect(() => {
+    //     if (!loadingCartUpdate && shouldFetchCart) {
+    //         setShouldFetchCart(true);
+    //     };
+    // }, [loadingCartUpdate, shouldFetchCart]);
 
     return (
         <Flex>
@@ -196,7 +221,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                                             </Flex>
                                             <Flex mt={{ base: '5px', sm: '10px' }} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
                                                 <Flex onClick={() => handleAddToCart(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} > <AiOutlineShoppingCart /> </Flex>
-                                                <Flex onClick={() => handleClick(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} ><SiQuicklook /> </Flex>
+                                                <Flex onClick={() => handleProductDetail(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} ><SiQuicklook /> </Flex>
                                             </Flex>
                                         </Box>
                                     </Box>
@@ -206,15 +231,11 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems }) => {
                         </Flex>
                     )}
                     <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
-                        {totalPage > 1 && (
-                            <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
-                                {page > 1 && (
-                                    <Button onClick={prevPage}>Previous Page</Button>
-                                )}
-                                {page < totalPage && (
-                                    <Button onClick={nextPage}>Next Page</Button>
-                                )}
-                            </Flex>
+                        {page > 1 && (
+                            <Button onClick={prevPage}>Previous Page</Button>
+                        )}
+                        {page < totalPage && (
+                            <Button onClick={nextPage}>Next Page</Button>
                         )}
                     </Flex>
                 </Box>

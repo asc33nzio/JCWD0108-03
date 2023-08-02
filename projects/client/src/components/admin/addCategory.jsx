@@ -76,7 +76,7 @@ export const AddCategory = () => {
                                     </ModalBody>
 
                                     <ModalFooter>
-                                        <Button type="submit" onClick={handleSubmit} colorScheme='yellow' color={"white"} mr={3}>
+                                        <Button type="submit" colorScheme='yellow' color={"white"} mr={3}>
                                             Create
                                         </Button>
                                         <Button onClick={onClose}>Cancel</Button>

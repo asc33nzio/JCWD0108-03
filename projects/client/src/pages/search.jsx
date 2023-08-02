@@ -13,14 +13,14 @@ export const Search = () => {
     const token = localStorage.getItem("token")
     const [search, setSearch] = useState("")
     const [sort, setSort] = useState("DESC")
+    const [sortBy, setSortBy] = useState("productName")
     const navigate = useNavigate()
 
     const Products = async (pageNum) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/products/all?sortBy=productName&page=${pageNum}&sort=${sort}`, {
+            const response = await Axios.get(`http://localhost:8000/api/products/all?sortBy=${sortBy}&page=${pageNum}&sort=${sort}&search=${search}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            console.log(response);
             setProducts(response.data.result)
             setPage(response.data.page)
             setTotalPage(response.data.totalPage)
@@ -49,7 +49,8 @@ export const Search = () => {
 
     useEffect(() => {
         Products(page);
-    }, [reload])
+    }, [reload, search, sort])
+    console.log(sort);
 
     return (
         <Box>
@@ -68,11 +69,20 @@ export const Search = () => {
                         <Button w={"150px"} bgColor={"#FFC900"} mt={"10px"} color={"gray.600"} _hover={{bgColor:"yellow.500"}}>Search</Button>
                     </Box>
                     <Box>
-                        <Box mb={"5px"} fontWeight={"thin"} color={"gray"}>Sort</Box>
+                        <Box mb={"5px"} fontWeight={"thin"} color={"gray"}>Alphabetical</Box>
+                        <RadioGroup borderBottom={"1px solid"} borderColor={"gray.400"} mb={"10px"} pb={"20px"} onChange={(value) => setSort(value)} value={sort}>
+                            <Stack color={"gray"}>
+                                <Radio colorScheme="yellow" isChecked={sort == "ASC" && sortBy == "productName" ? true : false} borderColor={"gray"} onChange={(e) => {setSort("ASC"); setSortBy("productName")}}>A - Z</Radio>
+                                <Radio borderColor={"gray"} isChecked={sort == "DESC" && sortBy == "productName"? true : false} colorScheme="yellow" onChange={(e) => {setSort("DESC"); setSortBy("productName")}} >Z - A</Radio>
+                            </Stack>
+                        </RadioGroup>
+                    </Box>
+                    <Box>
+                        <Box mb={"5px"} fontWeight={"thin"} color={"gray"}>Price</Box>
                         <RadioGroup onChange={(value) => setSort(value)} value={sort}>
                             <Stack color={"gray"}>
-                                <Radio colorScheme="yellow" borderColor={"gray"} value='DESC'>A - Z</Radio>
-                                <Radio borderColor={"gray"} colorScheme="yellow" value='ASC'>Z - A</Radio>
+                                <Radio colorScheme="yellow" borderColor={"gray"} isChecked={sort == "DESC" && sortBy == "price"? true : false} onChange={(e) => {setSort("DESC"); setSortBy("price")}}>Highest</Radio>
+                                <Radio borderColor={"gray"} colorScheme="yellow" isChecked={sort == "ASC" && sortBy == "price"? true : false} onChange={(e) => {setSort("ASC"); setSortBy("price")}}>Lowest</Radio>
                             </Stack>
                         </RadioGroup>
                     </Box>

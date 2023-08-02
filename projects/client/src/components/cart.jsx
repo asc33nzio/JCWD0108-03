@@ -1,13 +1,19 @@
 import Axios from "axios";
 import { useState, useEffect } from "react";
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 import { CircleLoader } from "react-spinners";
 import { AiOutlineDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { IconButton } from "@chakra-ui/react";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setTransactionData } from "../redux/transactionSlice";
 
 export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQuantities }) => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const dispatch = useDispatch();
+    const toast = useToast();
 
     const fetchCartItems = async () => {
         try {
@@ -71,6 +77,15 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
             if (currentQuantity !== newQuantity) {
                 updateQuantityOnServer(productId, newQuantity);
             }
+        } else {
+            toast({
+                title: "Product Out Of Stock",
+                description: `${product.Product.productName} is out of stock. Only ${product.Product.stock} pcs are available. Please contact your supervisor.`,
+                status: "error",
+                duration: 2000,
+                isClosable: true,
+                position: "top"
+            });
         }
     };
 
@@ -122,6 +137,21 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
         }
     };
 
+    const handlePayment = async () => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await Axios.post("http://localhost:8000/api/transactions", {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const transactionData = response.data;
+            dispatch(setTransactionData(transactionData));
+            navigate('/payment');
+        } catch (error) {
+            console.error(error);
+        };
+    };
+
     const formatPrice = (price) => {
         return price.toLocaleString("id-ID");
     };
@@ -154,7 +184,7 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                 borderTopRadius={"10px"}
                 bgGradient={"linear(yellow.500,#FFC900)"}
                 ml={{ base: "10px", sm: "25px", md: "80px" }}
-                w={{ base: "190px", sm: "215px", md: "255px", lg: "335px", xl: "535px" }}
+                w={{ base: "235px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }}
             >
                 <Flex
                     justifyContent={"center"}
@@ -165,7 +195,7 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                 >
                     Shopping Cart
                 </Flex>
-                <Box w={{ base: "155px", sm: "180px", md: "220px", lg: "300px", xl: "500px" }} h={"3px"} bgColor={"white"}></Box>
+                <Box w={{ base: "235px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }} h={"3px"} bgColor={"white"}></Box>
                 <Box p={"20px"}>
                     {loading && deleteLoading ? (
                         <Flex justifyContent="center" alignItems="center" height="200px">
@@ -204,7 +234,7 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                                         onClick={() => handlePlusClick(item.ProductId)}
                                     />
                                 </Flex>
-                                <Box ml="40px">Rp. {item.Product ? `Rp. ${formatPrice(item.Product.price * item.quantity)}` : "Price Is Being Loaded"},00</Box>
+                                <Box ml="40px">Rp. {item.Product ? `${formatPrice(item.Product.price * item.quantity)}` : "Price Is Being Loaded"},00</Box>
                                 <IconButton
                                     ml={'10px'}
                                     mt={'10px'}
@@ -239,9 +269,9 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                 borderBottomRadius={"10px"}
                 bgColor={"#FFC900"}
                 ml={{ base: "10px", sm: "25px", md: "80px" }}
-                w={{ base: "190px", sm: "215px", md: "255px", lg: "335px", xl: "535px" }}
+                w={{ base: "235px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }}
             >
-                <Button color={"#FFC900"}>Checkout</Button>
+                <Button color={"#FFC900"} onClick={() => handlePayment()}>Pay</Button>
             </Flex>
         </Box>
     );

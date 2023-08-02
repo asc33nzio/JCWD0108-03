@@ -64,7 +64,7 @@ export const AddProduct = () => {
 
                                 <ModalOverlay />
                                 <ModalContent>
-                                    <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Category</ModalHeader>
+                                    <ModalHeader fontWeight={"bold"} color={"yellow.500"} >Add New Product</ModalHeader>
                                     <ModalCloseButton />
                                     <ModalBody pb={6}>
                                         <FormControl>
@@ -100,7 +100,7 @@ export const AddProduct = () => {
                                     </ModalBody>
 
                                     <ModalFooter>
-                                        <Button type="submit" onClick={handleSubmit} colorScheme='yellow' color={"white"} mr={3}>
+                                        <Button type="submit" colorScheme='yellow' color={"white"} mr={3}>
                                             Create
                                         </Button>
                                         <Button onClick={onClose}>Cancel</Button>
