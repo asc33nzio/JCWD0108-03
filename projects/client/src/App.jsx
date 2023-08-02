@@ -9,6 +9,7 @@ import { ErrorPage } from "./pages/404";
 import { Cashier } from "./pages/cashier";
 import { DetailProduct } from "./pages/detailProduct";
 import { CashierProducts } from "./pages/cashierProducts";
+import { AdminProducts } from "./pages/adminProducts";
 import { setValue } from './redux/userSlice';
 import { Search } from "./pages/search";
 import { Profile } from "./pages/profile";
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
   { path: "/forgot", element: <Forgot />, },
   { path: "/cashier", element: <Cashier /> },
   { path: "/cashierlist", element: <CashierList /> },
-  { path: "/category/:categoryId", element: <CashierProducts /> },
+  { path: "/categoryCashier/:categoryId", element: <CashierProducts /> },
+  { path: "/categoryAdmin/:categoryId", element: <AdminProducts /> },
   { path: "/product/:id", element: <DetailProduct /> },
   { path: "/search", element: <Search /> },
   { path: "/profile", element: <Profile /> },

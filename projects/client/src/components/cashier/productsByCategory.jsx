@@ -84,7 +84,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
                     }));
                 }
             }
-        };
+        }
     };
 
     const handleAddToCart = async (productId) => {
