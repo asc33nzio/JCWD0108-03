@@ -3,7 +3,13 @@ const { body, validationResult } = require("express-validator")
 module.exports = {
     checkRegsiter: async (req, res, next) => {
         try {
-            await body("username").notEmpty().isAlphanumeric().withMessage("You have to fill the username").run(req);
+            await body("username").notEmpty().isAlphanumeric().isStrongPassword({
+                minLength: 6,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 0,
+                minSymbols: 0
+            }).withMessage("You have to fill the username").run(req);
             await body("email").notEmpty().isEmail().run(req);
             await body("password").notEmpty().isStrongPassword({
                 minLength: 6,
@@ -14,7 +20,7 @@ module.exports = {
             }).run(req);
 
             const validation = validationResult(req);
-            if (req.avatar === undefined) res.status(400).send({
+            if (req.file === undefined) res.status(400).send({
                 message: "You Have to upload A Picture"
             });
             if (validation.isEmpty()) next();

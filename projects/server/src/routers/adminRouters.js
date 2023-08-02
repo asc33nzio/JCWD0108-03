@@ -4,7 +4,7 @@ const { verifyToken, checkRole } = require("../middleware/auth");
 const { multerUpload } = require("../middleware/multer");
 const { checkRegsiter } = require("../middleware/validator");
 
-router.post("/", verifyToken, checkRole, checkRegsiter, multerUpload(`./public/avatars`, 'Avatar').single('avatar'), adminControllers.addCashier);
+router.post("/", verifyToken, checkRole, multerUpload(`./public/avatars`, 'Avatar').single('avatar'), checkRegsiter, adminControllers.addCashier);
 router.get("/all", adminControllers.getAllCashier);
 router.get("/detailCashier/:id", adminControllers.getCashierById);
 router.patch("/updateCashier/:id", verifyToken, checkRole, multerUpload(`./public/avatars`, 'Avatar').single('avatar'), adminControllers.updateCashierData);

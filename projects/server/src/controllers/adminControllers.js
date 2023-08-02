@@ -35,8 +35,9 @@ module.exports = {
             });
         } catch (error) {
             res.status(500).send({
+                error,
                 status: 500,
-                message: "Internal server error."
+                message: 'Internal server error.',
             });
         }
     },
@@ -52,13 +53,15 @@ module.exports = {
 
             res.status(200).send({
                 status: 200,
-                message: "Updated!"
+                message: "Updated!",
+                result
             });
         } catch (error) {
             console.log(error);
             res.status(500).send({
+                error,
                 status: 500,
-                message: "Internal server error."
+                message: 'Internal server error.',
             });
         }
     },
@@ -88,7 +91,7 @@ module.exports = {
                 res.status(200).send({ message: "Cashier Suspended" })
             }
         } catch (error) {
-            console.log(error);
+            
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.',

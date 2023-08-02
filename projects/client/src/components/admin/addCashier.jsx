@@ -25,7 +25,7 @@ export default function AddCashier() {
             .required("Write your Email"),
         password: Yup.string()
             .required("Password is required")
-            .min(6, "Paasowrd min 6 ")
+            .min(6, "Password minimum 6 characters long")
             .matches(/^(?=.*[A-Z])/, "Password Must Contain 1 Capital")
             .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
             .matches(/.*[0-9].*/, "Password Must Contain 1 number"),
@@ -86,19 +86,19 @@ export default function AddCashier() {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Abcde' name="username" borderBottom={"1px solid"} borderColor={"#D5AD18"} />
+                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Ex: John Doe' name="username" borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
-                                            <Field as={Input} variant={"flushed"} placeholder='Abcde@gmail.com' name='email' borderBottom={"1px solid"} borderColor={"#D5AD18"} />
+                                            <Field as={Input} variant={"flushed"} placeholder='Ex: Johndoe@gmail.com' name='email' borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Password</FormLabel>
                                             <Flex>
                                                 <Box>
-                                                    <Field as={Input} name="password" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Password" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"1px solid"} borderColor={"#D5AD18"} />
+                                                    <Field as={Input} name="password" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Ex: /Johndoe12" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                                     <ErrorMessage
                                                         component="box"
                                                         name="password"
