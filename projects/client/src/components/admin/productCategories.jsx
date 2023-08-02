@@ -37,7 +37,7 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
     };
 
     const handleClick = (id) => {
-        navigate(`/category/${id}`);
+        navigate(`/categoryAdmin/${id}`);
     };
 
     useEffect(() => {
