@@ -54,23 +54,20 @@ module.exports = {
     },
     forgetPassword: async (req, res) => {
         try {
-            const isAccountExist = await users.findOne({ where: { email: req.body.email } });
-            if (!isAccountExist) throw { message: "E-mail not found." }
             const { email } = req.body;
-            const payload = { id: isAccountExist.id }
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "4h" });
+            const findUser = await users.findOne({ where: { email: email } });
+            if (!findUser) throw { message: "E-mail not found." }
             const data = await fs.readFileSync("./reset_password_template.html", "utf-8");
             const tempCompile = await handlebars.compile(data);
             const tempResult = tempCompile(data);
-            await users.update(
-                { isVerified: true },
-                { where: { email: req.body.email } }
-            );
+            const payload = { id: findUser.id }
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "4h" });
+            const htmlWithToken = tempResult.replace('TOKEN_PLACEHOLDER', token);
             await transporter.sendMail({
                 from: "aryobimoalvian@gmail.com",
                 to: email,
                 subject: "Reset Your Cashierkeun Account Password.",
-                html: tempResult
+                html: htmlWithToken
             });
             res.status(200).send(token);
         } catch (error) {
@@ -93,7 +90,7 @@ module.exports = {
             );
             res.status(200).send({ message: "Password has been changed" });
         } catch (error) {
-            console.log(error);
+            console.log(error); 
             res.status(400).send(error);
         }
     },

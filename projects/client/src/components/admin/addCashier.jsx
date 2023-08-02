@@ -86,19 +86,19 @@ export default function AddCashier() {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Abcde' name="username" borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Abcde' name="username" borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
-                                            <Field as={Input} variant={"flushed"} placeholder='Abcde@gmail.com' name='email' borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                                            <Field as={Input} variant={"flushed"} placeholder='Abcde@gmail.com' name='email' borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="email" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>
                                             <FormLabel>Password</FormLabel>
                                             <Flex>
                                                 <Box>
-                                                    <Field as={Input} name="password" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Password" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                                                    <Field as={Input} name="password" w={{ base: '180px', md: '400px', lg: '400px' }} placeholder="Password" size={"md"} type={show ? 'text' : 'password'} variant={"flushed"} color={"black"} borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                                     <ErrorMessage
                                                         component="box"
                                                         name="password"
@@ -118,7 +118,7 @@ export default function AddCashier() {
                                                         onChange={(e) => {
                                                             field.onChange(e);
                                                             setFile(e.target.files[0]);
-                                                        }} variant={"flushed"} borderBottom={"2px solid"} borderColor={"#D5AD18"} placeholder='Photo' name='avatar' as={Field} type='file' />
+                                                        }} variant={"flushed"} borderBottom={"1px solid"} borderColor={"#D5AD18"} placeholder='Photo' name='avatar' as={Field} type='file' />
                                                     <ErrorMessage component="Box" name="avatar" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                                 </FormControl>
                                             )}
