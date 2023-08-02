@@ -25,7 +25,7 @@ const router = createBrowserRouter([
   { path: "/product/:id", element: <DetailProduct /> },
   { path: "/search", element: <Search /> },
   { path: "/profile", element: <Profile /> },
-  { path: "/resetpassword", element: <ResetPassword /> },
+  { path: "/resetpassword/:token", element: <ResetPassword /> },
   { path: "/payment", element: <Payment />, errorElement: <Cashier /> },
   { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
 ]);
@@ -42,6 +42,7 @@ function App() {
         });
         dispatch(setValue(response.data));
       } catch (error) {
+        localStorage.removeItem("token")
         console.log(error);
       }
     };

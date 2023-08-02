@@ -9,14 +9,14 @@ export const ResetPassword = () => {
     const navigate = useNavigate()
     const { token } = useParams();
     const Resetschema = Yup.object().shape(({
-        password: Yup.string()
+        newPassword: Yup.string()
             .required("Password is required")
             .min(6, "Paasowrd min 6 ")
             .matches(/^(?=.*[A-Z])/, "Password Must Contain 1 Capital")
             .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
             .matches(/.*[0-9].*/, "Password Must Contain 1 number"),
         confirmPassword: Yup.string()
-            .oneOf([Yup.ref("password")], "Password is not same")
+            .oneOf([Yup.ref("newPassword")], "Password is not same")
             .required("have to same"),
     }));
     const handleReset = async (values) => {

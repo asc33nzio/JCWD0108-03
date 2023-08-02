@@ -123,7 +123,7 @@ export default function AddCashier() {
                                                 </FormControl>
                                             )}
                                         </Field>
-                                        <Button onClick={handleCreate} type='submit' colorScheme='yellow' mr={3}>  Add Cashier  </Button>
+                                        <Button type='submit' colorScheme='yellow' mr={3}>  Add Cashier  </Button>
                                         <Button onClick={onClose}>Cancel</Button>
                                     </Form>
                                 );
