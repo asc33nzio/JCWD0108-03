@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const db = require('../models');
+const user = db.Users
 const products = db.Products;
 const categories = db.Categories;
 
@@ -90,12 +91,12 @@ module.exports = {
                 where: { CategoryId: id }
             });
             const result = await products.findAll(
-                { where: { CategoryId: id }, limit, offset: limit * (page - 1) }
-            );
+                {where: { CategoryId: id }, limit,offset : limit * (page - 1) }
+                );
             res.status(200).send({
-                page: page,
-                totalPage: Math.ceil(totalProduct / limit),
-                result
+                page : page,
+                totalPage : Math.ceil(totalProduct / limit),  
+                 result
             });
         } catch (error) {
             res.status(500).send({
@@ -146,12 +147,11 @@ module.exports = {
             const sort = req.query.sort || "ASC"
             const sortBy = req.query.sortBy || "productName"
             const totalProduct = await products.count()
-            const user = await products.findOne(
+            const userData = await user.findOne(
                 { where: { id: id } }
             )
 
-
-            if (user.isAdmin) {
+            if (userData.isAdmin) {
                 const result = await products.findAll(
                     {
                         where: { productName: { [Op.like]: `%${search}%` } },
@@ -162,7 +162,7 @@ module.exports = {
                 )
                 return (
                     res.status(200).send({
-                        totalPage: Math.ceil(totalProduct / limit),
+                        totalPage : Math.ceil(totalProduct / limit),
                         page: page,
                         result
                     })
@@ -170,6 +170,9 @@ module.exports = {
             }
 
             else {
+                const allProducts = await products.count(
+                    {where: { productName: { [Op.like]: `%${search}%` }, isActive: true }}
+                ) 
                 const result = await products.findAll(
                     {
                         where: { productName: { [Op.like]: `%${search}%` }, isActive: true },
@@ -177,10 +180,10 @@ module.exports = {
                         limit,
                         offset: limit * (page - 1)
                     }
-                )
+                    )
                 return (
                     res.status(200).send({
-                        totalPage: Math.ceil(totalProduct / limit),
+                        totalPage: Math.ceil(allProducts / limit),
                         page: page,
                         result
                     })
