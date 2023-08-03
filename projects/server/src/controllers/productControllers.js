@@ -45,6 +45,11 @@ module.exports = {
     },
     getCategories: async (req, res) => {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 8
+            const totalCategory = categories.count({
+                where : {isDelete : 0}
+            })
             const result = await categories.findAll({
                 where : {isDelete : 0}
             });
@@ -344,7 +349,7 @@ module.exports = {
             }
         
             await products.update(
-                {isActive : 0},
+                {isDelete : 1},
                 {where : {CategoryId : categoryId}}
                 )
             res.status(200).send({message:"delete success"})
