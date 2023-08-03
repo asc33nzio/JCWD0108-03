@@ -61,7 +61,7 @@ export const Navbar = () => {
                                 {data.isAdmin ? (
                                     <Box>
                                         <MenuItem as={Link} to="/cashierlist">Cashier List</MenuItem>
-                                        <MenuItem as={Link} to="/salesGeneral">Sales Report</MenuItem>
+                                        <MenuItem as={Link} to="/sales">Sales Report</MenuItem>
                                     </Box>
                                 ) : (null)}
                                 <MenuItem fontWeight={"bold"} color={"red"} onClick={onLogout}>Log Out</MenuItem>

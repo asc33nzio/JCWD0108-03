@@ -135,7 +135,12 @@ module.exports = {
             });
             res.status(200).send(result);
         } catch (error) {
-            res.status(400).send(error)
+            console.log(error);
+            res.status(500).send({
+                error,
+                status: 500,
+                message: 'Internal server error.',
+            });
         }
     },
 }
