@@ -60,6 +60,7 @@ export const Search = () => {
                     <Box mb={"10px"} borderBottom={"1px solid"} borderColor={"gray.400"} pb={"20px"}>
                         <Box mb={"5px"} fontWeight={"thin"} color={"gray"}>Search Product</Box>
                         <Input 
+                            type="search"
                             value={search} 
                             onChange={(e) => setSearch(e.target.value)} 
                             w={"150px"} h={"30px"} border={"1px solid gray"} bgColor={"white"} 

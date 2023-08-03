@@ -1,8 +1,10 @@
 import Axios from "axios";
 import { Box, Button, Flex, Heading, Input, Text, useToast } from "@chakra-ui/react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 
 export const Forgot = () => {
+    const [email, setEmail] = useState("");
     const navigate = useNavigate();
     const toast = useToast();
     const { token } = useParams();
@@ -12,6 +14,7 @@ export const Forgot = () => {
     const getResetPassword = async () => {
         try {
             const response = await Axios.put("http://localhost:8000/api/users/forget", {
+                email: email,
             }, { headers: header });
 
             setTimeout(() => {
@@ -25,6 +28,7 @@ export const Forgot = () => {
                 isClosable: true,
                 position: "top"
             });
+            console.log(response.data);
         } catch (err) {
             console.log(err);
         }
@@ -42,10 +46,18 @@ export const Forgot = () => {
                         </Text>
                     </Flex>
                     <Flex mt={"20px"} justifyContent={"center"}>
-                        <Input w={{ base: '200px', md: '400px', lg: '400px' }} placeholder="Email" size={"md"} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
+                        <Input 
+                          value={email}
+                          onChange={(input) => setEmail(input.target.value)}
+                          onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                getResetPassword();
+                              }
+                            }}
+                        w={{ base: '200px', md: '400px', lg: '400px' }} placeholder="Email" size={"md"} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
                     </Flex>
                     <Flex mt={"30px"} justifyContent={"center"}>
-                        <Button onClick={getResetPassword} fontFamily={"monospace"} boxShadow='0px 0px 6px black' color={"black"} bgGradient="linear(#FFEA61, #FFC900)" w={"200px"}>
+                        <Button type="submit" onClick={getResetPassword} fontFamily={"monospace"} boxShadow='0px 0px 6px black' color={"black"} bgGradient="linear(#FFEA61, #FFC900)" w={"200px"}>
                             Submit
                         </Button>
                     </Flex>

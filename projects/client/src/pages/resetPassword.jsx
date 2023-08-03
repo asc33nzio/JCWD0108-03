@@ -2,19 +2,49 @@ import Axios from "axios";
 import * as Yup from "yup";
 import { Box, Button, Flex, Heading, Input, VStack, useToast } from "@chakra-ui/react";
 import { Field, ErrorMessage, Formik, Form } from "formik";
+import { useNavigate, useParams } from "react-router";
 
 export const ResetPassword = () => {
+    const toast = useToast();
+    const navigate = useNavigate()
+    const { token } = useParams();
     const Resetschema = Yup.object().shape(({
-        password: Yup.string()
+        newPassword: Yup.string()
             .required("Password is required")
-            .min(6, "Paasowrd min 6 ")
+            .min(6, "Password minimum 6 characters long")
             .matches(/^(?=.*[A-Z])/, "Password Must Contain 1 Capital")
             .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
             .matches(/.*[0-9].*/, "Password Must Contain 1 number"),
         confirmPassword: Yup.string()
-            .oneOf([Yup.ref("password")], "Password is not same")
+            .oneOf([Yup.ref("newPassword")], "Password is not same")
             .required("have to same"),
     }));
+    const handleReset = async (values) => {
+        try {
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            await Axios.patch(`http://localhost:8000/api/users/resetpassword`,
+                {
+                    newPassword: values.newPassword,
+                    confirmPassword: values.confirmPassword
+                },
+                { headers }
+            );
+            toast({
+                title: "Check your Email to Reset your Password!",
+                description: "Sent to your Email!",
+                status: 'success',
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
+            navigate('/');
+        } catch (error) {
+            console.error(error);
+            alert("Password reset unsuccessful. Please try again.")
+        }
+    };
     return (
         <>
             <Flex w={"full"} h={"100vh"} justifyContent={"center"} margin={"auto"} borderRadius={"10px"}
@@ -27,8 +57,7 @@ export const ResetPassword = () => {
                             initialValues={{ newPassword: "", confirmPassword: "" }}
                             validationSchema={Resetschema}
                             onSubmit={(value, action) => {
-                                // handleSubmit(value);
-                                // if (success) action.resetForm();
+                                handleReset(value);
                             }}>
                             {(props) => {
                                 return (

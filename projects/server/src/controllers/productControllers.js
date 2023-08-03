@@ -94,7 +94,7 @@ module.exports = {
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 8;
             const totalProduct = await products.count({
-                where: { CategoryId: id }
+                where: { CategoryId: id, isDelete:false }
             });
             const result = await products.findAll(
                 {where: { CategoryId: id, isDelete : 0 },
@@ -119,11 +119,11 @@ module.exports = {
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 8;
             const totalProduct = await products.count({
-                where: { CategoryId: id }
+                where: { CategoryId: id, isDelete:false, isActive:true }
             });
             const result = await products.findAll(
                 {
-                    where: { CategoryId: id, isActive : true, isDelete: 0 },
+                    where: { CategoryId: id, isActive : true, isDelete: false },
                     limit,
                     offset : limit * (page - 1) 
                 }

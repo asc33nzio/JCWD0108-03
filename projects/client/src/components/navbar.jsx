@@ -23,7 +23,7 @@ export const Navbar = () => {
         });
         setTimeout(() => {
             navigate("/");
-        }, 1500);
+        }, 500);
     }
     return (
         <Box zIndex={"100"} position={"fixed"}>
