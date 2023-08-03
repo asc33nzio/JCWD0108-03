@@ -9,13 +9,12 @@ import { setValue } from "../../redux/userSlice";
 import { useNavigate } from "react-router";
 
 export const CashierLogin = () => {
-    const [success, setSuccess] = useState();
-    const [show, setShow] = useState(false);
-    const handleClick = () => setShow(!show);
     const toast = useToast();
+    const token = localStorage.getItem("token");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+    const handleClick = () => setShow(!show);
+    const [show, setShow] = useState(false);
     const loginSchema = Yup.object().shape({
         username: Yup.string()
             .required("Username is required"),
@@ -25,13 +24,9 @@ export const CashierLogin = () => {
     const handleSubmit = async (data1) => {
         try {
             const response = await Axios.post("http://localhost:8000/api/users/cashierlogin", data1);
-            console.log(response.data);
             dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
-            setSuccess(true);
-            setTimeout(() => {
                 navigate("/cashier");
-            }, 1000)
             toast({
                 title: "Welcome!",
                 description: "Login Success!",
@@ -41,11 +36,11 @@ export const CashierLogin = () => {
                 position: "top"
             });
         } catch (err) {
-            console.log(err);   
+            console.log(err);
             toast({
                 title: "Access Denied!",
-                description: err.error,
-                status: "error",    
+                description: err.response.data.error.message,
+                status: "error",
                 duration: 2500,
                 isClosable: true,
                 position: "top"
@@ -63,7 +58,6 @@ export const CashierLogin = () => {
             validationSchema={loginSchema}
             onSubmit={(value, action) => {
                 handleSubmit(value);
-                if (success) action.resetForm();
             }}>
             {(props) => {
                 return (
