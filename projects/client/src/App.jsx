@@ -16,6 +16,7 @@ import { Profile } from "./pages/profile";
 import { ResetPassword } from "./pages/resetPassword";
 import { Payment } from "./pages/payment";
 import { Checkout } from "./pages/checkout";
+import { SalesGeneral } from "./pages/salesGeneral";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   { path: "/resetpassword/:token", element: <ResetPassword /> },
   { path: "/payment", element: <Payment />, errorElement: <Cashier /> },
   { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
+  { path: "/salesGeneral", element: <SalesGeneral />, errorElement: <Cashier /> },
 ]);
 
 function App() {
