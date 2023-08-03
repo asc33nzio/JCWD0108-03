@@ -18,9 +18,8 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
         try {
             const response = await Axios.get(`http://localhost:8000/api/products/categories?page=${page}`)
             setCategories(response.data.result)
-            setTotalPage(response.data.totalPage);
             setPage(response.data.page);
-            console.log(response.data);
+            setTotalPage(response.data.totalPage);
         } catch (error) {
             console.log(error);
         };
@@ -80,8 +79,8 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
 
     return (
         <Flex ml={{ base: "0px", sm: "100px" }}>
-            <Box justifyContent={"center"} w={{ base: "200px", sm: "400px", md: "450px", lg: "600px" }} h={"100%"}>
-                <Flex blur={"10px"} wrap={"wrap"} gap={{ base: "5", sm: "10" }} >
+            <Box justifyContent={"center"} w={{ base: "200px", sm: "400px", md: "450px", lg: "600px" }} h={"110%"}>
+                <Flex blur={"10px"} wrap={"wrap"} gap={{ base: "3", sm: "5" }} >
                     {categories.map(item => {
                         return (
                             <Flex key={item.id} wrap={"wrap"} borderRadius={'8px'} h={{ base: '70px', sm: '150px', md: '180px' }} w={{ base: '70px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} justifyContent={"center"} cursor={"pointer"} boxShadow={"0px 0px 5px gray"}>
@@ -101,12 +100,12 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
                     })}
                     {user ? (<AddCategory />) : (null)}
                 </Flex>
-                <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
+                <Flex mt={"20px"} justifyContent={"center"}>
                     {page > 1 && (
-                        <Button onClick={prevPage}>Previous Page</Button>
+                        <Button boxShadow={"0px 0px 10px gray"} _hover={{bgGradient:"linear(to-r, yellow.400, yellow.700)", transform:'scale(0.95)'}} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={prevPage}>Previous Page</Button>
                     )}
                     {page < totalPage && (
-                        <Button onClick={nextPage}>Next Page</Button>
+                        <Button boxShadow={"0px 0px 10px gray"} _hover={{bgGradient:"linear(to-r, yellow.400, yellow.700)", transform:'scale(0.95)'}} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={nextPage}>Next Page</Button>
                     )}
                 </Flex>
             </Box>
