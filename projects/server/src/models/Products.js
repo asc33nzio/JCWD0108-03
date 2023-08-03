@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       });
+      Products.hasMany(models.Sales, {
+        foreignKey: 'productId'
+      });
       Products.hasMany(models.CartItems);
     }
   }
