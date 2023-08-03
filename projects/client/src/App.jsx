@@ -32,7 +32,7 @@ const router = createBrowserRouter([
   { path: "/resetpassword/:token", element: <ResetPassword /> },
   { path: "/payment", element: <Payment />, errorElement: <Cashier /> },
   { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
-  { path: "/salesGeneral", element: <SalesGeneral />, errorElement: <Cashier /> },
+  { path: "/sales", element: <SalesGeneral />, errorElement: <Cashier /> },
   { path: "/sales/:txId", element: <SalesDetail /> },
 ]);
 

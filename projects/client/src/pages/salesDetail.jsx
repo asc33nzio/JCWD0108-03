@@ -35,19 +35,17 @@ export const SalesDetail = () => {
         return `${day}-${month}-${year} at ${hours}:${minutes}:${seconds}`;
     };
 
-    const transactionTime = formatDate(transactionData[0].Transaction.txTime);
+    const transactionTime = transactionData ? formatDate(transactionData[0].Transaction.txTime) : "";
 
     const calculateTotalSale = (data) => {
         let total = 0;
         data.forEach((transaction) => {
-          total += transaction.Product.totalAmount;
+            total += transaction.Product.totalAmount;
         });
         return total;
-      };
-      
-      const totalSaleAmount = transactionData
-        ? calculateTotalSale(transactionData).toLocaleString('id-ID')
-        : 0;
+    };
+
+    const totalSaleAmount = transactionData ? calculateTotalSale(transactionData).toLocaleString('id-ID') : 0;
 
     return (
         <Box w="100%" h="100vh">
@@ -71,9 +69,9 @@ export const SalesDetail = () => {
                             <p>Product ID: {transaction.Product.id}</p>
                             <p>Product Name: {transaction.Product.productName}</p>
                             <p>Category: {transaction.Product.Category.category}</p>
-                            <p>Product Price: {transaction.Product.price}</p>
                             <p>Quantity Sold: {transaction.Product.quantitySold}</p>
-                            <p>Total Amount: {transaction.Product.totalAmount}</p>
+                            <p>Product Price: Rp. {(transaction.Product.price).toLocaleString("id-ID")},00</p>
+                            <p>Total Amount: Rp. {(transaction.Product.totalAmount).toLocaleString("id-ID")},00</p>
                             <Flex justifyContent="center" alignItems="center">
                                 <img
                                     src={`http://localhost:8000/products/${transaction.Product.imgURL}`}

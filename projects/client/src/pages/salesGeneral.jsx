@@ -78,7 +78,7 @@ export const SalesGeneral = () => {
                         <p>Transaction ID: AAA_tx#{transaction.transactionId}</p>
                         <p>Transaction Time: {transaction.txTime}</p>
                         <p>Billed: Rp. {transaction.billable.toLocaleString("id-ID")},00</p>
-                        <Button colorScheme="blue" mt="10px">
+                        <Button as={Link} to={`/sales/${transaction.transactionId}`} colorScheme="blue" mt="10px">
                             See Detail
                         </Button>
                     </Box>
