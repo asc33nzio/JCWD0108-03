@@ -26,9 +26,7 @@ export const CashierLogin = () => {
             const response = await Axios.post("http://localhost:8000/api/users/cashierlogin", data1);
             dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
-            setTimeout(() => {
                 navigate("/cashier");
-            }, 1000)
             toast({
                 title: "Welcome!",
                 description: "Login Success!",

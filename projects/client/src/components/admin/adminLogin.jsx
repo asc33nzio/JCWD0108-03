@@ -28,9 +28,7 @@ export const AdminLogin = () => {
             dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
             setSuccess(true);
-            setTimeout(() => {
                 navigate("/cashier");
-            }, 1000)
             toast({
                 title: "Welcome!",
                 description: "Login Success!",

@@ -37,21 +37,19 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!token) console.log("You have to Login Agaian");
-    {
-      const keepLogin = async () => {
-        try {
-          const response = await Axios.get(`http://localhost:8000/api/users/keeplogin`, {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          dispatch(setValue(response.data));
-        } catch (error) {
-          localStorage.removeItem("token")
-          console.log(error);
-        }
-      };
-      keepLogin();
-    }
+    const keepLogin = async () => {
+      try {
+        const response = await Axios.get(`http://localhost:8000/api/users/keeplogin`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        dispatch(setValue(response.data));
+      } catch (error) {
+        localStorage.removeItem("token")
+        console.log(error);
+      }
+    };
+    keepLogin();
+
   }, [dispatch, token]);
 
   return (
