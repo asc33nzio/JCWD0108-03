@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
   Payments.init(
     {
       amountPaid: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
       changeAmount: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
     },

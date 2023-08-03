@@ -1,10 +1,10 @@
 import Axios from "axios";
-import Chart from "chart.js/auto"; 
-import moment from "moment"; 
+import Chart from "chart.js/auto";
+import moment from "moment";
 import { useEffect, useState, useRef } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
-import 'chartjs-adapter-moment'; 
+import 'chartjs-adapter-moment';
 
 export const SalesGraph = () => {
     const [salesData, setSalesData] = useState([]);
@@ -33,7 +33,7 @@ export const SalesGraph = () => {
         const formatSaleData = (data) => {
             const groupedData = {};
             data.forEach((record) => {
-                const date = record.Transaction.txTime.split("T")[0]; 
+                const date = record.Transaction.txTime.split("T")[0];
                 if (!groupedData[date]) {
                     groupedData[date] = 0;
                 }
@@ -47,6 +47,18 @@ export const SalesGraph = () => {
 
         const salesChartData = formatSaleData(salesData);
 
+        const handleChartClick = (event, elements) => {
+            if (elements.length > 0) {
+              const clickedElement = elements[0];
+              const index = clickedElement.index;
+              const date = salesChartData.dates[index];
+              const momentDate = moment(date, "YYYY-MM-DD"); // Parse the date using moment.js
+              const formattedDate = momentDate.add(1, 'days').format("DD-MM-YYYY"); // Add 1 day and then format the date
+              const dynamicURL = `http://localhost:3000/sales/byDate/${formattedDate}`;
+              window.location.href = dynamicURL;
+            }
+          };
+
         if (salesChartData.dates.length > 0) {
             const chartData = {
                 labels: salesChartData.dates,
@@ -54,7 +66,7 @@ export const SalesGraph = () => {
                     {
                         label: "Sales",
                         data: salesChartData.saleAmounts,
-                        fill: false,
+                        fill: true,
                         borderColor: "rgba(75,192,192,1)",
                         tension: 0.4,
                     },
@@ -70,24 +82,41 @@ export const SalesGraph = () => {
                             tooltipFormat: "ll",
                             unit: "day",
                             displayFormats: {
-                                day: "YYYY-MM-DD",
+                                day: "DD-MM-YYYY",
                             },
                         },
                         title: {
                             display: true,
-                            text: "Date",
+                            text: "Sale Dates",
+                            font: {
+                                size: 24,
+                            },
                         },
                         adapters: {
-                            date: moment, // Use the moment date adapter
+                            date: moment
+                        },
+                        ticks: {
+                            font: {
+                                size: 16,
+                            },
                         },
                     },
                     y: {
                         title: {
                             display: true,
-                            text: "Sales (Nominal Amount)",
+                            text: "Sales In Rupiah",
+                            font: {
+                                size: 24,
+                            },
+                        },
+                        ticks: {
+                            font: {
+                                size: 16,
+                            },
                         },
                     },
                 },
+                onClick: handleChartClick
             };
 
             const ctx = document.getElementById('salesGraph').getContext('2d');
@@ -108,9 +137,12 @@ export const SalesGraph = () => {
     return (
         <Box w="100%" h="100vh">
             <Navbar />
-            <Box p="20px">
-                <canvas id="salesGraph" />
-            </Box>
+            <Stack h="20vh" pb="500px" spacing={0} position="relative" pt="110px" align="center" justify="center" fontFamily={'monospace'} fontSize={'35px'}>
+                <Text>All Time Sales at AAA Shop</Text>
+                <Stack p="100px" position="absolute" top="30px" left="0" right="0">
+                    <canvas id="salesGraph" />
+                </Stack>
+            </Stack>
         </Box>
     );
 };

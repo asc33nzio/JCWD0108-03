@@ -19,6 +19,7 @@ import { Checkout } from "./pages/checkout";
 import { SalesGeneral } from "./pages/salesGeneral";
 import { SalesDetail } from "./pages/salesDetail";
 import { SalesGraph } from "./pages/salesGraph";
+import { SalesDate } from "./pages/salesDate";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
   { path: "/sales", element: <SalesGeneral />, errorElement: <Cashier /> },
   { path: "/sales/:txId", element: <SalesDetail /> },
   { path: "/sales/graph", element: <SalesGraph /> },
+  { path: "/sales/byDate/:dateQuery", element: <SalesDate /> },
 ]);
 
 function App() {

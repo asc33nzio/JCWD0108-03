@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './index.css';
 import { ChakraProvider, ColorModeProvider, extendTheme } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
@@ -29,7 +30,6 @@ root.render(
       <ColorModeProvider options={colorModeConfig}>
         <Provider store={store}>
           <ChakraProvider theme={theme}>
-
             <App />
           </ChakraProvider>
         </Provider>

@@ -34,7 +34,6 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
         }
     }
 
-
     const getCartByUser = async () => {
         try {
             setLoadingCartUpdate(true);
@@ -90,7 +89,7 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
                                             <DeleteIcon size={"20px"} color={"red.500"} />
                                         </Flex>) : (null)}
                                     </Flex>
-                                    <Flex onClick={() => handleClick(item.id)} _hover={{ transform: 'scale(0.98)', transition: "0.3s" }} justifyContent={"center"} lineHeight={{ base: '60px', sm: '140px', md: '170px' }}>
+                                    <Flex onClick={() => handleClick(item.id)} color={'red.200'} fontSize={'19px'} fontFamily={'monospace'} fontWeight={'strong'} _hover={{ transform: 'scale(0.98)', transition: "0.3s" }} justifyContent={"center"} lineHeight={{ base: '60px', sm: '140px', md: '170px' }}>
                                         {item.category}
                                     </Flex>
                                 </Box>

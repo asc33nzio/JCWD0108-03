@@ -16,7 +16,6 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
-    // const [shouldFetchCart, setShouldFetchCart] = useState(true);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -105,7 +104,6 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
                 if (totalQuantityInCart <= product.stock) {
-                    // setShouldFetchCart(true);
                     setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
@@ -165,23 +163,6 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
     const formatPrice = (price) => {
         return price.toLocaleString("id-ID");
     };
-
-    // useEffect(() => {
-    //     setLoadingProducts(true);
-    //     Promise.all([shouldFetchCart && getCartByUser(), fetchProductsByCategory(page)])
-    //         .then(() => setLoadingProducts(false))
-    //         .catch(() => setLoadingProducts(false));
-
-    //     if (shouldFetchCart) {
-    //         setShouldFetchCart(false);
-    //     };
-    // }, [fetchProductsByCategory, page, shouldFetchCart]);
-
-    // useEffect(() => {
-    //     if (!loadingCartUpdate && shouldFetchCart) {
-    //         setShouldFetchCart(true);
-    //     };
-    // }, [loadingCartUpdate, shouldFetchCart]);
 
     return (
         <Flex>
