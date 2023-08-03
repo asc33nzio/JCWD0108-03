@@ -24,16 +24,16 @@ export const ProductCategories = ({ cartItems, setCartItems }) => {
             console.log(error);
         };
     };
-
+    
     const deleteCategory = async (id) => {
         try {
-            const response = await Axios.patch(`http://localhost:8000/api/products/deleteCategory`, { categoryId: id })
+            const response = await Axios.patch(`http://localhost:8000/api/products/deleteCategory`, {categoryId: id})
             window.location.reload()
         } catch (error) {
-            console.log(id);
             console.log(error);
         }
     }
+
 
     const getCartByUser = async () => {
         try {

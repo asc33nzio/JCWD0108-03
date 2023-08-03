@@ -36,7 +36,7 @@ export const DetailProduct = () => {
             console.log(error);
         };
     };
-
+    
     const getCartByUser = async () => {
         try {
             setLoadingCartUpdate(true);
@@ -55,19 +55,19 @@ export const DetailProduct = () => {
 
     const handleBack = () => {
         if (data) {
-            return ("categoryAdmin")
+            return("categoryAdmin")
         } else {
-            return ("categoryCashier")
+            return("categoryCashier")
         }
     }
+    
 
-
-
+    
     useEffect(() => {
         dataProduct();
         getCartByUser();
     }, [loadingCartUpdate]);
-
+    
 
 
     return (

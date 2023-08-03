@@ -53,7 +53,7 @@ export const CashierList = () => {
             <Flex mt={"0px"}>
                 <Navbar />
             </Flex>
-            <Flex mt={"110px"} justifyContent={"center"}>
+            <Flex mt={"95px"} justifyContent={"center"}>
                 <Img w={"80px"} borderBottom={"2px solid"} src={AAA_Logo} />
                 <Text mt={"10px"} borderBottom={"2px solid"} fontFamily={"Times New Roman"} fontSize={"35px"}>Cashier Data</Text>
             </Flex>
