@@ -1,7 +1,9 @@
+const { Op, fn, col, sequelize } = require('sequelize');
 const db = require('../models');
 const products = db.Products;
 const cartItems = db.CartItems;
 const transactions = db.Transactions;
+const categories = db.Categories
 const sales = db.Sales;
 const payments = db.Payments;
 
@@ -192,5 +194,93 @@ module.exports = {
                 message: 'Internal server error.',
             });
         };
+    },
+    getAllSales: async (req, res) => {
+        try {
+            const results = await sales.findAll({
+                where: {
+                    completed: true
+                },
+                attributes: [
+                    'transactionId',
+                    [fn('sum', col('quantitySold')), 'totalQuantitySold'],
+                    [fn('sum', col('sales.totalAmount')), 'totalAmountSold']
+                ],
+                include: [
+                    {
+                        model: transactions,
+                        attributes: ['txTime']
+                    },
+                    {
+                        model: products,
+                        as: 'Product',
+                        attributes: ['id', 'imgURL', 'price', 'categoryId'],
+                        include: [
+                            {
+                                model: categories,
+                                attributes: ['category']
+                            }
+                        ]
+                    },
+                ],
+                group: ['transactionId', 'Product.id']
+            });
+    
+            // Restructure the data to group products by transactionId
+            const salesRecords = results.reduce((acc, result) => {
+                const transactionId = result.transactionId;
+                const transactionData = {
+                    transactionId: result.transactionId,
+                    totalQuantitySold: result.totalQuantitySold,
+                    totalAmountSold: result.totalAmountSold,
+                    Transaction: {
+                        txTime: result.Transaction.txTime
+                    },
+                    products: []
+                };
+    
+                // Check if the transaction already exists in the accumulator
+                const existingTransaction = acc.find(item => item.transactionId === transactionId);
+    
+                // If the transaction doesn't exist, add it to the accumulator
+                if (!existingTransaction) {
+                    transactionData.products.push({
+                        id: result.Product.id,
+                        imgURL: result.Product.imgURL,
+                        price: result.Product.price,
+                        categoryId: result.Product.categoryId,
+                        Category: {
+                            category: result.Product.Category.category
+                        }
+                    });
+                    acc.push(transactionData);
+                } else {
+                    // If the transaction already exists, add the product to its products array
+                    existingTransaction.products.push({
+                        id: result.Product.id,
+                        imgURL: result.Product.imgURL,
+                        price: result.Product.price,
+                        categoryId: result.Product.categoryId,
+                        Category: {
+                            category: result.Product.Category.category
+                        }
+                    });
+                }
+    
+                return acc;
+            }, []);
+    
+            return res.status(200).send({
+                status: 200,
+                message: 'Sales Records Successfully Fetched.',
+                salesRecords: salesRecords
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send({
+                status: 500,
+                message: 'Internal server error.',
+            });
+        }
     }
 };

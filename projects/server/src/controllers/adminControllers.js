@@ -31,7 +31,34 @@ module.exports = {
 
             res.status(200).send({
                 status: 200,
-                message: "Register success."
+                message: "Register success.",
+                result
+            });
+        } catch (error) {
+            res.status(500).send({
+                error,
+                status: 500,
+                message: 'Internal server error.',
+            });
+        }
+    },
+    addAdmin: async (req, res) => {
+        try {
+            const { username, email, password } = req.body;
+            const avatar = req.file.filename;
+            const isUserExist = await users.findOne({ where: { username } });
+            const isEmailExist = await users.findOne({ where: { email } });
+            if (isUserExist) throw { message: "Username has been used." };
+            if (isEmailExist) throw { message: "E-mail has been used." };
+
+            const salt = await bcrypt.genSalt(5);
+            const hashPassword = await bcrypt.hash(password, salt);
+            const result = await users.create({ username, email, password: hashPassword, avatar, isAdmin: true });
+
+            res.status(200).send({
+                status: 200,
+                message: "Register success.",
+                result
             });
         } catch (error) {
             res.status(500).send({
