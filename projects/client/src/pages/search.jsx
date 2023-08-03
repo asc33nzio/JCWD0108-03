@@ -28,7 +28,7 @@ export const Search = () => {
             console.log(error);
         }
     }
-
+    console.log(products);
     const nextPage = () => {
         if (page < totalPage) {
             setPage((prevPage) => +prevPage + 1)
@@ -60,13 +60,13 @@ export const Search = () => {
                     <Box mb={"10px"} borderBottom={"1px solid"} borderColor={"gray.400"} pb={"20px"}>
                         <Box mb={"5px"} fontWeight={"thin"} color={"gray"}>Search Product</Box>
                         <Input 
+                            type="search"
                             value={search} 
                             onChange={(e) => setSearch(e.target.value)} 
                             w={"150px"} h={"30px"} border={"1px solid gray"} bgColor={"white"} 
                             placeholder="Enter Product Name" 
                             _placeholder={{ fontSize: "10px", align: "center" }} 
                         />
-                        <Button w={"150px"} bgColor={"#FFC900"} mt={"10px"} color={"gray.600"} _hover={{bgColor:"yellow.500"}}>Search</Button>
                     </Box>
                     <Box>
                         <Box mb={"5px"} fontWeight={"thin"} color={"gray"}>Alphabetical</Box>

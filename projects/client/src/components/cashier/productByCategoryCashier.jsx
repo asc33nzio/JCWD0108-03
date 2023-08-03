@@ -20,7 +20,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/products/category/${categoryId}?page=${page}`);
+            const response = await Axios.get(`http://localhost:8000/api/products/categoryCashier/${categoryId}?page=${page}`);
             setTotalPage(response.data.totalPage);
             setPage(response.data.page);
             setProducts(response.data.result);
@@ -162,6 +162,10 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
         }
     }, [loadingCartUpdate]);
 
+    const formatPrice = (price) => {
+        return price.toLocaleString("id-ID");
+    };
+
     // useEffect(() => {
     //     setLoadingProducts(true);
     //     Promise.all([shouldFetchCart && getCartByUser(), fetchProductsByCategory(page)])
@@ -206,7 +210,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                                                 </Box>
                                                 <Box position={"relative"}>
                                                     <Flex justifyContent={"center"} fontWeight={"thin"}>{product.productName}</Flex>
-                                                    <Flex justifyContent={"center"}>Rp.{product.price}</Flex>
+                                                    <Flex justifyContent={"center"}>Rp.{`${formatPrice(product.price)}`}</Flex>
                                                 </Box>
                                             </Box>
                                             <Flex mt={{ base: '0px', sm: '35px' }} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
