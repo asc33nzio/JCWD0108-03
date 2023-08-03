@@ -28,9 +28,9 @@ export const AddCategory = () => {
     };
 
     return (
-        <Box>
-            <Box >
-                <Button h={{ base: '100px', sm: '150px', md: '180px' }} w={{ base: '80px', sm: '120px', md: '160px' }} onClick={onOpen} color={"white"} bgColor={"gray.300"} fontSize={"50px"}><AddIcon /></Button>
+        <Box >
+            <Box  >
+                <Button h={{ base: '70px', sm: '150px', md: '180px' }} w={{ base: '70px', sm: '120px', md: '160px' }} onClick={onOpen} color={"white"} bgColor={"gray.300"} fontSize={"50px"}><AddIcon /></Button>
             </Box>
             <Formik
                 initialValues={{

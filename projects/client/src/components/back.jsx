@@ -9,6 +9,6 @@ export const Back = ({ nav, id = "" }) => {
     };
 
     return (
-        <Box pt={"100px"} ml={{base:"45px"}}  ><ChevronLeftIcon _hover={{ transform: 'scale(1.1)', transition: '0.3s' }} boxSize={"70px"} color={"yellow.400"} cursor={"pointer"} onClick={backPage} /></Box>
+        <Box pt={"100px"} ml={{base:"10px"}}  ><ChevronLeftIcon _hover={{ transform: 'scale(1.1)', transition: '0.3s' }} boxSize={{base:"40px"}} color={"yellow.400"} cursor={"pointer"} onClick={backPage} /></Box>
     );
 };

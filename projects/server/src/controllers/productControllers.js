@@ -10,9 +10,13 @@ module.exports = {
             const { id } = req.params;
             const result = await products.findOne({
                 where: {
-                    id: id
+                    id: id,
+                    isDelete:false
                 }
             });
+            if (result.isDelete) throw{
+                message:"product not found"
+            }
 
             if (!id) {
                 return res.status(400).send({
@@ -41,7 +45,14 @@ module.exports = {
     },
     getCategories: async (req, res) => {
         try {
-            const result = await categories.findAll();
+            const page = parseInt(req.query.page) || 1
+            const limit = 8
+            const totalCategory = categories.count({
+                where : {isDelete : 0}
+            })
+            const result = await categories.findAll({
+                where : {isDelete : 0}
+            });
             res.status(200).send({
                 status: 200,
                 result: result
@@ -88,10 +99,39 @@ module.exports = {
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 8;
             const totalProduct = await products.count({
-                where: { CategoryId: id }
+                where: { CategoryId: id, isDelete:false }
             });
             const result = await products.findAll(
-                {where: { CategoryId: id }, limit,offset : limit * (page - 1) }
+                {where: { CategoryId: id, isDelete : 0 },
+                 limit,
+                 offset : limit * (page - 1) }
+                );
+            res.status(200).send({
+                page : page,
+                totalPage : Math.ceil(totalProduct / limit),  
+                 result
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: error
+            });
+        }
+    },
+    getProductByCategoryCashier: async (req, res) => {
+        try {
+            const id = req.params.id;
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 8;
+            const totalProduct = await products.count({
+                where: { CategoryId: id, isDelete:false, isActive:true }
+            });
+            const result = await products.findAll(
+                {
+                    where: { CategoryId: id, isActive : true, isDelete: false },
+                    limit,
+                    offset : limit * (page - 1) 
+                }
                 );
             res.status(200).send({
                 page : page,
@@ -131,7 +171,7 @@ module.exports = {
                 product: newProduct,
             });
         } catch (error) {
-            console.error(error);
+            console.log(error);
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.',
@@ -146,15 +186,20 @@ module.exports = {
             const limit = req.query.limit || 10
             const sort = req.query.sort || "ASC"
             const sortBy = req.query.sortBy || "productName"
-            const totalProduct = await products.count()
+            const totalProduct = await products.count({
+                where : {isDelete : false}
+            })
             const userData = await user.findOne(
-                { where: { id: id } }
+                { where: { id: id  } }
             )
 
             if (userData.isAdmin) {
                 const result = await products.findAll(
                     {
-                        where: { productName: { [Op.like]: `%${search}%` } },
+                        where: { 
+                            productName: { [Op.like]: `%${search}%` },
+                            isDelete : false
+                        },
                         order: [[sortBy, sort]],
                         limit,
                         offset: limit * (page - 1)
@@ -171,11 +216,11 @@ module.exports = {
 
             else {
                 const allProducts = await products.count(
-                    {where: { productName: { [Op.like]: `%${search}%` }, isActive: true }}
+                    {where: { productName: { [Op.like]: `%${search}%` }, isActive: true, isDelete: false }}
                 ) 
                 const result = await products.findAll(
                     {
-                        where: { productName: { [Op.like]: `%${search}%` }, isActive: true },
+                        where: { productName: { [Op.like]: `%${search}%` }, isActive: true, isDelete: false },
                         order: [[sortBy, sort]],
                         limit,
                         offset: limit * (page - 1)
@@ -190,7 +235,6 @@ module.exports = {
                 )
             }
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."
@@ -205,7 +249,7 @@ module.exports = {
             const sortBy = req.query.sortBy
             const result = await products.findAll(
                 {
-                    where: { isActive: 1 },
+                    where: { isActive: 1, isDelete:0 },
                     order: [[sortBy, sort]],
                     limit,
                     offset: limit * (page - 1)
@@ -213,7 +257,6 @@ module.exports = {
             )
             res.status(200).send(result)
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."
@@ -236,7 +279,6 @@ module.exports = {
                 newCategory: result
             });
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."
@@ -263,7 +305,56 @@ module.exports = {
                 res.status(200).send({ message: "actived success" })
             }
         } catch (error) {
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
+    updateProduct : async (req, res) => {
+        try {
+            const {id} = req.params
+            const {price, productName, stock, description} = req.body
+            const imgURL = req.file.filename
+
+            const result = await products.update(
+                {price, productName,stock, description, imgURL: imgURL},
+                {where : {id : id}}
+            )
+            res.status(200).send({
+                message : "update success"
+            })
+        } catch (error) {
             console.log(error);
+            res.status(500).send({
+                status: 500,
+                message: "Internal server error."
+            });
+        }
+    },
+    deleteCategory : async (req, res) => {
+        try {
+            const {categoryId} = req.body
+            const category = await categories.findOne({
+                where: {id : categoryId}
+            })
+            if (!category) {
+                throw({message: "category not found"})
+            }
+            if (!category.isDelete) {
+                await categories.update(
+                    {isDelete : 1},
+                    {where :{id : categoryId}}
+                    )
+            }
+        
+            await products.update(
+                {isDelete : 1},
+                {where : {CategoryId : categoryId}}
+                )
+            res.status(200).send({message:"delete success"})
+        } catch (error) {
+            console.log(error.message);
             res.status(500).send({
                 status: 500,
                 message: "Internal server error."
