@@ -234,10 +234,10 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                     )}
                     <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
                         {page > 1 && (
-                            <Button onClick={prevPage}>Previous Page</Button>
+                            <Button boxShadow={"0px 0px 10px gray"} _hover={{bgGradient:"linear(to-r, yellow.400, yellow.700)", transform:'scale(0.95)'}} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={prevPage}>Previous Page</Button>
                             )}
                         {page < totalPage && (
-                            <Button onClick={nextPage}>Next Page</Button>
+                            <Button boxShadow={"0px 0px 10px gray"} _hover={{bgGradient:"linear(to-r, yellow.400, yellow.700)", transform:'scale(0.95)'}} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={nextPage}>Next Page</Button>
                             )}
                     </Flex>
                 </Box>

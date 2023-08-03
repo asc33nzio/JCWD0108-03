@@ -47,14 +47,17 @@ module.exports = {
         try {
             const page = parseInt(req.query.page) || 1
             const limit = 8
-            const totalCategory = categories.count({
+            const totalCategory = await categories.count({
                 where : {isDelete : 0}
             })
             const result = await categories.findAll({
-                where : {isDelete : 0}
+                where : {isDelete : 0},
+                limit,
+                offset :  limit * (page- 1)
             });
             res.status(200).send({
-                status: 200,
+                page : page,
+                totalPage : Math.ceil(totalCategory / limit),
                 result: result
             });
         } catch (error) {
