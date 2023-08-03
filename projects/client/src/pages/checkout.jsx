@@ -126,7 +126,7 @@ export const Checkout = () => {
     const minute = String(date.getMinutes()).padStart(2, "0");
     const second = String(date.getSeconds()).padStart(2, "0");
     const formattedDMY = `${day}-${month}-${year}`;
-    const formattedHMS = `${hour}:${minute}:${second} ZULU -7`;
+    const formattedHMS = `${hour}:${minute}:${second} ZULU +7`;
 
     const receiptContent = (
         <Document>
