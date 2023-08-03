@@ -23,7 +23,7 @@ export const Profile = ({ id }) => {
         try {
             const data = new FormData();
             data.append("avatar", file);
-            const response = await Axios.patch(`http://localhost:8000/api/users/updateprofile`, data, {
+            await Axios.patch(`http://localhost:8000/api/users/updateprofile`, data, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
@@ -35,7 +35,6 @@ export const Profile = ({ id }) => {
                 isClosable: true,
                 position: "top"
             });
-            console.log(response);
             setTimeout(() => {
                 window.location.reload();
                 navigate("/profile");
@@ -52,7 +51,6 @@ export const Profile = ({ id }) => {
             });
         }
     };
-
     return (
         <>
             <Navbar />

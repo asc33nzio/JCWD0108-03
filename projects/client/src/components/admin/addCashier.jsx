@@ -19,7 +19,8 @@ export default function AddCashier() {
     const handleClick = () => setShow(!show);
     const Formschema = Yup.object().shape(({
         username: Yup.string()
-            .required("Write your name"),
+            .required("Write your name")
+            .matches(/^(\S+$)/g, 'This field cannot contain only blankspaces'),
         email: Yup.string()
             .email("Invalid email addres format")
             .required("Write your Email"),
@@ -40,7 +41,7 @@ export default function AddCashier() {
             data.append("email", { email }.email);
             data.append("password", { password }.password);
             data.append("avatar", file);
-            const response = await Axios.post("http://localhost:8000/api/admin", data, {
+            await Axios.post("http://localhost:8000/api/admin", data, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
@@ -53,9 +54,10 @@ export default function AddCashier() {
                 isClosable: true,
                 position: "top"
             });
-            window.location.reload();
-            navigate("/cashierlist");
-            console.log(response);
+            setTimeout(() => {
+                window.location.reload();
+                navigate("/cashierlist");
+            }, 1000);
         } catch (err) {
             console.log(err);
             toast({
@@ -94,7 +96,7 @@ export default function AddCashier() {
                                     <Form>
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
-                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Ex: John Doe' name="username" borderBottom={"1px solid"} borderColor={"#D5AD18"} />
+                                            <Field as={Input} ref={initialRef} variant={"flushed"} placeholder='Ex: JohnDoe' name="username" borderBottom={"1px solid"} borderColor={"#D5AD18"} />
                                             <ErrorMessage component="Box" name="username" style={{ color: "red", marginBottom: "-20px", marginLeft: "3px", marginTop: "-9px" }} />
                                         </FormControl>
                                         <FormControl mt={4}>

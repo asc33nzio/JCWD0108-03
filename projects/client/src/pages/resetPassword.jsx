@@ -32,8 +32,8 @@ export const ResetPassword = () => {
                 { headers }
             );
             toast({
-                title: "Check your Email to Reset your Password!",
-                description: "Sent to your Email!",
+                title: "Password Updated!",
+                description: "You can Login with your new Password!",
                 status: 'success',
                 duration: 2500,
                 isClosable: true,
@@ -45,7 +45,7 @@ export const ResetPassword = () => {
             toast({
                 title: "Failed to Reset",
                 description: "Password Reset Unsuccessful. Please try again.",
-                status: 'success',
+                status: 'error',
                 duration: 2500,
                 isClosable: true,
                 position: "top"

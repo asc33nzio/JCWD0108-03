@@ -47,12 +47,14 @@ export default function UpdateCashier({ id, username, email }) {
                 title: "Cashier Updated!",
                 description: "Your Cashier Data Updated!",
                 status: 'success',
-                duration: 1500,
+                duration: 1000,
                 isClosable: true,
                 position: "top"
             });
-            window.location.reload();
-            navigate("/cashierlist");
+            setTimeout(() => {
+                window.location.reload();
+                navigate("/cashierlist");
+            }, 1000);
         } catch (err) {
             console.log(err);
         }
