@@ -31,6 +31,15 @@ export const Forgot = () => {
             console.log(response.data);
         } catch (err) {
             console.log(err);
+            toast({
+                title: "Access Denied!",
+                description: err.response.data.error.message,
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
+            
         }
     }
     return (
@@ -57,7 +66,7 @@ export const Forgot = () => {
                         w={{ base: '200px', md: '400px', lg: '400px' }} placeholder="Email" size={"md"} variant={"flushed"} color={"black"} borderBottom={"2px solid"} borderColor={"#D5AD18"} />
                     </Flex>
                     <Flex mt={"30px"} justifyContent={"center"}>
-                        <Button type="submit" onClick={getResetPassword} fontFamily={"monospace"} boxShadow='0px 0px 6px black' color={"black"} bgGradient="linear(#FFEA61, #FFC900)" w={"200px"}>
+                        <Button onClick={getResetPassword} fontFamily={"monospace"} boxShadow='0px 0px 6px black' color={"black"} bgGradient="linear(#FFEA61, #FFC900)" w={"200px"}>
                             Submit
                         </Button>
                     </Flex>

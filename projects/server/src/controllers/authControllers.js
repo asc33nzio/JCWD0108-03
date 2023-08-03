@@ -11,18 +11,16 @@ module.exports = {
         try {
             const { username, password } = req.body;
             const checkLogin = await users.findOne({
-                where: { username: username, isAdmin: false }
+                where: { username: username }
             });
 
             if (!checkLogin) throw { message: "User not Found." }
             if (checkLogin.isSuspended == true) throw { message: "You are Suspended." }
-            if (checkLogin.isAdmin == true) throw { message: "You have to Login on Admin Login." }
-
-            if (checkLogin.isVerified == false) throw ({ message: 'Account is not verified.' });
-
+            if (!checkLogin.isAdmin == false) throw { message: "You have to Login on Admin Login." }
+            
             const isValid = await bcrypt.compare(password, checkLogin.password);
 
-            if (!isValid) throw { message: "Wrong password." };
+            if (!isValid) throw { message: "Username or Password Incorrect." };
 
             const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin };
             const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
@@ -45,19 +43,16 @@ module.exports = {
         try {
             const { username, password } = req.body;
             const checkLogin = await users.findOne({
-                where: { username: username, isAdmin: true }
+                where: { username: username }
             });
 
             if (!checkLogin) throw { message: "User not Found." }
-
-            if (checkLogin.isVerified == false) throw ({ message: 'Account is not verified.' });
-
-            const isValid = await bcrypt.compare(password, checkLogin.password);
             if (checkLogin.isSuspended == true) throw { message: "You are Suspended." }
-            if (!checkLogin.isAdmin == true) throw { message: "You have to Login on Cashier Login." }
+            if (checkLogin.isAdmin == false) throw { message: "You have to Login on Cashier Login." }
+            
+            const isValid = await bcrypt.compare(password, checkLogin.password);
 
-
-            if (!isValid) throw { message: "Wrong password." };
+            if (!isValid) throw { message: "Username or Password Incorrect." };
 
             const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin };
             const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
@@ -68,10 +63,11 @@ module.exports = {
                 token
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 error,
                 status: 500,
-                message: 'Internal server error.',
+                message: 'Internal server error',
             });
         }
     },

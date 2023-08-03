@@ -58,6 +58,14 @@ export default function AddCashier() {
             console.log(response);
         } catch (err) {
             console.log(err);
+            toast({
+                title: "Access Denied!",
+                description: err.response.data.error.message,
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
         }
     }
     return (

@@ -44,7 +44,7 @@ export const AdminLogin = () => {
             console.log(err);
             toast({
                 title: "Access Denied!",
-                description: "Username or Password Incorrect!",
+                description: err.response.data.error.message,
                 status: "error",
                 duration: 2500,
                 isClosable: true,
