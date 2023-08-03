@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   { path: "/product/:id", element: <DetailProduct /> },
   { path: "/search", element: <Search /> },
   { path: "/profile", element: <Profile /> },
-  { path: "/resetpassword", element: <ResetPassword /> },
+  { path: "/resetpassword/:token", element: <ResetPassword /> },
   { path: "/payment", element: <Payment />, errorElement: <Cashier /> },
   { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
 ]);
@@ -37,17 +37,21 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const keepLogin = async () => {
-      try {
-        const response = await Axios.get(`http://localhost:8000/api/users/keeplogin`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        dispatch(setValue(response.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    keepLogin();
+    if (!token) console.log("You have to Login Agaian");
+    {
+      const keepLogin = async () => {
+        try {
+          const response = await Axios.get(`http://localhost:8000/api/users/keeplogin`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          dispatch(setValue(response.data));
+        } catch (error) {
+          localStorage.removeItem("token")
+          console.log(error);
+        }
+      };
+      keepLogin();
+    }
   }, [dispatch, token]);
 
   return (
