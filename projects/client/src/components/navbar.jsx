@@ -33,16 +33,17 @@ export const Navbar = () => {
                         <Img src={AAA_Logo} mt={"12px"} w={"90px"} />
                     </Box>
                 </Box>
-                <Flex justifyContent={"center"} w={"60%"} mx={{ base: '10px', sm: '10px', }} _focus={{ borderColor: '#D5AD18', boxShadow: 'none', transform: 'scale(1.01)' }}>
-                    <Flex cursor={"pointer"} ml={"700px"} onClick={() => navigate("/search")} _active={{ transition: "0.1s", transform: "scale(0.95)" }} bgColor={"#D5AD18"} alignItems={"center"} p={"10px"} borderRadius={"5px"} color={"white"} h={{ base: '30px', sm: '40px', md: '40px' }}>
-                        <SearchIcon />
-                    </Flex>
+                <Flex justifyContent={"center"} w={"60%"} _focus={{ borderColor: '#D5AD18', boxShadow: 'none', transform: 'scale(1.01)' }}>
                 </Flex>
-                <Flex justifyContent={"end"} w={"20%"}>
+                <Flex justifyContent={"end"} align={"center"} w={"20%"}>
+                    <Flex cursor={"pointer"} onClick={() => navigate("/search")} _active={{ transition: "0.1s", transform: "scale(0.95)" }} alignItems={"center"} p={"10px"} borderRadius={"5px"} color={"white"} h={{ base: '30px', sm: '40px', md: '40px' }}>
+                        <SearchIcon boxSize={{base:"25px"}} />
+                    </Flex>
                     <Avatar as={Link} to={"/profile"} left={"20px"} boxShadow={"0px 0px 10px grey"} src={`http://localhost:8000/avatars/${data.avatar}`} bgColor={"gray.400"} colorScheme={"#FFC900"} />
                     <Menu>
                         <MenuButton as={IconButton} left={"28px"}
                             mt={"3px"}
+                            color={"white"}
                             aria-label='Options'
                             icon={<HamburgerIcon />}
                             variant="unstyled">

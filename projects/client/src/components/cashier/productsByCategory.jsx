@@ -202,7 +202,7 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
                                         <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"}>
                                             <Box h={"100px"} borderTopRadius={"9px"}>
                                                 <Box position={"absolute"} w={{ base: '80px', sm: '120px', md: '160px' }} >
-                                                    <Image borderRadius={"10px"} h={{ base: '130px', sm: '170px', md: '200px' }} filter={"auto"} brightness={"60%"} src={`http://localhost:8000/api/products/image/${product?.imgURL}`} />
+                                                    <Image cursor={"pointer"} _active={{transform:"scale(0.98)", transition:"0.3s"}} onClick={() => handleProductDetail(product.id)} borderTopRadius={"10px"} h={{ base: '130px', sm: '170px', md: '200px' }} filter={"auto"} brightness={"60%"} src={`http://localhost:8000/api/products/image/${product?.imgURL}`} />
                                                 </Box>
                                                 <Box position={"relative"}>
                                                     <Flex justifyContent={"center"} fontWeight={"thin"}>{product.productName}</Flex>
@@ -211,17 +211,16 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
                                             </Box>
                                             <Flex mt={{ base: '0px', sm: '35px' }} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
                                                 {/* Minus button */}
-                                                <Flex onClick={() => handleMinusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >-</Flex>
+                                                <Flex onClick={() => handleMinusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} h={"25px"} w={"25px"} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"#FFC900"} color={"white"} >-</Flex>
                                                 {/* Quantity display */}
                                                 <Flex mx={4} fontSize="20px" fontWeight="bold">
                                                     {product.stock === 0 ? 0 : inputQuantity}
                                                 </Flex>
                                                 {/* Plus button */}
-                                                <Flex onClick={() => handlePlusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"white"} color={"#FFC900"} >+</Flex>
+                                                <Flex onClick={() => handlePlusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} h={"25px"} w={"25px"} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"#FFC900"} color={"white"} >+</Flex>
                                             </Flex>
-                                            <Flex mt={{ base: '5px', sm: '10px' }} position={"relative"} w={{ base: '80px', sm: '120px', md: '160px' }} p={"10px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} justifyContent={"space-evenly"}>
-                                                <Flex onClick={() => handleAddToCart(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} > <AiOutlineShoppingCart /> </Flex>
-                                                <Flex onClick={() => handleProductDetail(product.id)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"yellow.600"} color={"white"} ><SiQuicklook /> </Flex>
+                                            <Flex onClick={() => handleAddToCart(product.id)} position={"relative"} p={"8px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} cursor={"pointer"} justifyContent={"space-evenly"} bgColor={"#FFC900"}>
+                                                <Flex  justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} w={"200"}  _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} color={"white"} > <AiOutlineShoppingCart size={"25px"}/> </Flex>
                                             </Flex>
                                         </Box>
                                     </Box>

@@ -183,20 +183,20 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                 borderBottomRadius={"0px"}
                 borderTopRadius={"10px"}
                 bgGradient={"linear(yellow.500,#FFC900)"}
-                ml={{ base: "10px", sm: "25px", md: "80px" }}
-                w={{ base: "235px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }}
+                ml={{ base: "0px", sm: "0px", md: "5px" }}
+                w={{ base: "150px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }}
             >
                 <Flex
                     justifyContent={"center"}
                     p={"20px"}
                     fontWeight={"bold"}
-                    fontSize={{ base: "20px", sm: "25px", md: "35px", lg: "40px" }}
+                    fontSize={{ base: "15px", sm: "25px", md: "35px", lg: "40px" }}
                     color={"white"}
                 >
                     Shopping Cart
                 </Flex>
                 <Box w={{ base: "235px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }} h={"3px"} bgColor={"white"}></Box>
-                <Box p={"20px"}>
+                <Box p={{base:"5px"}}>
                     {loading && deleteLoading ? (
                         <Flex justifyContent="center" alignItems="center" height="200px">
                             <CircleLoader size={200} color={"black"} loading={loading} />
@@ -208,13 +208,14 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                                 justifyContent="space-between"
                                 fontSize={{ base: "10px", sm: "13px", md: "18px", lg: "25px" }}
                                 borderBottom="1px solid white"
-                                pb="10px"
+                                p="10px"
                                 fontWeight="hairline"
                                 color="white"
                                 alignItems={'center'}
+                                wrap={"wrap"}
                             >
                                 <Box flex="2">{item.Product ? item.Product.productName : "Product Name Is Being Loaded"}</Box>
-                                <Flex flex="1" justifyContent="space-between" alignItems="center" ml="20px">
+                                <Flex flex="1" justifyContent="space-between" alignItems="center" ml={{base:"5px"}}>
                                     <IconButton
                                         icon={<AiOutlineMinus />}
                                         colorScheme="yellow"
@@ -268,9 +269,8 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
                 borderTopRadius={"0px"}
                 borderBottomRadius={"10px"}
                 bgColor={"#FFC900"}
-                ml={{ base: "10px", sm: "25px", md: "80px" }}
-                w={{ base: "235px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }}
-            >
+                ml={{ base: "0px", sm: "0px", md: "5px" }}
+                w={{ base: "150px", sm: "260px", md: "300px", lg: "380px", xl: "580px" }}            >
                 <Button color={"#FFC900"} onClick={() => handlePayment()}>Pay</Button>
             </Flex>
         </Box>

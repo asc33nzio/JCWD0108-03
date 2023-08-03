@@ -1,19 +1,21 @@
 import Axios from "axios";
 import { Box, Button, Flex, Image } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Cart } from "../components/cart";
 import { Back } from "../components/back";
 import { AiOutlineShoppingCart } from "react-icons/ai"
 import { useSelector } from "react-redux";
+import { EditProduct } from "../components/admin/editProduct";
 
 export const DetailProduct = () => {
+    const navigate = useNavigate()
     const params = useParams();
+    const data = useSelector((state) => state.user.value.isAdmin)
     const [cartItems, setCartItems] = useState([]);
     const [product, setProduct] = useState([]);
     const [updatedQuantities, setUpdatedQuantities] = useState({});
-
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
 
     const handleClick = async (id) => {
@@ -24,6 +26,7 @@ export const DetailProduct = () => {
             console.log(error);
         }
     }
+    console.log(product.id);
 
     const dataProduct = async (id) => {
         try {
@@ -33,7 +36,7 @@ export const DetailProduct = () => {
             console.log(error);
         };
     };
-
+    
     const getCartByUser = async () => {
         try {
             setLoadingCartUpdate(true);
@@ -50,18 +53,28 @@ export const DetailProduct = () => {
         };
     };
 
+    const handleBack = () => {
+        if (data) {
+            return("categoryAdmin")
+        } else {
+            return("categoryCashier")
+        }
+    }
+    
+
+    
     useEffect(() => {
         dataProduct();
         getCartByUser();
     }, [loadingCartUpdate]);
+    
 
-    const data = useSelector((state) => state.user.value.isAdmin)
 
     return (
         <Box>
             <Box><Navbar /></Box>
             <Flex>
-                <Back nav={"/category"} id={`/${product.CategoryId}`} />
+                <Back nav={`/${handleBack()}`} id={`/${product.CategoryId}`} />
                 <Flex justifyContent={"center"} pt={{ base: "70px", sm: "100px" }} px={{ base: "10px", sm: "30px", md: "50px" }} wrap={"wrap"} w={{ base: "350px", sm: "800px", md: "1200px" }} gap={"20px"}>
                     <Box>
                         <Box>
@@ -73,7 +86,7 @@ export const DetailProduct = () => {
                             </Box>
                             <Flex>
                                 {data ? (<Flex alignItems={"center"} gap={{ base: "5px" }} mt={{ base: "10px", sm: "25px" }}>
-                                    <Flex boxShadow={"0px 0px 3px #FFC900"} bgColor={"yellow.400"} h={{ base: "15px", sm: "20px", md: "25px", lg: "30px" }} color={"white"} w={{ base: "40px", sm: "50px", md: "60px", lg: "70px" }} borderRadius={"5px"} align={"center"} justifyContent={"center"} transition={"0.3s"}> <AiOutlineShoppingCart size={{ base: "10px", sm: "20px" }} /> </Flex>
+                                    <Flex> <EditProduct productName={product.productName} price={product.price} description={product.description} stock={product.stock} /> </Flex>
                                     {product.isActive ? (<Box cursor={"pointer"} boxShadow={"0px 0px 3px green"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm: "20px", md: "25px", lg: "30px" }} w={{ base: "40px", sm: "50px", md: "60px", lg: "70px" }} h={{ base: "15px", sm: "20px", md: "25px", lg: "30px" }} fontSize={{ base: "10px", sm: "15px" }} transition={"0.3s"} bgColor={"green"} color={"white"} onClick={() => handleClick(product.id)}>Active</Box>) : (<Button boxShadow={"0px 0px 3px red"} borderRadius={"5px"} textAlign={"center"} lineHeight={{ base: "15px", sm: "20px", md: "25px", lg: "30px" }} w={{ base: "40px", sm: "50px", md: "60px", lg: "70px" }} h={{ base: "15px", sm: "20px", md: "25px", lg: "30px" }} fontSize={{ base: "10px", sm: "15px" }} transition={"0.3s"} bgColor={"red"} color={"white"} onClick={() => handleClick(product.id)}>Deactive</Button>)}
 
 

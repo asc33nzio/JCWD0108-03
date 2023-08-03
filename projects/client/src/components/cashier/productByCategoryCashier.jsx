@@ -20,7 +20,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
-            const response = await Axios.get(`http://localhost:8000/api/products/category/${categoryId}?page=${page}`);
+            const response = await Axios.get(`http://localhost:8000/api/products/categoryCashier/${categoryId}?page=${page}`);
             setTotalPage(response.data.totalPage);
             setPage(response.data.page);
             setProducts(response.data.result);

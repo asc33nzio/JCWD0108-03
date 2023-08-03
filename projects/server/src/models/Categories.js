@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
-    imgURL: DataTypes.STRING
+    imgURL: DataTypes.STRING,
+    isDelete : {
+      type : DataTypes.BOOLEAN,
+      defaultValue:false
+    }
   }, {
     sequelize,
     modelName: 'Categories',
