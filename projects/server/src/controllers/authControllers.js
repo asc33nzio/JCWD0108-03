@@ -17,7 +17,7 @@ module.exports = {
             if (!checkLogin) throw { message: "User not Found." }
             if (checkLogin.isSuspended == true) throw { message: "You are Suspended." }
             if (!checkLogin.isAdmin == false) throw { message: "You have to Login on Admin Login." }
-            
+
             const isValid = await bcrypt.compare(password, checkLogin.password);
 
             if (!isValid) throw { message: "Username or Password Incorrect." };
@@ -49,7 +49,7 @@ module.exports = {
             if (!checkLogin) throw { message: "User not Found." }
             if (checkLogin.isSuspended == true) throw { message: "You are Suspended." }
             if (checkLogin.isAdmin == false) throw { message: "You have to Login on Cashier Login." }
-            
+
             const isValid = await bcrypt.compare(password, checkLogin.password);
 
             if (!isValid) throw { message: "Username or Password Incorrect." };
@@ -126,6 +126,18 @@ module.exports = {
         } catch (error) {
             console.log(error);
             res.status(400).send(error);
+        }
+    },
+    updateProfile: async (req, res) => {
+        try {
+            const result = await users.update({
+                avatar: req.file.filename,
+            }, {
+                where: { id: req.user.id }
+            });
+            res.status(200).send(result);
+        } catch (error) {
+            res.status(400).send(error)
         }
     },
 }
