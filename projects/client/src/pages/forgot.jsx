@@ -4,9 +4,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 export const Forgot = () => {
-    const [email, setEmail] = useState("");
-    const navigate = useNavigate();
     const toast = useToast();
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
     const { token } = useParams();
     const header = {
         Authorization: `Bearer ${token}`
@@ -16,7 +16,6 @@ export const Forgot = () => {
             const response = await Axios.put("http://localhost:8000/api/users/forget", {
                 email: email,
             }, { headers: header });
-
             setTimeout(() => {
                 navigate("/");
             }, 1000)
@@ -28,9 +27,7 @@ export const Forgot = () => {
                 isClosable: true,
                 position: "top"
             });
-            console.log(response.data);
         } catch (err) {
-            console.log(err);
             toast({
                 title: "Access Denied!",
                 description: err.response.data.error.message,

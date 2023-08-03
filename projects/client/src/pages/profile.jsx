@@ -9,11 +9,11 @@ import { useNavigate } from 'react-router';
 import { AddIcon } from '@chakra-ui/icons';
 
 export const Profile = ({ id }) => {
-    const toast = useToast();
     const navigate = useNavigate();
+    const toast = useToast();
     const token = localStorage.getItem("token");
-    const [file, setFile] = useState(null);
     const data = useSelector((state) => state.user.value);
+    const [file, setFile] = useState(null);
     const Formschema = Yup.object().shape(({
         avatar: Yup.string()
             .required("Add image"),
@@ -22,11 +22,10 @@ export const Profile = ({ id }) => {
         try {
             const data = new FormData();
             data.append("avatar", file);
-            const response = await Axios.patch(`http://localhost:8000/api/users/updateprofile`, data, {
+            await Axios.patch(`http://localhost:8000/api/users/updateprofile`, data, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
-            console.log(response);
             toast({
                 title: "Profile Updated!",
                 description: "Your Profile Updated!",

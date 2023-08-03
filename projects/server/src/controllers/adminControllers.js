@@ -118,7 +118,6 @@ module.exports = {
                 res.status(200).send({ message: "Cashier Suspended" })
             }
         } catch (error) {
-            
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.',

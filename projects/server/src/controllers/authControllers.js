@@ -31,7 +31,6 @@ module.exports = {
                 token
             });
         } catch (error) {
-            console.log(error);
             res.status(500).send({
                 error,
                 status: 500,
@@ -124,7 +123,6 @@ module.exports = {
             );
             res.status(200).send({ message: "Password has been changed" });
         } catch (error) {
-            console.log(error);
             res.status(400).send(error);
         }
     },

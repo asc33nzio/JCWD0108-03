@@ -9,7 +9,7 @@ export const DeleteButton = ({ id }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const onDelete = async () => {
         try {
-            const response = await Axios.delete(`http://localhost:8000/api/admin/deletecashier/${id}`, {
+            await Axios.delete(`http://localhost:8000/api/admin/deletecashier/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
