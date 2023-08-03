@@ -5,8 +5,8 @@ import { Field, ErrorMessage, Formik, Form } from "formik";
 import { useNavigate, useParams } from "react-router";
 
 export const ResetPassword = () => {
-    const toast = useToast();
     const navigate = useNavigate()
+    const toast = useToast();
     const { token } = useParams();
     const Resetschema = Yup.object().shape(({
         newPassword: Yup.string()
@@ -42,7 +42,14 @@ export const ResetPassword = () => {
             navigate('/');
         } catch (error) {
             console.error(error);
-            alert("Password reset unsuccessful. Please try again.")
+            toast({
+                title: "Failed to Reset",
+                description: "Password Reset Unsuccessful. Please try again.",
+                status: 'success',
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
         }
     };
     return (

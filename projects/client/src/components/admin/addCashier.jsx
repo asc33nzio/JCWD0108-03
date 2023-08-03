@@ -7,15 +7,15 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export default function AddCashier() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
-    const [file, setFile] = useState(null);
     const toast = useToast();
-    const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+    const [file, setFile] = useState(null);
     const [success, setSuccess] = useState();
     const [show, setShow] = useState(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const handleClick = () => setShow(!show);
     const Formschema = Yup.object().shape(({
         username: Yup.string()
@@ -58,6 +58,14 @@ export default function AddCashier() {
             console.log(response);
         } catch (err) {
             console.log(err);
+            toast({
+                title: "Access Denied!",
+                description: err.response.data.error.message,
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
         }
     }
     return (

@@ -25,13 +25,10 @@ export const AdminLogin = () => {
     const handleSubmit = async (data1) => {
         try {
             const response = await Axios.post("http://localhost:8000/api/users/adminlogin", data1);
-            console.log(response.data);
             dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
             setSuccess(true);
-            setTimeout(() => {
                 navigate("/cashier");
-            }, 1000)
             toast({
                 title: "Welcome!",
                 description: "Login Success!",
@@ -41,10 +38,9 @@ export const AdminLogin = () => {
                 position: "top"
             });
         } catch (err) {
-            console.log(err);
             toast({
                 title: "Access Denied!",
-                description: "Username or Password Incorrect!",
+                description: err.response.data.error.message,
                 status: "error",
                 duration: 2500,
                 isClosable: true,
