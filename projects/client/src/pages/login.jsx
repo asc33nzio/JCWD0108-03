@@ -5,7 +5,7 @@ import { AdminLogin } from '../components/admin/adminLogin';
 import { Link } from 'react-router-dom';
 
 export const Login = () => {
-    return z(
+    return (
         <>
             <Flex w={"full"} h={"100vh"} bgGradient="linear(#FFC900, #FFEA61)" justifyContent={"center"}>
                 <Box margin={"auto"} bg={"white"} w={{ base: '250px', md: '500px', lg: '600px', xl: "600px" }} h={"500px"} border={"2px solid"} borderColor={"black"} borderRadius={"10px"} boxShadow={"0px 0px 10px black"} justifyContent={"center"}>
