@@ -24,7 +24,7 @@ export const CashierLogin = () => {
     });
     const handleSubmit = async (data1) => {
         try {
-            const response = await Axios.post("http://localhost:8000/api/users/login", data1);
+            const response = await Axios.post("http://localhost:8000/api/users/cashierlogin", data1);
             console.log(response.data);
             dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
@@ -41,11 +41,11 @@ export const CashierLogin = () => {
                 position: "top"
             });
         } catch (err) {
-            console.log(err);
+            console.log(err);   
             toast({
                 title: "Access Denied!",
-                description: "Username or Password Incorrect!",
-                status: "error",
+                description: err.error,
+                status: "error",    
                 duration: 2500,
                 isClosable: true,
                 position: "top"

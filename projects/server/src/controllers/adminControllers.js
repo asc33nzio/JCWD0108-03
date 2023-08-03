@@ -31,7 +31,8 @@ module.exports = {
 
             res.status(200).send({
                 status: 200,
-                message: "Register success."
+                message: "Register success.",
+                result
             });
         } catch (error) {
             res.status(500).send({
@@ -40,23 +41,53 @@ module.exports = {
             });
         }
     },
-    updateCashierData: async (req, res) => {
+    addAdmin: async (req, res) => {
         try {
-            const { username, email } = req.body;
+            const { username, email, password } = req.body;
             const avatar = req.file.filename;
-            const { id } = req.params;
+            const isUserExist = await users.findOne({ where: { username } });
+            const isEmailExist = await users.findOne({ where: { email } });
+            if (isUserExist) throw { message: "Username has been used." };
+            if (isEmailExist) throw { message: "E-mail has been used." };
 
-            const result = await users.update({ username, email, avatar }, { where: { id }});
+            const salt = await bcrypt.genSalt(5);
+            const hashPassword = await bcrypt.hash(password, salt);
+            const result = await users.create({ username, email, password: hashPassword, avatar, isAdmin: true });
 
             res.status(200).send({
                 status: 200,
-                message: "Updated!"
+                message: "Register success.",
+                result
+            });
+        } catch (error) {
+            res.status(500).send({
+                error,
+                status: 500,
+                message: 'Internal server error.',
+            });
+        }
+    },
+    updateCashierData: async (req, res) => {
+        try {
+            const { username, email, password } = req.body;
+            const avatar = req.file.filename;
+            const { id } = req.params;
+
+            const salt = await bcrypt.genSalt(5);
+            const hashPassword = await bcrypt.hash(password, salt);
+            const result = await users.update({ username, email, password: hashPassword, avatar }, { where: { id } });
+
+            res.status(200).send({
+                status: 200,
+                message: "Updated!",
+                result
             });
         } catch (error) {
             console.log(error);
             res.status(500).send({
+                error,
                 status: 500,
-                message: "Internal server error."
+                message: 'Internal server error.',
             });
         }
     },
@@ -86,7 +117,7 @@ module.exports = {
                 res.status(200).send({ message: "Cashier Suspended" })
             }
         } catch (error) {
-            console.log(error);
+            
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.',

@@ -4,6 +4,7 @@ const router = require('express').Router();
 
 router.post('/', verifyToken, txControllers.createTransaction);
 router.post('/checkout/:transactionId', verifyToken, txControllers.checkout);
+router.get('/sales', txControllers.getAllSales);
 router.get('/:txId', txControllers.getPayment);
 
 module.exports = router;
