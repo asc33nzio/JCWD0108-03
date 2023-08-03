@@ -29,7 +29,7 @@ export const Forgot = () => {
             });
         } catch (err) {
             toast({
-                title: "Access Denied!",
+                title: "Error!",
                 description: err.response.data.error.message,
                 status: "error",
                 duration: 2500,
