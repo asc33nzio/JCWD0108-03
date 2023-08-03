@@ -7,16 +7,15 @@ import { EditIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Button, Input, FormControl, FormLabel, useToast, Flex, Box, } from '@chakra-ui/react';
 
 export default function UpdateCashier({ id, username, email }) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [file, setFile] = useState(null);
-    const [success, setSuccess] = useState();
     const initialRef = useRef(null);
     const finalRef = useRef(null);
     const toast = useToast();
-    const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const [show, setShow] = useState(false);
+    const navigate = useNavigate();
     const handleClick = () => setShow(!show);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [file, setFile] = useState(null);
+    const [show, setShow] = useState(false);
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name"),
@@ -40,11 +39,10 @@ export default function UpdateCashier({ id, username, email }) {
             data.append("email", { email }.email);
             data.append("password", { password }.password);
             data.append("avatar", file);
-            const response = await Axios.patch(`http://localhost:8000/api/admin/updateCashier/${id}`, data, {
+            await Axios.patch(`http://localhost:8000/api/admin/updateCashier/${id}`, data, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
-            setSuccess(true);
             toast({
                 title: "Cashier Updated!",
                 description: "Your Cashier Data Updated!",
@@ -55,7 +53,6 @@ export default function UpdateCashier({ id, username, email }) {
             });
             window.location.reload();
             navigate("/cashierlist");
-            console.log(response);
         } catch (err) {
             console.log(err);
         }
@@ -78,7 +75,6 @@ export default function UpdateCashier({ id, username, email }) {
                             validationSchema={Formschema}
                             onSubmit={(value, action) => {
                                 handleCreate(value);
-                                if (success) action.resetForm();
                             }}>
                             {() => {
                                 return (

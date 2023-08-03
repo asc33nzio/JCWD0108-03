@@ -10,11 +10,11 @@ import { useNavigate } from "react-router";
 import { DeleteButton } from "../components/admin/deleteButton";
 
 export const CashierList = () => {
-    const [data, setData] = useState();
     const token = localStorage.getItem("token");
-    const navigate = useNavigate();
-    const [reload, setReload] = useState(true);
     const toast = useToast();
+    const navigate = useNavigate();
+    const [data, setData] = useState();
+    const [reload, setReload] = useState(true);
     const getCashier = async (data) => {
         try {
             const response = await Axios.get("http://localhost:8000/api/admin/all", data);
