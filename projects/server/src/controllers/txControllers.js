@@ -299,20 +299,16 @@ module.exports = {
         try {
             const { saleDate } = req.params;
     
-            // Parse the saleDate from the request into a JavaScript Date object
             const dateParts = saleDate.split('-');
             const parsedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
     
-            // Extract the year, month, and day from the parsedDate to use in the query
             const year = parsedDate.getFullYear();
-            const month = parsedDate.getMonth() + 1; // January is month 0, so we add 1 to get the correct month value
+            const month = parsedDate.getMonth() + 1; 
             const day = parsedDate.getDate();
-    
-            // Find all sales records with a sale date matching the specified date
+
             const results = await sales.findAll({
                 where: {
                     completed: true,
-                    // Use the sequelize.Op.between operator to match the sale date between the start and end of the specified day
                     saleDate: {
                         [Op.between]: [
                             new Date(`${year}-${month}-${day} 00:00:00`),
@@ -364,7 +360,4 @@ module.exports = {
             });
         }
     }
-
-
-
 };
