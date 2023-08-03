@@ -1,4 +1,4 @@
-const { Op, fn, col, sequelize } = require('sequelize');
+const { Op, fn, col, sequelize, literal } = require('sequelize');
 const db = require('../models');
 const products = db.Products;
 const cartItems = db.CartItems;
@@ -202,9 +202,7 @@ module.exports = {
                     completed: true
                 },
                 attributes: [
-                    'transactionId',
-                    [fn('sum', col('quantitySold')), 'totalQuantitySold'],
-                    [fn('sum', col('sales.totalAmount')), 'totalAmountSold']
+                    'transactionId'
                 ],
                 include: [
                     {
@@ -214,7 +212,14 @@ module.exports = {
                     {
                         model: products,
                         as: 'Product',
-                        attributes: ['id', 'imgURL', 'price', 'categoryId'],
+                        attributes: ['id',
+                            'productName',
+                            'imgURL',
+                            'price',
+                            'categoryId',
+                            [literal('SUM(sales.quantitySold)'), 'quantitySold'],
+                            [literal('SUM(sales.totalAmount)'), 'totalAmount']
+                        ],
                         include: [
                             {
                                 model: categories,
@@ -223,57 +228,133 @@ module.exports = {
                         ]
                     },
                 ],
-                group: ['transactionId', 'Product.id']
+                group: ['transactionId', 'Product.id', 'Transaction.id']
             });
-    
-            // Restructure the data to group products by transactionId
-            const salesRecords = results.reduce((acc, result) => {
-                const transactionId = result.transactionId;
-                const transactionData = {
-                    transactionId: result.transactionId,
-                    totalQuantitySold: result.totalQuantitySold,
-                    totalAmountSold: result.totalAmountSold,
-                    Transaction: {
-                        txTime: result.Transaction.txTime
-                    },
-                    products: []
-                };
-    
-                // Check if the transaction already exists in the accumulator
-                const existingTransaction = acc.find(item => item.transactionId === transactionId);
-    
-                // If the transaction doesn't exist, add it to the accumulator
-                if (!existingTransaction) {
-                    transactionData.products.push({
-                        id: result.Product.id,
-                        imgURL: result.Product.imgURL,
-                        price: result.Product.price,
-                        categoryId: result.Product.categoryId,
-                        Category: {
-                            category: result.Product.Category.category
-                        }
-                    });
-                    acc.push(transactionData);
-                } else {
-                    // If the transaction already exists, add the product to its products array
-                    existingTransaction.products.push({
-                        id: result.Product.id,
-                        imgURL: result.Product.imgURL,
-                        price: result.Product.price,
-                        categoryId: result.Product.categoryId,
-                        Category: {
-                            category: result.Product.Category.category
-                        }
-                    });
-                }
-    
-                return acc;
-            }, []);
-    
+
             return res.status(200).send({
                 status: 200,
                 message: 'Sales Records Successfully Fetched.',
-                salesRecords: salesRecords
+                salesRecords: results
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send({
+                status: 500,
+                message: 'Internal server error.',
+            });
+        }
+    },
+    getSaleById: async (req, res) => {
+        try {
+            const { txId } = req.params;
+            const results = await sales.findAll({
+                where: {
+                    completed: true,
+                    transactionId: txId
+                },
+                attributes: [
+                    'transactionId'
+                ],
+                include: [
+                    {
+                        model: transactions,
+                        attributes: ['txTime']
+                    },
+                    {
+                        model: products,
+                        as: 'Product',
+                        attributes: ['id',
+                            'productName',
+                            'imgURL',
+                            'price',
+                            'categoryId',
+                            [literal('SUM(sales.quantitySold)'), 'quantitySold'],
+                            [literal('SUM(sales.totalAmount)'), 'totalAmount']
+                        ],
+                        include: [
+                            {
+                                model: categories,
+                                attributes: ['category']
+                            }
+                        ]
+                    },
+                ],
+                group: ['transactionId', 'Product.id', 'Transaction.id']
+            });
+
+            return res.status(200).send({
+                status: 200,
+                message: 'Sale Records Successfully Fetched.',
+                salesRecords: results
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send({
+                status: 500,
+                message: 'Internal server error.',
+            });
+        }
+    },
+    getSalesByDate: async (req, res) => {
+        try {
+            const { saleDate } = req.params;
+    
+            // Parse the saleDate from the request into a JavaScript Date object
+            const dateParts = saleDate.split('-');
+            const parsedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+    
+            // Extract the year, month, and day from the parsedDate to use in the query
+            const year = parsedDate.getFullYear();
+            const month = parsedDate.getMonth() + 1; // January is month 0, so we add 1 to get the correct month value
+            const day = parsedDate.getDate();
+    
+            // Find all sales records with a sale date matching the specified date
+            const results = await sales.findAll({
+                where: {
+                    completed: true,
+                    // Use the sequelize.Op.between operator to match the sale date between the start and end of the specified day
+                    saleDate: {
+                        [Op.between]: [
+                            new Date(`${year}-${month}-${day} 00:00:00`),
+                            new Date(`${year}-${month}-${day} 23:59:59`),
+                        ],
+                    },
+                },
+                attributes: [
+                    'transactionId'
+                ],
+                
+                include: [
+                    {
+                        model: transactions,
+                        attributes: ['txTime']
+                    },
+                    {
+                        model: products,
+                        as: 'Product',
+                        attributes: ['id',
+                            'productName',
+                            'imgURL',
+                            'price',
+                            'categoryId',
+                            [literal('SUM(sales.quantitySold)'), 'quantitySold'],
+                            [literal('SUM(sales.totalAmount)'), 'totalAmount']
+                        ],
+                        include: [
+                            {
+                                model: categories,
+                                attributes: ['category']
+                            }
+                        ]
+                    },
+                ],
+                group: ['transactionId', 'Product.id', 'Transaction.id']
+            });
+    
+            return res.status(200).send({
+                status: 200,
+                message: 'Sale Records Successfully Fetched.',
+                salesRecords: results
             });
         } catch (error) {
             console.error(error);
@@ -283,4 +364,7 @@ module.exports = {
             });
         }
     }
+
+
+
 };
