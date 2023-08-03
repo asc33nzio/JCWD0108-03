@@ -7,14 +7,16 @@ const handlebars = require("handlebars")
 const transporter = require("../middleware/transporter.js")
 
 module.exports = {
-    login: async (req, res) => {
+    cashierLogin: async (req, res) => {
         try {
             const { username, password } = req.body;
             const checkLogin = await users.findOne({
-                where: { username: username }
+                where: { username: username, isAdmin: false }
             });
 
             if (!checkLogin) throw { message: "User not Found." }
+            if (checkLogin.isSuspended == true) throw { message: "You are Suspended." }
+            if (checkLogin.isAdmin == true) throw { message: "You have to Login on Admin Login." }
 
             if (checkLogin.isVerified == false) throw ({ message: 'Account is not verified.' });
 
@@ -31,7 +33,43 @@ module.exports = {
                 token
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
+                error,
+                status: 500,
+                message: 'Internal server error',
+            });
+        }
+    },
+    adminLogin: async (req, res) => {
+        try {
+            const { username, password } = req.body;
+            const checkLogin = await users.findOne({
+                where: { username: username, isAdmin: true }
+            });
+
+            if (!checkLogin) throw { message: "User not Found." }
+
+            if (checkLogin.isVerified == false) throw ({ message: 'Account is not verified.' });
+
+            const isValid = await bcrypt.compare(password, checkLogin.password);
+            if (checkLogin.isSuspended == true) throw { message: "You are Suspended." }
+            if (!checkLogin.isAdmin == true) throw { message: "You have to Login on Cashier Login." }
+
+
+            if (!isValid) throw { message: "Wrong password." };
+
+            const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin };
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+
+            res.status(200).send({
+                message: "Login success",
+                user: checkLogin,
+                token
+            });
+        } catch (error) {
+            res.status(500).send({
+                error,
                 status: 500,
                 message: 'Internal server error.',
             });
@@ -54,30 +92,27 @@ module.exports = {
     },
     forgetPassword: async (req, res) => {
         try {
-            const isAccountExist = await users.findOne({ where: { email: req.body.email } });
-            if (!isAccountExist) throw { message: "E-mail not found." }
             const { email } = req.body;
-            const payload = { id: isAccountExist.id }
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "4h" });
+            const findUser = await users.findOne({ where: { email: email } });
+            if (!findUser) throw { message: "E-mail not found." }
             const data = await fs.readFileSync("./reset_password_template.html", "utf-8");
             const tempCompile = await handlebars.compile(data);
             const tempResult = tempCompile(data);
-            await users.update(
-                { isVerified: true },
-                { where: { email: req.body.email } }
-            );
+            const payload = { id: findUser.id }
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "4h" });
+            const htmlWithToken = tempResult.replace('TOKEN_PLACEHOLDER', token);
             await transporter.sendMail({
                 from: "aryobimoalvian@gmail.com",
                 to: email,
                 subject: "Reset Your Cashierkeun Account Password.",
-                html: tempResult
+                html: htmlWithToken
             });
             res.status(200).send(token);
         } catch (error) {
-            console.log(error);
             res.status(500).send({
+                error,
                 status: 500,
-                message: "Internal server error."
+                message: 'Internal server error.',
             });
         };
     },

@@ -15,7 +15,7 @@ export const Profile = () => {
                         boxShadow='0px 0px 6px black' bg={"white"} w={"590px"} h={"350px"}>
                         <Box mr={"45px"}>
                             <Flex mt={"20px"} justifyContent={"center"} >
-                                <Avatar src={`http://localhost:8000/avatars/${data.avatar}`} mt={"25px"} boxShadow={"0px 0px 4px black"} bg={"grey"} w={"200px"} h={"230px"} />
+                                <Avatar src={`http://localhost:8000/avatars/${data.avatar}`} mt={"25px"} boxShadow={"0px 0px 4px black"} bg={"grey"} w={"230px"} h={"230px"} />
                             </Flex>
                             <Flex mt={"10px"}
                                 justifyContent={"center"}>

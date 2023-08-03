@@ -1,42 +1,40 @@
-import { Box, Button, Flex, Input, VStack, useToast } from "@chakra-ui/react";
-import { useState } from "react";
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import Axios from "axios";
 import * as Yup from "yup";
+import { Box, Button, Flex, Input, VStack, useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Field, ErrorMessage, Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
-import Axios from "axios";
 import { setValue } from "../../redux/userSlice";
 import { useNavigate } from "react-router";
 
 export const AdminLogin = () => {
-    const toast = useToast();
+    const [success, setSuccess] = useState();
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
+    const toast = useToast();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [success, setSuccess] = useState();
+    const token = localStorage.getItem("token");
     const loginSchema = Yup.object().shape({
         username: Yup.string()
             .required("Username is required"),
         password: Yup.string()
             .required("Password is required")
-            .min(6, "Paasowrd min 6 ")
-            .matches(/^(?=.*[A-Z])/, "Password Must Contain 1 Capital")
-            .matches(/^(?=.*(\W|_))/, "Password Must Contain 1 Symbol")
-            .matches(/.*[0-9].*/, "Password Must Contain 1 number")
     });
-    const handleSubmit = async (data) => {
+    const handleSubmit = async (data1) => {
         try {
-            const response = await Axios.post("http://localhost:8000/api/users/login", data);
-            dispatch(setValue(response.data));
+            const response = await Axios.post("http://localhost:8000/api/users/adminlogin", data1);
+            console.log(response.data);
+            dispatch(setValue(response.data.user));
             localStorage.setItem("token", response.data.token);
             setSuccess(true);
             setTimeout(() => {
-                navigate("/cashierlist");
+                navigate("/cashier");
             }, 1000)
             toast({
                 title: "Welcome!",
-                description: "Login Succses!",
+                description: "Login Success!",
                 status: 'success',
                 duration: 2500,
                 isClosable: true,
@@ -44,9 +42,21 @@ export const AdminLogin = () => {
             });
         } catch (err) {
             console.log(err);
-        };
-    };
-
+            toast({
+                title: "Access Denied!",
+                description: "Username or Password Incorrect!",
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top"
+            });
+        }
+    }
+    useEffect(() => {
+        if (token) {
+            navigate("/cashier")
+        }
+    }, []);
     return (
         <Formik
             initialValues={{ username: "", password: "" }}
