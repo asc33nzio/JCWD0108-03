@@ -61,7 +61,7 @@ export const DetailProduct = () => {
         <Box>
             <Box><Navbar /></Box>
             <Flex>
-                <Back nav={"/category"} id={`/${product.CategoryId}`} />
+                <Back nav={"/categoryCashier"} id={`/${product.CategoryId}`} />
                 <Flex justifyContent={"center"} pt={{ base: "70px", sm: "100px" }} px={{ base: "10px", sm: "30px", md: "50px" }} wrap={"wrap"} w={{ base: "350px", sm: "800px", md: "1200px" }} gap={"20px"}>
                     <Box>
                         <Box>

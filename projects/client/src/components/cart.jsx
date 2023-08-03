@@ -79,8 +79,8 @@ export const Cart = ({ cartItems, setCartItems, updatedQuantities, setUpdatedQua
             }
         } else {
             toast({
-                title: "Product Out Of Stock",
-                description: `${product.Product.productName} is out of stock. Only ${product.Product.stock} pcs are available. Please contact your supervisor.`,
+                title: "Maximum Product Quantity Exceeded.",
+                description: `${product.Product.productName} only has ${product.Product.stock} pcs remaining in the warehouse. Please contact your supervisor for indent order.`,
                 status: "error",
                 duration: 2000,
                 isClosable: true,
