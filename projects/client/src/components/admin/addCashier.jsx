@@ -20,7 +20,7 @@ export default function AddCashier() {
     const Formschema = Yup.object().shape(({
         username: Yup.string()
             .required("Write your name")
-            .matches(/^(\S+$)/g, 'This field cannot contain only blankspaces'),
+            .matches(/^(\S+$)/g, 'This field cannot contain blankspaces'),
         email: Yup.string()
             .email("Invalid email addres format")
             .required("Write your Email"),

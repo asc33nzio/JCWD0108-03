@@ -18,6 +18,7 @@ import { Payment } from "./pages/payment";
 import { Checkout } from "./pages/checkout";
 import { SalesGeneral } from "./pages/salesGeneral";
 import { SalesDetail } from "./pages/salesDetail";
+import { SalesGraph } from "./pages/salesGraph";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
   { path: "/checkout", element: <Checkout />, errorElement: <Cashier /> },
   { path: "/sales", element: <SalesGeneral />, errorElement: <Cashier /> },
   { path: "/sales/:txId", element: <SalesDetail /> },
+  { path: "/sales/graph", element: <SalesGraph /> },
 ]);
 
 function App() {
