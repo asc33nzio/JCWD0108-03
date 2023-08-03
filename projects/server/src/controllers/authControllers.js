@@ -23,7 +23,7 @@ module.exports = {
             if (!isValid) throw { message: "Username or Password Incorrect." };
 
             const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin };
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "3h" });
 
             res.status(200).send({
                 message: "Login success",
@@ -54,7 +54,7 @@ module.exports = {
             if (!isValid) throw { message: "Username or Password Incorrect." };
 
             const payload = { id: checkLogin.id, isAdmin: checkLogin.isAdmin };
-            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "1h" });
+            const token = jwt.sign(payload, process.env.KEY_JWT, { expiresIn: "3h" });
 
             res.status(200).send({
                 message: "Login success",
