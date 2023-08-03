@@ -41,11 +41,11 @@ export const CashierLogin = () => {
                 position: "top"
             });
         } catch (err) {
-            console.log(err);
+            console.log(err);   
             toast({
                 title: "Access Denied!",
-                // description: err.error.message,
-                status: "error",
+                description: err.error,
+                status: "error",    
                 duration: 2500,
                 isClosable: true,
                 position: "top"

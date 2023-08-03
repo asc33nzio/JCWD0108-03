@@ -77,7 +77,6 @@ export default function UpdateCashier({ id, username, email }) {
                             initialValues={{ username: username, email: email, avatar: null }}
                             validationSchema={Formschema}
                             onSubmit={(value, action) => {
-                                console.log(value);
                                 handleCreate(value);
                                 if (success) action.resetForm();
                             }}>

@@ -37,7 +37,7 @@ module.exports = {
             res.status(500).send({
                 error,
                 status: 500,
-                message: 'Internal server error.',
+                message: 'Internal server error',
             });
         }
     },
