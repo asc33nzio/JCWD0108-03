@@ -40,7 +40,7 @@ export default function AddCashier() {
             data.append("email", { email }.email);
             data.append("password", { password }.password);
             data.append("avatar", file);
-            const response = await Axios.post("http://localhost:8000/api/admin", data, {
+            await Axios.post("http://localhost:8000/api/admin", data, {
                 headers: { Authorization: `Bearer ${token}` },
                 "content-Type": "Multiple/form-data"
             });
@@ -53,9 +53,10 @@ export default function AddCashier() {
                 isClosable: true,
                 position: "top"
             });
-            window.location.reload();
-            navigate("/cashierlist");
-            console.log(response);
+            setTimeout(() => {
+                window.location.reload();
+                navigate("/cashierlist");
+            }, 1000);
         } catch (err) {
             console.log(err);
             toast({
