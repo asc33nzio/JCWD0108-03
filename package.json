@@ -19,5 +19,10 @@
   },
   "workspaces": [
     "projects/*"
-  ]
+  ],
+  "dependencies": {
+    "chart.js": "^4.3.3",
+    "chartjs-adapter-moment": "^1.0.1",
+    "moment": "^2.29.4"
+  }
 }

@@ -2,9 +2,7 @@ import Axios from "axios";
 import { Box, Flex, Image, Button } from "@chakra-ui/react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useCallback } from "react";
-import { AiOutlineShoppingCart } from "react-icons/ai"
-import { SiQuicklook } from "react-icons/si"
-import { AddProduct } from "../admin/addProduct";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CircleLoader } from "react-spinners";
 
 export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, updatedQuantities, setUpdatedQuantities }) => {
@@ -16,7 +14,6 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
-    // const [shouldFetchCart, setShouldFetchCart] = useState(true);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -105,7 +102,6 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
                 if (totalQuantityInCart <= product.stock) {
-                    // setShouldFetchCart(true);
                     setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
@@ -166,23 +162,6 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
         return price.toLocaleString("id-ID");
     };
 
-    // useEffect(() => {
-    //     setLoadingProducts(true);
-    //     Promise.all([shouldFetchCart && getCartByUser(), fetchProductsByCategory(page)])
-    //         .then(() => setLoadingProducts(false))
-    //         .catch(() => setLoadingProducts(false));
-
-    //     if (shouldFetchCart) {
-    //         setShouldFetchCart(false);
-    //     };
-    // }, [fetchProductsByCategory, page, shouldFetchCart]);
-
-    // useEffect(() => {
-    //     if (!loadingCartUpdate && shouldFetchCart) {
-    //         setShouldFetchCart(true);
-    //     };
-    // }, [loadingCartUpdate, shouldFetchCart]);
-
     return (
         <Flex>
             <Flex justifyContent={"center"} w={"full"}>
@@ -206,7 +185,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                                         <Box borderTopRadius={'8px'} h={{ base: '100px', sm: '150px', md: '200px' }} w={{ base: '80px', sm: '120px', md: '160px' }} fontSize={{ base: '10px', sm: '10px', md: '17px', lg: '20px' }} fontWeight={"bold"} color={"white"}>
                                             <Box h={"100px"} borderTopRadius={"9px"}>
                                                 <Box position={"absolute"} w={{ base: '80px', sm: '120px', md: '160px' }} >
-                                                    <Image cursor={"pointer"} _active={{transform:"scale(0.98)", transition:"0.3s"}} onClick={() => handleProductDetail(product.id)} borderTopRadius={"10px"} h={{ base: '130px', sm: '170px', md: '200px' }} filter={"auto"} brightness={"60%"} src={`http://localhost:8000/api/products/image/${product?.imgURL}`} />
+                                                    <Image cursor={"pointer"} _active={{ transform: "scale(0.98)", transition: "0.3s" }} onClick={() => handleProductDetail(product.id)} borderTopRadius={"10px"} h={{ base: '130px', sm: '170px', md: '200px' }} filter={"auto"} brightness={"60%"} src={`http://localhost:8000/api/products/image/${product?.imgURL}`} />
                                                 </Box>
                                                 <Box position={"relative"}>
                                                     <Flex justifyContent={"center"} fontWeight={"thin"}>{product.productName}</Flex>
@@ -224,7 +203,7 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                                                 <Flex onClick={() => handlePlusClick(productId)} justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} p={{ base: '3px', sm: '5px', md: '7px' }} h={"25px"} w={"25px"} cursor={"pointer"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} bgColor={"#FFC900"} color={"white"} >+</Flex>
                                             </Flex>
                                             <Flex onClick={() => handleAddToCart(product.id)} position={"relative"} p={"8px"} alignItems={"center"} color={"white"} borderBottomRadius={"10px"} cursor={"pointer"} justifyContent={"space-evenly"} bgColor={"#FFC900"}>
-                                                <Flex  justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} w={"200"}  _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} color={"white"} > <AiOutlineShoppingCart size={"25px"}/> </Flex>
+                                                <Flex justifyContent={"center"} align={"center"} fontSize={{ base: '7px', md: '15px' }} w={"200"} _active={{ bgColor: 'yellow.500' }} transition={"0.3s"} borderRadius={"5px"} color={"white"} > <AiOutlineShoppingCart size={"25px"} /> </Flex>
                                             </Flex>
                                         </Box>
                                     </Box>
@@ -234,11 +213,11 @@ export const ProductsByCategoryCashier = ({ addToCart, cartItems, setCartItems, 
                     )}
                     <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
                         {page > 1 && (
-                            <Button onClick={prevPage}>Previous Page</Button>
-                            )}
+                            <Button boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-r, yellow.400, yellow.700)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={prevPage}>Previous Page</Button>
+                        )}
                         {page < totalPage && (
-                            <Button onClick={nextPage}>Next Page</Button>
-                            )}
+                            <Button boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-r, yellow.400, yellow.700)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={nextPage}>Next Page</Button>
+                        )}
                     </Flex>
                 </Box>
             </Flex >

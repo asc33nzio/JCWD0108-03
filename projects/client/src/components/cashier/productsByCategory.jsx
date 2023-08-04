@@ -16,7 +16,6 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
     const [totalPage, setTotalPage] = useState(1);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingCartUpdate, setLoadingCartUpdate] = useState(false);
-    // const [shouldFetchCart, setShouldFetchCart] = useState(true);
 
     const fetchProductsByCategory = useCallback(async (page) => {
         try {
@@ -105,7 +104,6 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
                 const totalQuantityInCart = cartItem ? cartItem.quantity + inputQuantity : inputQuantity;
 
                 if (totalQuantityInCart <= product.stock) {
-                    // setShouldFetchCart(true);
                     setLoadingCartUpdate(true);
                     await Axios.post('http://localhost:8000/api/cart', payload, {
                         headers: { Authorization: `Bearer ${token}` },
@@ -166,27 +164,10 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
         return price.toLocaleString("id-ID");
     };
 
-    // useEffect(() => {
-    //     setLoadingProducts(true);
-    //     Promise.all([shouldFetchCart && getCartByUser(), fetchProductsByCategory(page)])
-    //         .then(() => setLoadingProducts(false))
-    //         .catch(() => setLoadingProducts(false));
-
-    //     if (shouldFetchCart) {
-    //         setShouldFetchCart(false);
-    //     };
-    // }, [fetchProductsByCategory, page, shouldFetchCart]);
-
-    // useEffect(() => {
-    //     if (!loadingCartUpdate && shouldFetchCart) {
-    //         setShouldFetchCart(true);
-    //     };
-    // }, [loadingCartUpdate, shouldFetchCart]);
-
     return (
         <Flex>
             <Flex justifyContent={"center"} w={"full"}>
-                <Box>
+                <Box h={"102%"}>
                     {loadingProducts ? (
                         <Flex justifyContent="center" alignItems="center" height="200px">
                             <CircleLoader size={200} color={"black"} loading={loadingProducts} />
@@ -233,12 +214,12 @@ export const ProductsByCategory = ({ addToCart, cartItems, setCartItems, updated
                             <AddProduct />
                         </Flex>
                     )}
-                    <Flex mt={"20px"} justifyContent={"center"} gap={'20px'}>
+                    <Flex mt={"10px"} justifyContent={"center"} gap={'20px'}>
                         {page > 1 && (
-                            <Button onClick={prevPage}>Previous Page</Button>
+                            <Button boxShadow={"0px 0px 10px gray"} _hover={{bgGradient:"linear(to-r, yellow.400, yellow.700)", transform:'scale(0.95)'}} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={prevPage}>Previous Page</Button>
                         )}
                         {page < totalPage && (
-                            <Button onClick={nextPage}>Next Page</Button>
+                            <Button boxShadow={"0px 0px 10px gray"} _hover={{bgGradient:"linear(to-r, yellow.400, yellow.700)", transform:'scale(0.95)'}} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} onClick={nextPage}>Next Page</Button>
                         )}
                     </Flex>
                 </Box>

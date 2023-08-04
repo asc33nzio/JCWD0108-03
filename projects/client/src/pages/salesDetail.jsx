@@ -23,7 +23,6 @@ export const SalesDetail = () => {
             });
     }, [txId]);
 
-
     const formatDate = (dateStr) => {
         const dateObj = new Date(dateStr);
         const day = String(dateObj.getDate()).padStart(2, "0");
@@ -65,7 +64,7 @@ export const SalesDetail = () => {
                 <Stack direction="row" align="center" spacing={4} overflowX="auto" padding="20px" mt={'80px'}
                 >
                     {transactionData.map((transaction) => (
-                        <Box key={transaction.transactionId} p={4} border="1px solid #ccc">
+                        <Box key={Math.random(transaction.transactionId)} p={4} border="1px solid #ccc">
                             <p>Product ID: {transaction.Product.id}</p>
                             <p>Product Name: {transaction.Product.productName}</p>
                             <p>Category: {transaction.Product.Category.category}</p>

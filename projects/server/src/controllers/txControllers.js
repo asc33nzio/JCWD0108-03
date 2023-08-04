@@ -1,4 +1,4 @@
-const { Op, fn, col, sequelize, literal } = require('sequelize');
+const { Sequelize, Op, fn, col, sequelize, literal } = require('sequelize');
 const db = require('../models');
 const products = db.Products;
 const cartItems = db.CartItems;
@@ -298,12 +298,12 @@ module.exports = {
     getSalesByDate: async (req, res) => {
         try {
             const { saleDate } = req.params;
-    
+
             const dateParts = saleDate.split('-');
             const parsedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
-    
+
             const year = parsedDate.getFullYear();
-            const month = parsedDate.getMonth() + 1; 
+            const month = parsedDate.getMonth() + 1;
             const day = parsedDate.getDate();
 
             const results = await sales.findAll({
@@ -319,7 +319,7 @@ module.exports = {
                 attributes: [
                     'transactionId'
                 ],
-                
+
                 include: [
                     {
                         model: transactions,
@@ -346,7 +346,7 @@ module.exports = {
                 ],
                 group: ['transactionId', 'Product.id', 'Transaction.id']
             });
-    
+
             return res.status(200).send({
                 status: 200,
                 message: 'Sale Records Successfully Fetched.',
@@ -357,6 +357,79 @@ module.exports = {
             return res.status(500).send({
                 status: 500,
                 message: 'Internal server error.',
+            });
+        }
+    },
+    getSalesBetweenDates: async (req, res) => {
+        try {
+            const { startDate, endDate } = req.query;
+
+            const startDateObj = new Date(startDate);
+            const endDateObj = new Date(endDate);
+
+            const startDateWithTime = new Date(
+                startDateObj.getFullYear(),
+                startDateObj.getMonth(),
+                startDateObj.getDate(),
+                0,
+                0,
+                0
+            );
+            const endDateWithTime = new Date(
+                endDateObj.getFullYear(),
+                endDateObj.getMonth(),
+                endDateObj.getDate(),
+                23,
+                59,
+                59
+            );
+
+            const results = await sales.findAll({
+                where: {
+                    completed: true,
+                    saleDate: {
+                        [Op.between]: [startDateWithTime, endDateWithTime],
+                    },
+                },
+                attributes: ["transactionId"],
+                include: [
+                    {
+                        model: transactions,
+                        attributes: ["txTime"],
+                    },
+                    {
+                        model: products,
+                        as: "Product",
+                        attributes: [
+                            "id",
+                            "productName",
+                            "imgURL",
+                            "price",
+                            "categoryId",
+                            [sequelize.literal("SUM(sales.quantitySold)"), "quantitySold"],
+                            [sequelize.literal("SUM(sales.totalAmount)"), "totalAmount"],
+                        ],
+                        include: [
+                            {
+                                model: categories,
+                                attributes: ["category"],
+                            },
+                        ],
+                    },
+                ],
+                group: ["transactionId", "Product.id", "Transaction.id"],
+            });
+
+            return res.status(200).send({
+                status: 200,
+                message: "Sale Records Successfully Fetched.",
+                salesRecords: results,
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send({
+                status: 500,
+                message: "Internal server error.",
             });
         }
     }

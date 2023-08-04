@@ -1,24 +1,7 @@
-import React, { useState } from "react";
-import {
-    Box,
-    Button,
-    Flex,
-    FormControl,
-    FormLabel,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    useDisclosure,
-    useToast,
-} from "@chakra-ui/react";
 import Axios from "axios";
+import React, { useState } from "react";
 import * as Yup from "yup";
-
+import { Box, Button, Flex, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from "@chakra-ui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useParams } from "react-router-dom";
 
@@ -28,18 +11,18 @@ export const EditProduct = ({
     description,
     stock,
 }) => {
-    const toast = useToast()
+    const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const params = useParams();
     const [file, setFile] = useState(null);
 
     const editSchema = Yup.object().shape({
-        productName: Yup.string().required("product name is required!"),
-        description: Yup.string().required("description is required!"),
-        price: Yup.string().required("price is required!"),
-        stock: Yup.string().required("stock is required!"),
-        imgURL: Yup.string().required("image product is required!"),
-    })
+        productName: Yup.string().required("Product name is required!"),
+        description: Yup.string().required("Description is required!"),
+        price: Yup.string().required("Price is required!"),
+        stock: Yup.string().required("Stock is required!"),
+        imgURL: Yup.string().required("Product Image is required!"),
+    });
 
     const update = async (values) => {
         try {
@@ -93,7 +76,7 @@ export const EditProduct = ({
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader fontWeight={"thin"}>
-                        Update Detail Produk
+                        Update Product Details
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
@@ -106,7 +89,6 @@ export const EditProduct = ({
                             }}
                             validationSchema={editSchema}
                             onSubmit={(values) => {
-                                // console.log(values);
                                 update(values);
                             }}
                         >
@@ -118,47 +100,47 @@ export const EditProduct = ({
                                             as={Field}
                                             defaultValue={productName}
                                             name="productName"
-                                            placeholder="Masukkan Nama Produk Baru"
+                                            placeholder="Enter a new product name"
                                         />
                                         <ErrorMessage component="box" name="productName" style={{ color: "red", marginTop: "-8px" }} />
                                     </FormControl>
 
                                     <FormControl mt={4}>
-                                        <FormLabel>Deskripsi</FormLabel>
+                                        <FormLabel>Description</FormLabel>
                                         <Input
                                             defaultValue={description}
                                             as={Field}
                                             name="description"
-                                            placeholder="Masukkan Deskripsi Baru"
+                                            placeholder="Enter a new product description"
                                         />
                                         <ErrorMessage component="box" name="description" style={{ color: "red", marginTop: "-8px" }} />
                                     </FormControl>
 
                                     <FormControl mt={4}>
-                                        <FormLabel>Harga</FormLabel>
+                                        <FormLabel>Price</FormLabel>
                                         <Input
                                             defaultValue={price}
                                             as={Field}
                                             name="price"
-                                            placeholder="Masukkan Harga Baru"
+                                            placeholder="Enter a new price"
                                         />
                                         <ErrorMessage component="box" name="price" style={{ color: "red", marginTop: "-8px" }} />
                                     </FormControl>
 
                                     <FormControl mt={4}>
-                                        <FormLabel>Stok</FormLabel>
+                                        <FormLabel>Stock</FormLabel>
                                         <Input
                                             defaultValue={stock}
                                             as={Field}
                                             name="stock"
-                                            placeholder="Perbarui Stok Baru"
+                                            placeholder="Update stock quantity"
                                         />
                                         <ErrorMessage component="box" name="stock" style={{ color: "red", marginTop: "-8px" }} />
                                     </FormControl>
                                     <Field name="imgURL">
                                         {({ field }) => (
                                             <FormControl mt={4}>
-                                                <FormLabel>Gambar Produk</FormLabel>
+                                                <FormLabel>Product image</FormLabel>
                                                 <Input
                                                     {...field}
                                                     onChange={(e) => {
@@ -168,7 +150,7 @@ export const EditProduct = ({
                                                     as={Field}
                                                     type="file"
                                                     name="imgURL"
-                                                    placeholder="Perbarui Gambar Produk Baru"
+                                                    placeholder="Update product's image"
                                                 />
                                                 <ErrorMessage component="box" name="imgURL" style={{ color: "red", marginTop: "-8px" }} />
                                             </FormControl>
@@ -179,17 +161,17 @@ export const EditProduct = ({
                                         colorScheme="yellow"
                                         color="white"
                                         mr={3}
+                                        mt={5}
                                         isDisabled={!dirty}
                                     >
-                                        Simpan
+                                        Save Changes
                                     </Button>
                                 </Form>
                             )}
                         </Formik>
                     </ModalBody>
-
                     <ModalFooter>
-                        <Button onClick={onClose}>Batal</Button>
+                        <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

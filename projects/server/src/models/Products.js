@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false
     },
     imgURL: {
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isDelete: {
       type: DataTypes.BOOLEAN,
-      defaultValue:false
+      defaultValue: false
     }
   }, {
     sequelize,
