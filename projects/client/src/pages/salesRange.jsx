@@ -39,10 +39,10 @@ export const SalesDateRange = () => {
                 if (status === 200 && salesRecords.length > 0) {
                     const uniqueSalesRecords = removeDuplicateTransactions(salesRecords);
                     setSalesData(uniqueSalesRecords);
-                    setFilteredSalesData(uniqueSalesRecords); // Initialize filteredSalesData with all sales data
+                    setFilteredSalesData(uniqueSalesRecords); 
                 } else {
                     setSalesData([]);
-                    setFilteredSalesData([]); // Clear filteredSalesData if no records found
+                    setFilteredSalesData([]);
                 }
             })
             .catch((error) => {
