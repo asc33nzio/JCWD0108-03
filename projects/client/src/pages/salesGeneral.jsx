@@ -60,7 +60,7 @@ export const SalesGeneral = () => {
                         <Button as={Link} to="/sales/graph" boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-r, yellow.400, yellow.700)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-r, yellow.400, yellow.700)"} mr="150px">
                             Sales Graph
                         </Button>
-                        <Button as={Link} to="/recapSales" boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-l, yellow.700, yellow.400)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-l, yellow.400, yellow.700)"}>
+                        <Button as={Link} to="/sales/range" boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-l, yellow.700, yellow.400)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-l, yellow.400, yellow.700)"}>
                             Recap Sales
                         </Button>
                 </Flex>

@@ -28,7 +28,7 @@ export const SalesGraph = () => {
     useEffect(() => {
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
-        }
+        };
 
         const formatSaleData = (data) => {
             const groupedData = {};
@@ -52,8 +52,8 @@ export const SalesGraph = () => {
               const clickedElement = elements[0];
               const index = clickedElement.index;
               const date = salesChartData.dates[index];
-              const momentDate = moment(date, "YYYY-MM-DD"); // Parse the date using moment.js
-              const formattedDate = momentDate.add(1, 'days').format("DD-MM-YYYY"); // Add 1 day and then format the date
+              const momentDate = moment(date, "YYYY-MM-DD"); 
+              const formattedDate = momentDate.add(1, 'days').format("DD-MM-YYYY"); 
               const dynamicURL = `http://localhost:3000/sales/byDate/${formattedDate}`;
               window.location.href = dynamicURL;
             }

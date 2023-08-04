@@ -20,6 +20,7 @@ import { SalesGeneral } from "./pages/salesGeneral";
 import { SalesDetail } from "./pages/salesDetail";
 import { SalesGraph } from "./pages/salesGraph";
 import { SalesDate } from "./pages/salesDate";
+import { SalesDateRange } from "./pages/salesRange";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
   { path: "/sales", element: <SalesGeneral />, errorElement: <Cashier /> },
   { path: "/sales/:txId", element: <SalesDetail /> },
   { path: "/sales/graph", element: <SalesGraph /> },
+  { path: "/sales/range", element: <SalesDateRange /> },
   { path: "/sales/byDate/:dateQuery", element: <SalesDate /> },
 ]);
 

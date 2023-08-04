@@ -6,8 +6,8 @@ import { Link, useParams } from "react-router-dom";
 
 export const SalesDate = () => {
     const { dateQuery } = useParams();
+    const [nonUniqueTransactionData, setNonUniqueTransactionData] = useState([]);
     const [transactionData, setTransactionData] = useState([]);
-    const [renderedTransactionIds, setRenderedTransactionIds] = useState([]);
 
     const formatDate = (dateStr) => {
         const [month, day, year] = dateStr.split("-");
@@ -17,12 +17,28 @@ export const SalesDate = () => {
 
     const formattedDateQuery = formatDate(dateQuery);
 
+    const removeDuplicateTransactions = (salesRecords) => {
+        const uniqueTransactions = [];
+        const seenTransactionIds = new Set();
+
+        salesRecords.forEach((transaction) => {
+            if (!seenTransactionIds.has(transaction.transactionId)) {
+                uniqueTransactions.push(transaction);
+                seenTransactionIds.add(transaction.transactionId);
+            }
+        });
+
+        return uniqueTransactions;
+    };
+
     useEffect(() => {
         Axios.get(`http://localhost:8000/api/transactions/sales/date/${formattedDateQuery}`)
             .then((response) => {
                 const { status, salesRecords } = response.data;
                 if (status === 200 && salesRecords.length > 0) {
-                    setTransactionData(salesRecords);
+                    setNonUniqueTransactionData(salesRecords);
+                    const uniqueSalesRecords = removeDuplicateTransactions(salesRecords);
+                    setTransactionData(uniqueSalesRecords);
                 } else {
                     console.error("Error fetching transactions by date");
                 }
@@ -49,27 +65,15 @@ export const SalesDate = () => {
         return total + transaction.Product.totalAmount;
     }, 0);
 
-    const calculateTotalAmount = (salesRecords) => {
-        const groupedTransactions = salesRecords.reduce((acc, transaction) => {
-            if (!acc[transaction.transactionId]) {
-                acc[transaction.transactionId] = [];
+    const calculateTotalAmount = (transactionId) => {
+        let total = 0;
+        nonUniqueTransactionData.forEach((transaction) => {
+            if (transaction.transactionId === transactionId) {
+                total += transaction.Product.totalAmount;
             }
-            acc[transaction.transactionId].push(transaction.Product.totalAmount);
-            return acc;
-        }, {});
-
-        const totalAmounts = Object.values(groupedTransactions).map((amounts) =>
-            amounts.reduce((total, amount) => total + amount, 0)
-        );
-
-        return totalAmounts;
+        });
+        return total;
     };
-
-    const totalPerTx = calculateTotalAmount(transactionData);
-
-    useEffect(() => {
-        setRenderedTransactionIds((prevIds) => [...prevIds, ...transactionData.map((transaction) => transaction.transactionId)]);
-    }, [transactionData]);
 
     return (
         <Box w="100%" h="100vh">
@@ -79,7 +83,7 @@ export const SalesDate = () => {
                     All Sales on {formattedDateQuery}
                 </Text>
                 <Text color={"black"} align={"center"} mt={"auto"} fontFamily={"monospace"} fontSize={"20px"} fontWeight={"bold"}>
-                    Total Transactions: {totalTransactions}
+                    Total Unique Transactions: {totalTransactions}
                 </Text>
                 <Text color={"black"} align={"center"} mt={"auto"} fontFamily={"monospace"} fontSize={"20px"} fontWeight={"bold"}>
                     Revenue: Rp. {totalDailySales.toLocaleString("id-ID")},00
@@ -87,16 +91,19 @@ export const SalesDate = () => {
             </Stack>
             {transactionData.length > 0 ? (
                 <Stack direction="column" spacing={4} overflowX="auto" padding="20px" mt={'80px'}>
-                    {transactionData.map((transaction, index) => (
-                        <Box key={Math.random(transaction.transactionId)} p={4} border="1px solid #ccc">
-                            <p>Transaction ID: {transaction.transactionId}</p>
-                            <p>Transaction Time: {formatDate2(transaction.Transaction.txTime)}</p>
-                            <p>Billed: {totalPerTx[index]}</p>
-                            <Button as={Link} to={`/sales/${transaction.transactionId}`} boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-t, yellow.700, yellow.400)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-t, yellow.400, yellow.700)"} mt={'10px'}>
-                                See Detail
-                            </Button>
-                        </Box>
-                    ))}
+                    {transactionData.map((transaction, index) => {
+                        const billedAmount = calculateTotalAmount(transaction.transactionId);
+                        return (
+                            <Box key={transaction.transactionId} p={4} border="1px solid #ccc">
+                                <p>Transaction ID: {transaction.transactionId}</p>
+                                <p>Transaction Time: {formatDate2(transaction.Transaction.txTime)}</p>
+                                <p>Billed: Rp. {billedAmount.toLocaleString("id-ID")},00</p>
+                                <Button as={Link} to={`/sales/${transaction.transactionId}`} boxShadow={"0px 0px 10px gray"} _hover={{ bgGradient: "linear(to-t, yellow.700, yellow.400)", transform: 'scale(0.95)' }} color={"white"} bgGradient={"linear(to-t, yellow.400, yellow.700)"} mt={'10px'}>
+                                    See Detail
+                                </Button>
+                            </Box>
+                        );
+                    })}
                 </Stack>
             ) : (
                 <p>No transactions found on {formattedDateQuery}</p>
