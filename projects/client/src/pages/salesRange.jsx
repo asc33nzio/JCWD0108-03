@@ -39,7 +39,7 @@ export const SalesDateRange = () => {
                 if (status === 200 && salesRecords.length > 0) {
                     const uniqueSalesRecords = removeDuplicateTransactions(salesRecords);
                     setSalesData(uniqueSalesRecords);
-                    setFilteredSalesData(uniqueSalesRecords); 
+                    setFilteredSalesData(uniqueSalesRecords);
                 } else {
                     setSalesData([]);
                     setFilteredSalesData([]);
@@ -125,24 +125,24 @@ export const SalesDateRange = () => {
                 </Stack>
             ) : (
                 <>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <p>No sales records found for the selected date range.</p>
                 </>
             )}
